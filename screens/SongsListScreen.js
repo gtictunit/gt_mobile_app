@@ -7,13 +7,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {toggleFavourite} from '../store/actions/songsActions';
 
 import {
-  CLASSICS,
-  DANCE,
+  CONVENTIONS,
+  SUNDAY,
   GENRES,
-  ROCKON,
-  ROM,
-  SOOTHING,
-  WORKOUT,
+  THURSDAY,
+  SPECIAL
 } from '../components/data';
 import SongItem from '../components/SongItem';
 import Colors from '../components/Colors';
@@ -27,18 +25,14 @@ const SongsListScreen = (props) => {
 
   let arr = [{}];
   if (gid === '1') {
-    arr = ROM;
+    arr = THURSDAY;
   } else if (gid === '2') {
-    arr = SOOTHING;
+    arr = SUNDAY;
   } else if (gid === '3') {
-    arr = ROCKON;
+    arr = CONVENTIONS;
   } else if (gid === '4') {
-    arr = CLASSICS;
-  } else if (gid === '5') {
-    arr = WORKOUT;
-  } else if (gid === '6') {
-    arr = DANCE;
-  }
+    arr = SPECIAL;
+  } 
 
   const displayedSongs = arr.filter((song) => song.genre.indexOf(gid) >= 0); //filter out the songs of the same genre,
   // not needed though coz arr also contains the songs of the required genre

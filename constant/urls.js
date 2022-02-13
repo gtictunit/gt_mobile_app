@@ -1,0 +1,1 @@
+export const WB_URL = 'http://localhost:88/gt_mobile_app_backend'

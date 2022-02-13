@@ -1,5 +1,109 @@
 import Song from '../models/Song';
 import Genre from '../models/Genre';
+import { WB_URL } from '../constant/urls';
+
+function getMsgsConvention() {
+  let resp = [];
+  fetch('http://192.168.0.82:88/gt_mobile_app_backend/message/get_messages_by_service?id=3')
+    .then(data => 
+      console.log(data.json()),
+      data.json().forEach(item => {
+    resp.push(   new Song(
+        item.id,
+        item.service,
+        item.title,
+        item.preacher,
+        item.img_url,
+        item.media_file_url,
+      ))
+    })
+    )
+    return resp;
+}
+
+function getMsgsSunday() {
+  let resp = [];
+  fetch('http://192.168.0.82:88/gt_mobile_app_backend/message/get_messages_by_service?id=2')
+    .then(data => 
+      console.log(data.json()),
+    data.json().forEach(item => {
+      resp.push(   new Song(
+        item.id,
+        item.service,
+        item.title,
+        item.preacher,
+        item.img_url,
+        item.media_file_url,
+      ))
+    })
+    )
+    return resp;
+}
+
+function getMsgsThursday() {
+  let resp = [];
+  fetch('http://192.168.0.82:88/gt_mobile_app_backend/message/get_messages_by_service?id=1')
+    .then(data => 
+      console.log(data.json()),
+    data.json().forEach(item => {
+      resp.push(   new Song(
+        item.id,
+        item.service,
+        item.title,
+        item.preacher,
+        item.img_url,
+        item.media_file_url,
+      ))
+    })
+    )
+    return resp;
+}
+
+function getMsgsSpecial() {
+  let resp = [];
+  fetch('http://192.168.0.82:88/gt_mobile_app_backend/message/get_messages_by_service?id=4')
+    .then(data => 
+      console.log(data.json()),
+      data.json().forEach(item => {
+        resp.push(   new Song(
+          item.id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        ))
+      })
+      )
+      return resp;
+}
+
+function getGenres() {
+  let resp =[]
+  fetch ('http://192.168.0.82:88/gt_mobile_app_backend/service/get_services',{
+    credentials: 'include',
+    headers: {        
+        'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.-uIFDdo5mrwk4NZq4LARFPa4ynh3Jcl_oMScJO9-xxM',
+    }
+  })
+    .then(data =>      data.json())
+    .then((customerselect) => {
+      console.log(JSON.stringify(customerselect));
+    }
+      )
+      return resp
+}
+
+
+export const TEST = getGenres();
+
+// export const GENRES = getGenres();
+// export const THURSDAY = getMsgsThursday();
+// export const SUNDAY = getMsgsSunday();
+// export const SPECIAL = getMsgsSpecial();
+// export const CONVENTIONS = getMsgsConvention();
+
+
 
 export const GENRES = [
   new Genre(
