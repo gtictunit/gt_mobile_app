@@ -4,7 +4,7 @@ import { WB_URL } from '../constant/urls';
 
 function getMsgsConvention() {
   let resp = [];
-  fetch('http://192.168.0.82:88/gt_mobile_app_backend/message/get_messages_by_service?id=3')
+  fetch('https://gt.pariong.com.ng/gt_mobile_app_backend/message/get_messages_by_service?id=3')
     .then(data => 
       console.log(data.json()),
       data.json().forEach(item => {
@@ -23,7 +23,7 @@ function getMsgsConvention() {
 
 function getMsgsSunday() {
   let resp = [];
-  fetch('http://192.168.0.82:88/gt_mobile_app_backend/message/get_messages_by_service?id=2')
+  fetch('https://gt.pariong.com.ng/gt_mobile_app_backend/message/get_messages_by_service?id=2')
     .then(data => 
       console.log(data.json()),
     data.json().forEach(item => {
@@ -42,26 +42,26 @@ function getMsgsSunday() {
 
 function getMsgsThursday() {
   let resp = [];
-  fetch('http://192.168.0.82:88/gt_mobile_app_backend/message/get_messages_by_service?id=1')
+  fetch('https://gt.pariong.com.ng/gt_mobile_app_backend/message/get_messages_user/')
     .then(data => 
-      console.log(data.json()),
-    data.json().forEach(item => {
-      resp.push(   new Song(
-        item.id,
-        item.service,
-        item.title,
-        item.preacher,
-        item.img_url,
-        item.media_file_url,
-      ))
-    })
+      console.log(data.json())
+    // data.json().forEach(item => {
+    //   resp.push(   new Song(
+    //     item.id,
+    //     item.service,
+    //     item.title,
+    //     item.preacher,
+    //     item.img_url,
+    //     item.media_file_url,
+    //   ))
+    // })
     )
     return resp;
 }
 
 function getMsgsSpecial() {
   let resp = [];
-  fetch('http://192.168.0.82:88/gt_mobile_app_backend/message/get_messages_by_service?id=4')
+  fetch('https://gt.pariong.com.ng/gt_mobile_app_backend/message/get_messages_by_service?id=4')
     .then(data => 
       console.log(data.json()),
       data.json().forEach(item => {
@@ -80,7 +80,7 @@ function getMsgsSpecial() {
 
 function getGenres() {
   let resp =[]
-  fetch ('http://192.168.0.82:88/gt_mobile_app_backend/service/get_services',{
+  fetch ('https://gt.pariong.com.ng/service/get_services/',{
     credentials: 'include',
     headers: {        
         'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.-uIFDdo5mrwk4NZq4LARFPa4ynh3Jcl_oMScJO9-xxM',
@@ -88,14 +88,14 @@ function getGenres() {
   })
     .then(data =>      data.json())
     .then((customerselect) => {
-      console.log(JSON.stringify(customerselect));
+      console.log('JSON RESPONSE FROM CALL'+JSON.stringify(customerselect));
     }
       )
       return resp
 }
 
 
-export const TEST = getGenres();
+// export const TEST = getGenres();
 
 // export const GENRES = getGenres();
 // export const THURSDAY = getMsgsThursday();
@@ -103,39 +103,44 @@ export const TEST = getGenres();
 // export const SPECIAL = getMsgsSpecial();
 // export const CONVENTIONS = getMsgsConvention();
 
-
+getMsgsThursday();
 
 export const GENRES = [
   new Genre(
     '1',
-    'Romantic',
+    'Thursday',
     'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600086093/rom_rzxckc.jpg',
   ),
   new Genre(
     '2',
-    'Soothing',
-    'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600086191/soothing_l2fhdm.jpg',
+    'Sunday',
+    'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600086093/rom_rzxckc.jpg',
   ),
-  new Genre(
-    '3',
-    'Rock-on',
-    'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600086245/rockon_fgsbfk.jpg',
-  ),
-  new Genre(
-    '4',
-    'Classics',
-    'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600085955/classics_h9mj11.jpg',
-  ),
-  new Genre(
-    '5',
-    'Workout',
-    'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600086391/workout_qa5lhh.jpg',
-  ),
-  new Genre(
-    '6',
-    'Dance',
-    'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600085955/dance_bzgn8j.jpg',
-  ),
+  // new Genre(
+  //   '2',
+  //   'Soothing',
+  //   'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600086191/soothing_l2fhdm.jpg',
+  // ),
+  // new Genre(
+  //   '3',
+  //   'Rock-on',
+  //   'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600086245/rockon_fgsbfk.jpg',
+  // ),
+  // new Genre(
+  //   '4',
+  //   'Classics',
+  //   'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600085955/classics_h9mj11.jpg',
+  // ),
+  // new Genre(
+  //   '5',
+  //   'Workout',
+  //   'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600086391/workout_qa5lhh.jpg',
+  // ),
+  // new Genre(
+  //   '6',
+  //   'Dance',
+  //   'https://res.cloudinary.com/dht1rd0lr/image/upload/v1600085955/dance_bzgn8j.jpg',
+  // ),
 ];
 
 export const ROM = [
