@@ -3,7 +3,7 @@ import Genre from '../models/Genre';
 import Axios from 'axios'
 import { WB_URL } from '../constant/urls';
 
-const onSunday = async ()=>{
+export const SUNDAY = async ()=>{
   const res = await Axios.get('https://gt.pario.com.ng/backend/message/get_messages_by_service?id=2');
  //console.log(res.data);
 
@@ -26,7 +26,7 @@ const onSunday = async ()=>{
     return resp;
   };
 
-const onThursday = async ()=>{
+  export const THURSDAY = async ()=>{
   const res = await Axios.get('https://gt.pario.com.ng/backend/message/get_messages_by_service?id=1');
  //console.log(res.data);
 
@@ -50,28 +50,44 @@ const onThursday = async ()=>{
 
 };
 
-const getGenres = async ()=>{
+async function genreList (){
   const res = await Axios.get('https://gt.pario.com.ng/backend/service/get_services');
  //console.log(res.data);
-
+ users.map((user) => {
+  return (
+    <Text style={styles.paragraph}>{user.id} - {user.name}</Text>
+  )
+})
   let resp = [];
 
   Object.keys(res.data.data).forEach(key => {    
     var item = res.data.data[key];
-    // console.log("ITEM[] ===> "+JSON.stringify(item));
-      resp.push(   new Genre(
-        item.id,
-        item.name,
-        item.img
-      ))
-    })
+    console.log("ITEM[] ===> "+JSON.stringify(item));
+    var g = new Genre(
+      item.id,
+      item.name,
+      item.img
+    );
+      resp.push(g);
+    });
 
-    // console.log("ARRAY[] ===> "+JSON.stringify(resp));
+    console.log("ARRAY[] ===> "+JSON.stringify(resp));
     return resp;
 
-};
+}
 
-const getLastSongs = async ()=>{
+export const GENRES = [new Genre(
+  '1',
+  'Thursday',
+  'https://gt.pario.com.ng/images/gt_logo.jpg'
+),
+new Genre(
+  '2',
+  'Sunday',
+  'https://gt.pario.com.ng/images/gt_logo.jpg'
+)]
+
+export const SONGS = async ()=>{
   const res = await Axios.get('https://gt.pario.com.ng/backend/message/get_messages_recent');
  //console.log(res.data);
 
@@ -92,12 +108,4 @@ const getLastSongs = async ()=>{
 
     console.log("ARRAY[] ===> "+JSON.stringify(resp));
     return resp;
-
 };
-
-export const THURSDAY = onThursday();
-export const SUNDAY = onSunday();
-
-export const GENRES = getGenres();
-
-export const SONGS = getLastSongs();
