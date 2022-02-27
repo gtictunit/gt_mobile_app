@@ -19,6 +19,7 @@ import Colors from '../components/Colors';
 const {width, height} = Dimensions.get('window');
 
 const SongsListScreen = (props) => {
+  console.log("GENRES ==>>  "+JSON.stringify(GENRES));
   const gid = props.navigation.getParam('gid');//getting the genre passed as param
 
   const displayedGenre = GENRES.find((genre) => genre.id === gid); //finding the genre by the id whose songs are going to be displayed
@@ -28,11 +29,12 @@ const SongsListScreen = (props) => {
     arr = THURSDAY;
   } else if (gid === '2') {
     arr = SUNDAY;
-  } else if (gid === '3') {
-    arr = CONVENTIONS;
-  } else if (gid === '4') {
-    arr = SPECIAL;
   } 
+  // else if (gid === '3') {
+  //   arr = CONVENTIONS;
+  // } else if (gid === '4') {
+  //   arr = SPECIAL;
+  // } 
 
   const displayedSongs = arr.filter((song) => song.genre.indexOf(gid) >= 0); //filter out the songs of the same genre,
   // not needed though coz arr also contains the songs of the required genre
