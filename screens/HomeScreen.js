@@ -9,6 +9,8 @@ import Recomm from '../components/Recomm';
 const {width, height} = Dimensions.get('window');
 
 const HomeScreen = (props) => {
+  console.log("HAVE RENDERED?");
+  console.log("HOMESCREEN ===> \n"+JSON.stringify(GENRES));
   const renderGenreItem = ({item, index}) => {
     return (
       <GenreGrid
@@ -41,7 +43,7 @@ const HomeScreen = (props) => {
     <View style={{backgroundColor: 'black', padding: 10}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.header}>Namaste!</Text>
+          <Text style={styles.header}>Shalom!</Text>
           {/* <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('Search');//added just for test purpose
@@ -49,7 +51,7 @@ const HomeScreen = (props) => {
             <Text>Search</Text>
           </TouchableOpacity> */}
         </View>
-        <Text style={styles.subHeader}>Choose your favourite genre!</Text>
+        <Text style={styles.subHeader}>Services</Text>
 
         <View style={styles.listOfGenres}>
           <FlatList
@@ -61,7 +63,7 @@ const HomeScreen = (props) => {
           />
         </View>
         <View style={styles.recomm}>
-          <Text style={styles.recommText}>English Tracks</Text>
+          <Text style={styles.recommText}>Recent Uploads</Text>
           <FlatList
             horizontal
             data={SONGS}
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
   },
   subHeader: {
     fontSize: height / 41,
-    color: 'gray',
+    color: 'gold',
     paddingBottom: height / 75,
     paddingLeft: width / 25,
     fontWeight: 'bold',

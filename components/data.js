@@ -2,6 +2,7 @@ import Song from '../models/Song';
 import Genre from '../models/Genre';
 import Axios from 'axios'
 import { WB_URL } from '../constant/urls';
+import React, { useState, useEffect }  from 'react';
 
 const onSunday = async ()=>{
   const res = await Axios.get('https://gt.pario.com.ng/backend/message/get_messages_by_service?id=2');
@@ -22,7 +23,7 @@ const onSunday = async ()=>{
       ))
     })
 
-    // console.log("ARRAY[] ===> "+JSON.stringify(resp));
+    // console.log("SUNDAY[] ===> "+JSON.stringify(resp));
     return resp;
   };
 
@@ -44,36 +45,39 @@ const onThursday = async ()=>{
       ))
     })
 
-    // console.log("ARRAY[] ===> "+JSON.stringify(resp));
+    // console.log("THURSDAY[] ===> "+JSON.stringify(resp));
     return resp;
 
 };
 
 const getGenres = async ()=>{
-  const res = await Axios.get('https://gt.pario.com.ng/backend/service/get_services');
-//  console.log(res.data);
+  // const [genres, updateGenres] = useState([]);
 
+  // useEffect(
+  //   function effectFunction() {
+    const res = await Axios.get('https://gt.pario.com.ng/backend/service/get_services');
+//     updateGenres(res.data.data);
+// }, []);
+// console.log("RESPONSE[] ===> "+JSON.stringify(res.data)); s
   let resp = [];
 
   Object.keys(res.data.data).forEach(key => {    
     var item = res.data.data[key];
     // console.log("ITEM[] ===> "+JSON.stringify(item));
-      resp.push(   new Genre(
-        item.id,
-        item.name,
-        item.img
-      ))
-    })
-
-    console.log("ARRAY[] ===> "+JSON.stringify(resp));
-    return resp;
-
+    var gen = new Genre(item.id,item.name,item.img);
+      resp.push(gen);
+    // console.log("ARRAY[] ===> "+JSON.stringify(resp));
+  });
+  console.log("Genre List ===>    "+JSON.stringify(resp));
+  console.log("\n");
+  // return res.data.data.map(genre=> new Genre("1","Sunday", "https://gt.pario.com.ng/images/gt_logo.jpg"));
+  return resp;
 };
 
 export const THURSDAY = onThursday();
 export const SUNDAY = onSunday();
 
-export const GENRES = getGenres();
+export const GENRES = [];;
 
 export const SONGS = [
   new Song(
