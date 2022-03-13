@@ -4,29 +4,32 @@ import Axios from 'axios'
 import { WB_URL } from '../constant/urls';
 import React, { useState, useEffect }  from 'react';
 
-const onSunday = async ()=>{
-  const res = await Axios.get('https://gt.pario.com.ng/backend/message/get_messages_by_service?id=2');
-//  console.log(res.data);
 
-  let resp = [];
 
-  Object.keys(res.data.data).forEach(key => {    
-    var item = res.data.data[key];
-    // console.log("ITEM[] ===> "+JSON.stringify(item));
-      resp.push(   new Song(
-        item.id,
-        item.service,
-        item.title,
-        item.preacher,
-        item.img_url,
-        item.media_file_url,
-      ))
-    })
 
-    // console.log("SUNDAY[] ===> "+JSON.stringify(resp));
-    return resp;
-  };
-
+export function GENRES(){
+  const [genres, updateGenres] = useState([]);
+  useEffect(() => {
+  (async () => {
+    let res = await fetch(
+      "https://gt.pario.com.ng/backend/service/get_services" //example and simple data
+    );
+    let response = await res.json();
+    let r = response.data;
+    console.log("GEN=====>>>     "+JSON.stringify(r))
+    let resp = [];
+    r.forEach(item => {    
+      console.log("ITEM=====>>>     "+JSON.stringify(item))
+      var gen = new Genre(item.id,item.name,item.img);
+        resp.push(gen);
+      console.log("ARRAY[] ===> "+JSON.stringify(resp));
+    });
+    updateGenres(resp);
+  })();
+}, []);
+return genres;
+  }
+  
 const onThursday = async ()=>{
   const res = await Axios.get('https://gt.pario.com.ng/backend/message/get_messages_by_service?id=1');
 //  console.log(res.data);
@@ -34,7 +37,7 @@ const onThursday = async ()=>{
 
   Object.keys(res.data.data).forEach(key => {    
     var item = res.data.data[key];
-    // console.log("ITEM[] ===> "+JSON.stringify(item));
+    console.log("ITEM[] ===> "+JSON.stringify(item));
       resp.push(   new Song(
         item.id,
         item.service,
@@ -45,39 +48,17 @@ const onThursday = async ()=>{
       ))
     })
 
-    // console.log("THURSDAY[] ===> "+JSON.stringify(resp));
+    console.log("ARRAY[] ===> "+JSON.stringify(resp));
     return resp;
 
 };
 
-const getGenres = async ()=>{
-  // const [genres, updateGenres] = useState([]);
 
-  // useEffect(
-  //   function effectFunction() {
-    const res = await Axios.get('https://gt.pario.com.ng/backend/service/get_services');
-//     updateGenres(res.data.data);
-// }, []);
-// console.log("RESPONSE[] ===> "+JSON.stringify(res.data)); s
-  let resp = [];
 
-  Object.keys(res.data.data).forEach(key => {    
-    var item = res.data.data[key];
-    // console.log("ITEM[] ===> "+JSON.stringify(item));
-    var gen = new Genre(item.id,item.name,item.img);
-      resp.push(gen);
-    // console.log("ARRAY[] ===> "+JSON.stringify(resp));
-  });
-  console.log("Genre List ===>    "+JSON.stringify(resp));
-  console.log("\n");
-  // return res.data.data.map(genre=> new Genre("1","Sunday", "https://gt.pario.com.ng/images/gt_logo.jpg"));
-  return resp;
-};
+export const THURSDAY = [];
+export const SUNDAY = [];
 
-export const THURSDAY = onThursday();
-export const SUNDAY = onSunday();
-
-export const GENRES = [];;
+// export const GENRES = genres;
 
 export const SONGS = [
   new Song(

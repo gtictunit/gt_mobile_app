@@ -6,20 +6,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {toggleFavourite} from '../store/actions/songsActions';
 
-import {
-  CONVENTIONS,
-  SUNDAY,
-  GENRES,
-  THURSDAY,
-  SPECIAL
-} from '../components/data';
 import SongItem from '../components/SongItem';
 import Colors from '../components/Colors';
 
 const {width, height} = Dimensions.get('window');
 
+
 const SongsListScreen = (props) => {
-  console.log("GENRES ==>>  "+JSON.stringify(GENRES));
+  const GENRES = this.state.genres;
+const THURSDAY = this.state.thursday;
+const SUNDAY = this.state.sunday;
+const CONVENTIONS = this.state.convention;
+const SPECIAL = this.state.special;
+  console.log("GENRES ==>>  "+JSON.stringify(this.state.genres));
   const gid = props.navigation.getParam('gid');//getting the genre passed as param
 
   const displayedGenre = GENRES.find((genre) => genre.id === gid); //finding the genre by the id whose songs are going to be displayed
@@ -30,11 +29,11 @@ const SongsListScreen = (props) => {
   } else if (gid === '2') {
     arr = SUNDAY;
   } 
-  // else if (gid === '3') {
-  //   arr = CONVENTIONS;
-  // } else if (gid === '4') {
-  //   arr = SPECIAL;
-  // } 
+  else if (gid === '3') {
+    arr = CONVENTIONS;
+  } else if (gid === '4') {
+    arr = SPECIAL;
+  } 
 
   const displayedSongs = arr.filter((song) => song.genre.indexOf(gid) >= 0); //filter out the songs of the same genre,
   // not needed though coz arr also contains the songs of the required genre
@@ -82,7 +81,7 @@ const SongsListScreen = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({  
   screen: {
     flex: 1,
     padding: height/75,

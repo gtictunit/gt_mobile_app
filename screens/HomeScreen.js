@@ -1,16 +1,40 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Dimensions, FlatList} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
+import Genre from '../models/Genre';
 import {GENRES, SONGS} from '../components/data';
 import GenreGrid from '../components/GenreGrid';
 import Recomm from '../components/Recomm';
 
 const {width, height} = Dimensions.get('window');
 
-const HomeScreen = (props) => {
+
+function HomeScreen (props) {
   console.log("HAVE RENDERED?");
-  console.log("HOMESCREEN ===> \n"+JSON.stringify(GENRES));
+  const [genres, updateGenres] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      let res = await fetch(
+        "https://gt.pario.com.ng/backend/service/get_services" //example and simple data
+      );
+      let response = await res.json();
+      let r = response.data;
+      console.log("GEN=====>>>     "+JSON.stringify(r))
+      let resp = [];
+      r.forEach(item => {    
+        console.log("ITEM=====>>>     "+JSON.stringify(item))
+        var gen = new Genre(item.id,item.name,item.img);
+          resp.push(gen);
+        console.log("ARRAY[] ===> "+JSON.stringify(resp));
+      });
+      updateGenres(resp);
+    })();
+  }, []);
+
+  
+
   const renderGenreItem = ({item, index}) => {
     return (
       <GenreGrid
@@ -56,8 +80,8 @@ const HomeScreen = (props) => {
         <View style={styles.listOfGenres}>
           <FlatList
             keyExtractor={(item, index) => item.id}
-            key={GENRES} //new thing, Changing numColumns on the fly is not supported. Change the key prop on FlatList when changing the number of columns to force a fresh render of the component.
-            data={GENRES}
+            key={genres} //new thing, Changing numColumns on the fly is not supported. Change the key prop on FlatList when changing the number of columns to force a fresh render of the component.
+            data={genres}
             renderItem={renderGenreItem}
             numColumns={2}
           />
@@ -74,7 +98,7 @@ const HomeScreen = (props) => {
       </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   welcome: {

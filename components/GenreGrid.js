@@ -20,42 +20,22 @@ if (Platform.OS === 'android' && Platform.Version >= 21) {
 }
 
 const GenreGrid = (props) => {
-  const [genres, updateGenres] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      let res = await fetch(
-        "https://gt.pario.com.ng/backend/service/get_services" //example and simple data
-      );
-      let response = await res.json();
-      let r = response.data;
-      console.log("GEN=====>>>     "+JSON.stringify(r))
-      updateGenres(r);
-    })();
-  }, []);
-
-//   useEffect(
-//     function effectFunction() {
-//     const res = async ()=>{ await Axios.get('https://gt.pario.com.ng/backend/service/get_services')};
-//     updateGenres(res.data);
-// }, []);
-
-  return (genres.map( genre =>
+  return (
     <View style={styles.grid}>
       <TouchableCmp onPress={props.onSelect}>
         <ImageBackground
-          source={{uri: genre.img}}
+          source={{uri: props.imageUrl}}
           style={{height: '100%', width: '100%'}}>
           <View style={{...styles.container, ...props.image}}>
             <Text numberOfLines={2} style={styles.title}>
-              {genre.title}
+              {props.title}
             </Text>
           </View>
         </ImageBackground>
       </TouchableCmp>
     </View>
   )
-  );
+  
 }
 
 const styles = StyleSheet.create({
