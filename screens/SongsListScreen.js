@@ -1,5 +1,5 @@
-import React, {useCallback} from 'react';
-import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {View, Text, StyleSheet, Image, Dimensions, AsyncStorage} from 'react-native';
 import {ScrollView, FlatList} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,12 +13,12 @@ const {width, height} = Dimensions.get('window');
 
 
 const SongsListScreen = (props) => {
-  const GENRES = this.state.genres;
-const THURSDAY = this.state.thursday;
-const SUNDAY = this.state.sunday;
-const CONVENTIONS = this.state.convention;
-const SPECIAL = this.state.special;
-  console.log("GENRES ==>>  "+JSON.stringify(this.state.genres));
+const GENRES = props.navigation.getParam('genres');
+const THURSDAY = props.navigation.getParam('thursday');
+const SUNDAY = props.navigation.getParam('sunday');
+const CONVENTIONS = props.navigation.getParam('convention');
+const SPECIAL = props.navigation.getParam('special');
+  console.log("GENRES ==>>  "+JSON.stringify(GENRES));
   const gid = props.navigation.getParam('gid');//getting the genre passed as param
 
   const displayedGenre = GENRES.find((genre) => genre.id === gid); //finding the genre by the id whose songs are going to be displayed

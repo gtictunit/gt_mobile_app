@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Dimensions, FlatList} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, FlatList, AsyncStorage} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 import Genre from '../models/Genre';
-import {GENRES, SONGS} from '../components/data';
+import Song from '../models/Song';
+import {SONGS} from '../components/data';
 import GenreGrid from '../components/GenreGrid';
 import Recomm from '../components/Recomm';
 
@@ -13,7 +14,12 @@ const {width, height} = Dimensions.get('window');
 function HomeScreen (props) {
   console.log("HAVE RENDERED?");
   const [genres, updateGenres] = useState([]);
-
+  const [thursday, updateThursday] = useState([]);
+  const [sunday, updateSunday] = useState([]);
+  const [special, updateSpecial] = useState([]);
+  const [convention, updateConvention] = useState([]);
+  const [recent, updateRecent] = useState([]);
+  
   useEffect(() => {
     (async () => {
       let res = await fetch(
@@ -33,15 +39,139 @@ function HomeScreen (props) {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      let res = await fetch(
+        "https://gt.pario.com.ng/backend/message/get_messages_by_service?id=1" //example and simple data
+      );
+      let response = await res.json();
+      let r = response.data;
+      console.log("THURSDAY =====>>>     "+JSON.stringify(r))
+      let resp = [];
+      r.forEach(item => {    
+        console.log("THUR ITEM=====>>>     "+JSON.stringify(item))
+        var gen = new Song(
+          item.id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        );
+          resp.push(gen);
+        console.log("ARRAY[] ===> "+JSON.stringify(resp));
+      });
+      updateThursday(resp);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      let res = await fetch(
+        "https://gt.pario.com.ng/backend/message/get_messages_by_service?id=2" //example and simple data
+      );
+      let response = await res.json();
+      let r = response.data;
+      let resp = [];
+      r.forEach(item => {    
+        var gen = new Song(
+          item.id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        );
+          resp.push(gen);
+      });
+      updateSunday(resp);
+    })();
+  }, []);
   
+    useEffect(() => {
+    (async () => {
+      let res = await fetch(
+        "https://gt.pario.com.ng/backend/message/get_messages_by_service?id=3" //example and simple data
+      );
+      let response = await res.json();
+      let r = response.data;
+      let resp = [];
+      r.forEach(item => {    
+        var gen = new Song(
+          item.id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        );
+          resp.push(gen);
+      });
+      updateConvention(resp);
+    })();
+  }, []);
+  
+    useEffect(() => {
+    (async () => {
+      let res = await fetch(
+        "https://gt.pario.com.ng/backend/message/get_messages_by_service?id=4" //example and simple data
+      );
+      let response = await res.json();
+      let r = response.data;
+      let resp = [];
+      r.forEach(item => {    
+        var gen = new Song(
+          item.id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        );
+          resp.push(gen)
+        console.log("ARRAY[] ===> "+JSON.stringify(resp));
+      });
+      updateSpecial(resp);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      let res = await fetch(
+        "https://gt.pario.com.ng/backend/message/get_messages_recent" //example and simple data
+      );
+      let response = await res.json();
+      let r = response.data;
+      let resp = [];
+      r.forEach(item => {    
+        var gen = new Song(
+          item.id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        );
+          resp.push(gen)
+        console.log("RECENT[] ===> "+JSON.stringify(resp));
+      });
+      updateRecent(resp);
+    })();
+  }, []);
+
+  // AsyncStorage.setItem('genres',genres);  
+  // AsyncStorage.setItem('thursday',thursday);  
+  // AsyncStorage.setItem('sunday',sunday);  
+  // AsyncStorage.setItem('convention',convention);  
+  // AsyncStorage.setItem('special',special);  
 
   const renderGenreItem = ({item, index}) => {
     return (
       <GenreGrid
         imageUrl={item.imageUrl}
-        title={item.title}
+        title={""}
         onSelect={() => {
-          props.navigation.navigate('SongsList', {gid: item.id}); //passing the id of genre as params to view its songs in the next screens
+          props.navigation.navigate('SongsList', {gid: item.id, genres: genres, thursday:thursday, sunday:sunday, convention:convention, special:special}); //passing the id of genre as params to view its songs in the next screens
         }}
       />
     );
