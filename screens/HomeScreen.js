@@ -36,6 +36,7 @@ function HomeScreen (props) {
         console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
       updateGenres(resp);
+      AsyncStorage.setItem('genres',genres); 
     })();
   }, []);
 
@@ -62,6 +63,7 @@ function HomeScreen (props) {
         console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
       updateThursday(resp);
+      AsyncStorage.setItem('thursday',thursday); 
     })();
   }, []);
 
@@ -220,7 +222,7 @@ function HomeScreen (props) {
           <Text style={styles.recommText}>Recent Uploads</Text>
           <FlatList
             horizontal
-            data={SONGS}
+            data={recent}
             renderItem={renderSongItem}
             showsHorizontalScrollIndicator={false}
           />

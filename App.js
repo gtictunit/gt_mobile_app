@@ -7,6 +7,8 @@ import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 
 import songsReducer from './store/reducers/songsReducers';
+import LoginScreen from './screens/LoginScreen';
+import LoginNavigator from './navigation/LoginNavigator';
 
 const rootReducer = combineReducers({
   songs: songsReducer,
@@ -20,7 +22,7 @@ export default function App() {
   },[])
   return (
     <Provider store={store}>
-      <SongsNavigator />
+      <LoginNavigator />
     </Provider>
   );
 }
