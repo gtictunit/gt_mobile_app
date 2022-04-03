@@ -12,13 +12,24 @@ const {width, height} = Dimensions.get('window');
 
 
 function HomeScreen (props) {
-  console.log("HAVE RENDERED?");
+  
+  // console.log("HAVE RENDERED?");
+  const [username, updateUsername] = useState('')
   const [genres, updateGenres] = useState([]);
   const [thursday, updateThursday] = useState([]);
   const [sunday, updateSunday] = useState([]);
   const [special, updateSpecial] = useState([]);
   const [convention, updateConvention] = useState([]);
   const [recent, updateRecent] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const getData = await AsyncStorage.getItem('@username')
+    .then((value) => { 
+      console.log("Username ===>   "+value);
+      updateUsername(value); });
+    })();
+  }, []);
   
   useEffect(() => {
     (async () => {
@@ -27,16 +38,16 @@ function HomeScreen (props) {
       );
       let response = await res.json();
       let r = response.data;
-      console.log("GEN=====>>>     "+JSON.stringify(r))
+      // console.log("GEN=====>>>     "+JSON.stringify(r))
       let resp = [];
       r.forEach(item => {    
-        console.log("ITEM=====>>>     "+JSON.stringify(item))
+        // console.log("ITEM=====>>>     "+JSON.stringify(item))
         var gen = new Genre(item.id,item.name,item.img);
           resp.push(gen);
-        console.log("ARRAY[] ===> "+JSON.stringify(resp));
+        // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
       updateGenres(resp);
-      AsyncStorage.setItem('genres',genres); 
+      AsyncStorage.setItem('@genres',genres); 
     })();
   }, []);
 
@@ -47,10 +58,10 @@ function HomeScreen (props) {
       );
       let response = await res.json();
       let r = response.data;
-      console.log("THURSDAY =====>>>     "+JSON.stringify(r))
+      // console.log("THURSDAY =====>>>     "+JSON.stringify(r))
       let resp = [];
       r.forEach(item => {    
-        console.log("THUR ITEM=====>>>     "+JSON.stringify(item))
+        // console.log("THUR ITEM=====>>>     "+JSON.stringify(item))
         var gen = new Song(
           item.id,
           item.service,
@@ -60,10 +71,10 @@ function HomeScreen (props) {
           item.media_file_url,
         );
           resp.push(gen);
-        console.log("ARRAY[] ===> "+JSON.stringify(resp));
+        // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
       updateThursday(resp);
-      AsyncStorage.setItem('thursday',thursday); 
+      AsyncStorage.setItem('@thursday',thursday); 
     })();
   }, []);
 
@@ -86,6 +97,7 @@ function HomeScreen (props) {
         );
           resp.push(gen);
       });
+      AsyncStorage.setItem('@sunday',sunday); 
       updateSunday(resp);
     })();
   }, []);
@@ -109,6 +121,7 @@ function HomeScreen (props) {
         );
           resp.push(gen);
       });
+      AsyncStorage.setItem('@convention',convention); 
       updateConvention(resp);
     })();
   }, []);
@@ -131,8 +144,9 @@ function HomeScreen (props) {
           item.media_file_url,
         );
           resp.push(gen)
-        console.log("ARRAY[] ===> "+JSON.stringify(resp));
+        // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
+      AsyncStorage.setItem('@special',special); 
       updateSpecial(resp);
     })();
   }, []);
@@ -155,17 +169,11 @@ function HomeScreen (props) {
           item.media_file_url,
         );
           resp.push(gen)
-        console.log("RECENT[] ===> "+JSON.stringify(resp));
+        // console.log("RECENT[] ===> "+JSON.stringify(resp));
       });
       updateRecent(resp);
     })();
   }, []);
-
-  // AsyncStorage.setItem('genres',genres);  
-  // AsyncStorage.setItem('thursday',thursday);  
-  // AsyncStorage.setItem('sunday',sunday);  
-  // AsyncStorage.setItem('convention',convention);  
-  // AsyncStorage.setItem('special',special);  
 
   const renderGenreItem = ({item, index}) => {
     return (
@@ -199,13 +207,15 @@ function HomeScreen (props) {
     <View style={{backgroundColor: 'black', padding: 10}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.header}>Shalom!</Text>
-          {/* <TouchableOpacity
+          <Text style={styles.header}>Shalom!,  {username} Alade</Text>
+          <Text style={styles.login}>Logout</Text>
+          <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('Search');//added just for test purpose
+              AsyncStorage.setItem('@isLoggedin', 'false');
+              props.navigation.navigate('Login');//added just for test purpose
             }}>
-            <Text>Search</Text>
-          </TouchableOpacity> */}
+            <Text>Logout</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.subHeader}>Services</Text>
 
@@ -238,10 +248,18 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'white',
-    fontSize: height / 25,
+    fontSize: height / 35,
     paddingBottom: height / 37,
     paddingTop: height / 50,
     paddingLeft: width / 25,
+    fontWeight: 'bold',
+  },
+  login: {
+    color: 'white',
+    fontSize: height / 45,
+    paddingBottom: height / 37,
+    paddingTop: height / 50,
+    paddingLeft: width / 35,
     fontWeight: 'bold',
   },
   subHeader: {
