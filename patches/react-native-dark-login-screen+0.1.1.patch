@@ -1,0 +1,87 @@
+diff --git a/node_modules/react-native-dark-login-screen/lib/DarkLoginScreen.tsx b/node_modules/react-native-dark-login-screen/lib/DarkLoginScreen.tsx
+index 4557970..72378fe 100644
+--- a/node_modules/react-native-dark-login-screen/lib/DarkLoginScreen.tsx
++++ b/node_modules/react-native-dark-login-screen/lib/DarkLoginScreen.tsx
+@@ -45,7 +45,7 @@ interface DarkLoginScreenProps {
+   handleFacebookLogIn?: () => void;
+   handleForgotPassword?: () => void;
+   fullNameOnChange?: (fullName: string) => void;
+-  singUpPasswordChangeText?: (password: string) => void;
++  signUpPasswordChangeText?: (password: string) => void;
+   emailOnChange?: (email: string) => void;
+   handleSignUp?: () => void;
+   handleSignUpButton?: () => void;
+diff --git a/node_modules/react-native-dark-login-screen/lib/screens/sign-up/SignUpScreen.tsx b/node_modules/react-native-dark-login-screen/lib/screens/sign-up/SignUpScreen.tsx
+index 33c8f9e..fa5fa18 100644
+--- a/node_modules/react-native-dark-login-screen/lib/screens/sign-up/SignUpScreen.tsx
++++ b/node_modules/react-native-dark-login-screen/lib/screens/sign-up/SignUpScreen.tsx
+@@ -23,6 +23,8 @@ interface SignUpScreenProps {
+   placeholderTextColor?: string;
+   textInputStyle?: TextStyle;
+   emailPlaceholderText?: string;
++  phonePlaceholderText?: string;
++  usernamePlaceholderText?: string;
+   passwordPlaceholder?: string;
+   passwordTextInputStyle?: TextStyle;
+   signUpButtonText?: string;
+@@ -34,7 +36,9 @@ interface SignUpScreenProps {
+   signInButtonText?: string;
+   fullNameOnChange?: (fullName: string) => void;
+   emailOnChange?: (email: string) => void;
+-  singUpPasswordChangeText?: (password: string) => void;
++  userNameOnChange?: (username: string) => void;
++  phoneOnChange?: (phone: string) => void;
++  signUpPasswordChangeText?: (password: string) => void;
+   handleSignUpButton?: () => void;
+   handleSignIn?: () => void;
+ }
+@@ -49,6 +53,8 @@ const SignUpScreen = (props: SignUpScreenProps) => {
+     placeholderTextColor = "#6C6D72",
+     textInputStyle,
+     emailPlaceholderText = "Email Address",
++    phonePlaceholderText = "08123456789",
++    usernamePlaceholderText = "johndoe",
+     passwordPlaceholder = "Password",
+     passwordTextInputStyle,
+     signUpButtonText = "Sign Up",
+@@ -60,7 +66,9 @@ const SignUpScreen = (props: SignUpScreenProps) => {
+     signInButtonText = "Sign In",
+     fullNameOnChange,
+     emailOnChange,
+-    singUpPasswordChangeText,
++    userNameOnChange,
++    phoneOnChange,
++    signUpPasswordChangeText,
+     handleSignUpButton,
+     handleSignIn,
+   } = props;
+@@ -93,6 +101,20 @@ const SignUpScreen = (props: SignUpScreenProps) => {
+         placeholderTextColor={placeholderTextColor}
+         style={[styles.textInputStyle, textInputStyle]}
+         onChangeText={emailOnChange}
++      />
++            <TextInput
++        {...props}
++        placeholder={phonePlaceholderText}
++        placeholderTextColor={placeholderTextColor}
++        style={[styles.textInputStyle, textInputStyle]}
++        onChangeText={phoneOnChange}
++      />
++            <TextInput
++        {...props}
++        placeholder={usernamePlaceholderText}
++        placeholderTextColor={placeholderTextColor}
++        style={[styles.textInputStyle, textInputStyle]}
++        onChangeText={userNameOnChange}
+       />
+       <TextInput
+         {...props}
+@@ -100,7 +122,7 @@ const SignUpScreen = (props: SignUpScreenProps) => {
+         placeholderTextColor={placeholderTextColor}
+         style={[styles.textInputStyle, passwordTextInputStyle]}
+         secureTextEntry
+-        onChangeText={singUpPasswordChangeText}
++        onChangeText={signUpPasswordChangeText}
+       />
+     </View>
+   );

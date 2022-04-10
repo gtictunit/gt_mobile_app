@@ -4,12 +4,9 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DarkLoginScreen from "react-native-dark-login-screen";
 
 export default function LoginScreen(props) {
-    console.log("IN LOGIN");
-    
+    console.log("IN LOGIN");    
     const isLoggedIn = AsyncStorage.getItem('@isLoggedin');
     console.log("IS LOGGED IN "+ isLoggedIn);
-        // if (!isLoggedIn) {
-            // }
     const [username, updateUsername] = useState([]);
     const [password, updatePassword] = useState([]);
     const [fullname, updateFullname] = useState([]);
@@ -20,20 +17,34 @@ export default function LoginScreen(props) {
 
     const handleSignIn = () => {
         console.log(username + " ==== " + password);
-        // const isLoggedIn = AsyncStorage.getItem('@isLoggedin');
-        // if (!isLoggedIn) {
-            if (username == null || password == null || username == '') {
+            let _data = { 
+                login:username,
+                password:password
+              }
+            if (username == null || password == null || username == '' || password == '') {
                 Alert.alert('Enter Username or Password');
             }
             else {
-                AsyncStorage.setItem('@isLoggedin', 'true');
-                AsyncStorage.setItem('@username', username);
-                props.navigation.navigate('Media');
+                (async () => {
+                    let res = await fetch(
+                      "https://gt.pario.com.ng/backend/user/is_login", {
+                        method: "POST",
+                        body: JSON.stringify(_data),
+                        headers: {"Content-type": "application/json; charset=UTF-8"}
+                      })
+                    let response = await res.json();
+                    let r = response.data;
+                    updateUser(r);
+                    if(r.data.code === "99"){
+                        Alert.alert(r.data.message);
+                    }
+                    else {
+                        Alert.alert('Login Successful!');
+                        AsyncStorage.setItem('@user',JSON.stringify(user)); 
+                        props.navigation.navigate('Media');
+                    }
+                  })();
             }
-        // }
-        // else{
-        //     props.navigation.navigate('Media');
-        // }
     }
 
     const handleSignUp = () => {
@@ -45,7 +56,7 @@ export default function LoginScreen(props) {
             phone:phone,
             password:signUpPassword
           }
-          
+          console.log("DATA  ==== " + JSON.stringify(_data));
         (async () => {
             let res = await fetch(
               "https://gt.pario.com.ng/backend/user/create_new_user", {
@@ -55,9 +66,13 @@ export default function LoginScreen(props) {
               })
             let response = await res.json();
             let r = response.data;
-            updateUser(r);
-            AsyncStorage.setItem('@user',user); 
-            props.navigation.navigate('Login');
+            if(r.data.code === "99"){
+                Alert.alert('Error in Registration! \n Please try again later');
+            }
+            else {
+                Alert.alert('Registration Successful!');
+                props.navigation.navigate('Login');
+            }
           })();
     }
 
@@ -67,7 +82,7 @@ export default function LoginScreen(props) {
             handleSignInButton={() => { handleSignIn() }}
             handleGoogleLogIn={() => { }}
             handleFacebookLogIn={() => { }}
-            handleSignUpButton={() => { handleSignUp }}
+            handleSignUpButton={() => { handleSignUp() }}
             enableForgotPassword={true}
             enableAppleLogin={false}
             usernameChangeText={(username) => { updateUsername(username) }}
