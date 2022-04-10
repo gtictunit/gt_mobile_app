@@ -1,99 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, AsyncStorage, AppRegistry } from 'react-native';
+import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import DarkLoginScreen from "react-native-dark-login-screen";
+import SignInScreen from './login/SignInScreen';
+import SignUpScreen from './login/SignUpScreen';
+import {
+  isAndroid,
+  isIPhoneNotchFamily,
+} from "@freakycoder/react-native-helpers";
+
+const {width, height} = Dimensions.get('window');
 
 export default function LoginScreen(props) {
     console.log("IN LOGIN");    
     const isLoggedIn = AsyncStorage.getItem('@isLoggedin');
     console.log("IS LOGGED IN "+ isLoggedIn);
-    const [username, updateUsername] = useState([]);
-    const [password, updatePassword] = useState([]);
-    const [fullname, updateFullname] = useState([]);
-    const [email, updateEmail] = useState([]);
-    const [phone, updatePhone] = useState([]);
-    const [signUpPassword, updateSignUpPassword] = useState([]);
-    const [user, updateUser] = useState([])
+    const [newAccount, setNewAccount] = useState(props.newAccount&&false);
 
-    const handleSignIn = () => {
-        console.log(username + " ==== " + password);
-            let _data = { 
-                login:username,
-                password:password
-              }
-            if (username == null || password == null || username == '' || password == '') {
-                Alert.alert('Enter Username or Password');
-            }
-            else {
-                (async () => {
-                    let res = await fetch(
-                      "https://gt.pario.com.ng/backend/user/is_login", {
-                        method: "POST",
-                        body: JSON.stringify(_data),
-                        headers: {"Content-type": "application/json; charset=UTF-8"}
-                      })
-                    let response = await res.json();
-                    let r = response.data;
-                    updateUser(r);
-                    if(r.data.code === "99"){
-                        Alert.alert(r.data.message);
-                    }
-                    else {
-                        Alert.alert('Login Successful!');
-                        AsyncStorage.setItem('@user',JSON.stringify(user)); 
-                        props.navigation.navigate('Media');
-                    }
-                  })();
-            }
-    }
-
-    const handleSignUp = () => {
-        console.log(email + " ==== " + fullname);
-        let _data = {
-            email: email,
-            full_name: fullname, 
-            login:username,
-            phone:phone,
-            password:signUpPassword
-          }
-          console.log("DATA  ==== " + JSON.stringify(_data));
-        (async () => {
-            let res = await fetch(
-              "https://gt.pario.com.ng/backend/user/create_new_user", {
-                method: "POST",
-                body: JSON.stringify(_data),
-                headers: {"Content-type": "application/json; charset=UTF-8"}
-              })
-            let response = await res.json();
-            let r = response.data;
-            if(r.data.code === "99"){
-                Alert.alert('Error in Registration! \n Please try again later');
-            }
-            else {
-                Alert.alert('Registration Successful!');
-                props.navigation.navigate('Login');
-            }
-          })();
-    }
-
+    const renderScreenChange = () => {
+      if (!newAccount) {
+        return (
+          <View style={styles.screenContainer}>
+          <SignInScreen />
+          </View>
+        );
+      } else {
+        return (
+          <View style={styles.screenContainer}>
+            <SignUpScreen />
+          </View>
+        );
+      }
+    };
 
     return (
-        <DarkLoginScreen
-            handleSignInButton={() => { handleSignIn() }}
-            handleGoogleLogIn={() => { }}
-            handleFacebookLogIn={() => { }}
-            handleSignUpButton={() => { handleSignUp() }}
-            enableForgotPassword={true}
-            enableAppleLogin={false}
-            usernameChangeText={(username) => { updateUsername(username) }}
-            passwordChangeText={(password) => { updatePassword(password) }}
-            titleText={'Shalom!'}
-            emailOnChange = {(email) => { updateEmail(email) }}
-            fullNameOnChange = {(fullname) => { updateFullname(fullname) }}
-            userNameOnChange = {(username) => { updateUsername(username) }}
-            phoneNameOnChange = {(phone) => { updatePhone(phone) }}
-            singUpPasswordChangeText = {(signUpPassword) => { updateSignUpPassword(signUpPassword) }}
-        />
-    );
-
+<View style={styles.mainContainer}>{renderScreenChange()}
+</View>
+      );
 }
+
+const styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mainContainer: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#181A1F",
+  },
+});
