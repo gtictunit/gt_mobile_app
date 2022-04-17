@@ -5899,6 +5899,13 @@
   "resolved" "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   "version" "3.0.4"
 
+"react-native-dark-login-screen@^0.1.1":
+  "integrity" "sha512-8O4WFInBQLNX/oHLEQjW7d2x665TOw6nR19nhtj5rQqJ3rbbF3LG9LWLDLzqBUvzGqDpTuhQfXUvIu2tDu7ndw=="
+  "resolved" "https://registry.npmjs.org/react-native-dark-login-screen/-/react-native-dark-login-screen-0.1.1.tgz"
+  "version" "0.1.1"
+  dependencies:
+    "@freakycoder/react-native-helpers" "^1.0.1"
+
 "react-native-elements@^2.3.2":
   "integrity" "sha512-HygYYmq8JYjk/YYiUwr/64qT64H2xlPBz0JnkGTQwvnnyXZrfkHFopw8rLWCupv3iLLPDzVohvPs0Z5HLdonSQ=="
   "resolved" "https://registry.npmjs.org/react-native-elements/-/react-native-elements-2.3.2.tgz"
@@ -5928,6 +5935,11 @@
   "integrity" "sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ=="
   "resolved" "https://registry.npmjs.org/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz"
   "version" "1.2.1"
+
+"react-native-loading-spinner-overlay@^3.0.0":
+  "integrity" "sha512-SmRCmfY795/Jxm9JHoyE0I6ry9uBT7m/RYAPNm0vlfZr9dz39HlzIt4h0MvcZvgSmUjEkHm6DzWnuWSO1yKr4A=="
+  "resolved" "https://registry.npmjs.org/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-3.0.0.tgz"
+  "version" "3.0.0"
 
 "react-native-paper@^2.2.2 || ^3.0.0", "react-native-paper@^4.1.0":
   "integrity" "sha512-ML4cH31J7cfkkzP2p2YdCNaKeSY3gin04CESlshB4p95jLoN4VmfoDsvd/CTAibd+GJbsdDTJrk9VwHyLEVhlQ=="
@@ -6007,7 +6019,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^15.0.2"
 
-"react-native@*", "react-native@>= 0.55.x", "react-native@>=0.42.0", "react-native@>=0.57", "react-native@>=0.57.0", "react-native@>=0.60.0-rc.2", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@0.63.2":
+"react-native@*", "react-native@>= 0.55.x", "react-native@>=0.42.0", "react-native@>=0.57", "react-native@>=0.57.0", "react-native@>=0.60.0-rc.2", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@>=0.63.x", "react-native@0.63.2":
   "integrity" "sha512-MkxHeJorUDzmQwKJrTfrFYMDRLyu9GSBpsFFMDX7X+HglVnaZi3CTzW2mRv1eIcazoseBOP2eJe+bnkyLl8Y2A=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.63.2.tgz"
   "version" "0.63.2"

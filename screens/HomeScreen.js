@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Dimensions, FlatList, AsyncStorage} from 'react-native';
+// import { AsyncStorage } from 'react-native-community';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 import Genre from '../models/Genre';
@@ -24,10 +25,8 @@ function HomeScreen (props) {
 
   useEffect(() => {
     (async () => {
-      const getData = await AsyncStorage.getItem('@username')
-    .then((value) => { 
-      console.log("Username ===>   "+value);
-      updateUsername(value); });
+      const name = await AsyncStorage.getItem('@username');
+      updateUsername(name);
     })();
   }, []);
   
@@ -207,14 +206,13 @@ function HomeScreen (props) {
     <View style={{backgroundColor: 'black', padding: 10}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.header}>Shalom!,  {username} Alade</Text>
-          <Text style={styles.login}>Logout</Text>
+          <Text style={styles.header}>Shalom!,  {username} </Text>
+          
           <TouchableOpacity
             onPress={() => {
-              AsyncStorage.setItem('@isLoggedin', 'false');
               props.navigation.navigate('Login');//added just for test purpose
             }}>
-            <Text>Logout</Text>
+            <Text style={styles.login}>Logout</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.subHeader}>Services</Text>
@@ -258,8 +256,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: height / 45,
     paddingBottom: height / 37,
-    paddingTop: height / 50,
-    paddingLeft: width / 35,
+    paddingTop: height / 40,
+    paddingLeft: width / 80,
     fontWeight: 'bold',
   },
   subHeader: {
