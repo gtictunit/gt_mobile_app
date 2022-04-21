@@ -3,15 +3,16 @@ import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, View, Activit
 import SignInScreen from './login/SignInScreen';
 import SignUpScreen from './login/SignUpScreen';
 import Spinner from 'react-native-loading-spinner-overlay';
+import AnimatedSplash from 'react-native-animated-splash-screen';
 
 const { width, height } = Dimensions.get('window');
-
+const logo = require('./login/logo.png');
 export default function LoginScreen(props) {
   console.log("IN LOGIN");
   const isLoggedIn = AsyncStorage.getItem('@isLoggedin');
   console.log("IS LOGGED IN " + isLoggedIn);
   const [newAccount, updateNewAccount] = useState(false);
-  const [activitySpin, updateActivitySpin] = useState(false);
+  const [activitySpin, updateActivitySpin] = useState(true);
   const [user, updateUser] = useState([]);
   const [username, updateUsername] = useState([]);
   const [password, updatePassword] = useState([]);
@@ -97,37 +98,39 @@ export default function LoginScreen(props) {
 
   const renderScreenChange = () => {
     let code = AsyncStorage.getItem('@isLoggedin');
-    if(code=='00'){
+    if (code == '00') {
       props.navigation.navigate('Media');
     }
-    if (!newAccount) {
-      return (
-        <SignInScreen
-          usernameChangeText={(username) => updateUsername(username)}
-          passwordChangeText={(password) => updatePassword(password)}
-          handleSignInButton={() => handleSignIn()}
-          handleSignUp={() => updateNewAccount(true)}
-        />
-      );
-    } else {
-      return (
-        <SignUpScreen
-          fullNameOnChange={(fullname) => updateFullname(fullname)}
-          emailOnChange={(email) => updateEmail(email)}
-          phoneOnChange={(phone) => updatePhone(phone)}
-          usernameOnChange={(username) => updateUsername(username)}
-          signUpPasswordChangeText={(password) => updatePassword(password)}
-          handleSignIn={() => updateNewAccount(false)}
-          handleSignUpButton={() => handleSignUp()}
-        />
-      );
+    else {
+      if (!newAccount) {
+        return (
+          <SignInScreen
+            usernameChangeText={(username) => updateUsername(username)}
+            passwordChangeText={(password) => updatePassword(password)}
+            handleSignInButton={() => handleSignIn()}
+            handleSignUp={() => updateNewAccount(true)}
+          />
+        );
+      } else {
+        return (
+          <SignUpScreen
+            fullNameOnChange={(fullname) => updateFullname(fullname)}
+            emailOnChange={(email) => updateEmail(email)}
+            phoneOnChange={(phone) => updatePhone(phone)}
+            usernameOnChange={(username) => updateUsername(username)}
+            signUpPasswordChangeText={(password) => updatePassword(password)}
+            handleSignIn={() => updateNewAccount(false)}
+            handleSignUpButton={() => handleSignUp()}
+          />
+        );
+      }
     }
   };
 
   return (
     <View style={styles.mainContainer}>
-      <Spinner visible={activitySpin} />
-      {renderScreenChange()}    
+      <ActivityIndicator style={styles.activitySpinner} animating={activitySpin} size="large" color="#00ff00" />
+      {renderScreenChange()}
     </View>
   );
 }
@@ -142,5 +145,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "#181A1F",
+  },
+  activitySpinner: {
+    marginTop: 330,
+    position: "absolute",
+    zIndex: 5
   },
 });

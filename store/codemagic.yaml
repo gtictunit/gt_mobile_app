@@ -1,0 +1,8 @@
+workflows:
+  gtmobile-app:
+      scripts:
+      - name: Build Android APK
+        working_directory: android
+        script: ./gradlew assembleRelease
+    artifacts:
+      - app/build/outputs/**/**/*.apk

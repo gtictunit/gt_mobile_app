@@ -5899,6 +5899,13 @@
   "resolved" "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   "version" "3.0.4"
 
+"react-native-animated-splash-screen@^2.0.5":
+  "integrity" "sha512-VTZmcYHQq8lxtVtiXQFJKGSSftewI+F3hgLY0ONBA2g3GP/jIgLJHoShup4HBLeA0Q2mjvyNT39JpfTDcLKtHQ=="
+  "resolved" "https://registry.npmjs.org/react-native-animated-splash-screen/-/react-native-animated-splash-screen-2.0.5.tgz"
+  "version" "2.0.5"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-native-dark-login-screen@^0.1.1":
   "integrity" "sha512-8O4WFInBQLNX/oHLEQjW7d2x665TOw6nR19nhtj5rQqJ3rbbF3LG9LWLDLzqBUvzGqDpTuhQfXUvIu2tDu7ndw=="
   "resolved" "https://registry.npmjs.org/react-native-dark-login-screen/-/react-native-dark-login-screen-0.1.1.tgz"

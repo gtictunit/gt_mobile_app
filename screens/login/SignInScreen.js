@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   isAndroid,
-  isIPhoneNotchFamily,getStatusBarHeight
+  isIPhoneNotchFamily, getStatusBarHeight
 } from "@freakycoder/react-native-helpers";
 import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, KeyboardAvoidingView, SafeAreaView, View, TextInput, Text, Image } from 'react-native';
 import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
@@ -13,8 +13,9 @@ const logo = require('../login/logo.png');
 export default function SignInScreen(props) {
   console.log("IN SIGN IN");
 
-    const renderHeaderTextContainer = () => (
+  const renderHeaderTextContainer = () => (
     <View style={styles.headerContainer}>
+      <Image style={styles.logoImageStyle} source={logo}/>
       <Text style={[styles.titleTextStyle]}>Welcome!</Text>
       <View style={styles.descriptionContainer}>
         <Text style={[styles.descriptionTextStyle]}>
@@ -39,17 +40,17 @@ export default function SignInScreen(props) {
         secureTextEntry
         onChangeText={props.passwordChangeText}
       />
-        <TouchableOpacity
-          style={styles.forgotButtonStyle}
-          onPress={props.handleForgotPassword}
+      <TouchableOpacity
+        style={styles.forgotButtonStyle}
+        onPress={props.handleForgotPassword}
+      >
+        <Text
+          style={[styles.forgotPasswordTextStyle]}
         >
-          <Text
-            style={[styles.forgotPasswordTextStyle]}
-          >
-            {"Forgot Password"}
-            
-          </Text>
-        </TouchableOpacity>
+          {"Forgot Password"}
+
+        </Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={[styles.signInButtonStyle]}
         onPress={props.handleSignInButton}
@@ -79,6 +80,7 @@ export default function SignInScreen(props) {
 
   return (
     <View style={styles.newAccountContainer}>
+      <ScrollView>
       <KeyboardAvoidingView
         enabled
         behavior="padding"
@@ -92,13 +94,14 @@ export default function SignInScreen(props) {
         </SafeAreaView>
         <View
           style={{
-            position: "absolute",
+            // position: "absolute",
             bottom: isIPhoneNotchFamily() ? getStatusBarHeight() : 8,
           }}
         >
           {renderSignUpButtonContainer()}
         </View>
       </KeyboardAvoidingView>
+      </ScrollView>
     </View>
   );
 }
@@ -164,9 +167,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   logoImageStyle: {
-    width: 32,
-    height: 32,
-    marginRight: 12,
+    // width: 80,
+    // height: 80,
+    marginBottom: 30,
   },
   googleButtonStyle: {
     backgroundColor: "#FFFFFF",
@@ -233,7 +236,7 @@ const styles = StyleSheet.create({
   },
   newAccountContainer: {
     flex: 1,
-    marginTop:150,
+    marginTop: 50,
     alignItems: "center",
     justifyContent: "center",
   },
