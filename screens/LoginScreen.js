@@ -12,7 +12,7 @@ export default function LoginScreen(props) {
   const isLoggedIn = AsyncStorage.getItem('@isLoggedin');
   console.log("IS LOGGED IN " + isLoggedIn);
   const [newAccount, updateNewAccount] = useState(false);
-  const [activitySpin, updateActivitySpin] = useState(true);
+  const [activitySpin, updateActivitySpin] = useState(false);
   const [user, updateUser] = useState([]);
   const [username, updateUsername] = useState([]);
   const [password, updatePassword] = useState([]);
