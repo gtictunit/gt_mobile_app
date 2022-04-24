@@ -20,6 +20,13 @@ export default function LoginScreen(props) {
   const [email, updateEmail] = useState([]);
   const [phone, updatePhone] = useState([]);
 
+  // useEffect(() => {
+  //   (async () => {
+  //     const name = await AsyncStorage.getItem('@username');
+  //     updateUsername(name);
+  //   })();
+  // }, []);
+
   const handleSignIn = () => {
     console.log(username + " ==== " + password);
     updateActivitySpin(true);
@@ -129,8 +136,12 @@ export default function LoginScreen(props) {
 
   return (
     <View style={styles.mainContainer}>
-      <ActivityIndicator style={styles.activitySpinner} animating={activitySpin} size="large" color="#00ff00" />
       {renderScreenChange()}
+      {activitySpin &&
+        <View pointerEvents="none" style={styles.activitySpinner}>
+          <ActivityIndicator animating={activitySpin} size="large" color="#00ff00" />
+        </View>
+      }
     </View>
   );
 }
@@ -147,8 +158,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#181A1F",
   },
   activitySpinner: {
-    marginTop: 330,
-    position: "absolute",
-    zIndex: 5
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.5,
+    backgroundColor: 'black',
   },
 });

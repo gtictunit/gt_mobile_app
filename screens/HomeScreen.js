@@ -22,11 +22,15 @@ function HomeScreen (props) {
   const [special, updateSpecial] = useState([]);
   const [convention, updateConvention] = useState([]);
   const [recent, updateRecent] = useState([]);
+  const [user, updateUser] = useState([]);
 
   useEffect(() => {
     (async () => {
       const name = await AsyncStorage.getItem('@username');
+      const usr = await AsyncStorage.getItem('@user');
+      let r = JSON.parse(usr);
       updateUsername(name);
+      updateUser(r)
     })();
   }, []);
   
@@ -210,6 +214,7 @@ function HomeScreen (props) {
           
           <TouchableOpacity
             onPress={() => {
+              AsyncStorage.setItem('@isLogeedIn', '99')
               props.navigation.navigate('Login');//added just for test purpose
             }}>
             <Text style={styles.login}>Logout</Text>
