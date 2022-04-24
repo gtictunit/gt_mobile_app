@@ -20,12 +20,14 @@ export default function LoginScreen(props) {
   const [email, updateEmail] = useState([]);
   const [phone, updatePhone] = useState([]);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const name = await AsyncStorage.getItem('@username');
-  //     updateUsername(name);
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      let code = AsyncStorage.getItem('@isLoggedin');
+      if (code == '00') {
+        props.navigation.navigate('Media');
+      }
+    })();
+  }, []);
 
   const handleSignIn = () => {
     console.log(username + " ==== " + password);
@@ -35,6 +37,7 @@ export default function LoginScreen(props) {
       password: password
     }
     if (username == null || password == null || username == '' || password == '') {
+      updateActivitySpin(false);
       Alert.alert('Enter Username or Password');
     }
     else {
