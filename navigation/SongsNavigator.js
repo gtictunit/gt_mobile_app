@@ -44,7 +44,7 @@ const FavSongsNavigator = createStackNavigator(
 
 const Searchnavigator = createStackNavigator(
   {
-    Search: SearchScreen,
+    Search: gtmobile.glorytabernacleibadan.org,
   },
   {
     defaultNavigationOptions: {

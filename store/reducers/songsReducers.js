@@ -1,16 +1,16 @@
-import {
-  CLASSICS,
-  DANCE,
-  ROCKON,
-  ROM,
-  SONGS,
-  SOOTHING,
-  WORKOUT,
-} from '../../components/data';
+
+import { AsyncStorage } from 'react-native';
 import {TOGGLE_FAVOURITE} from '../actions/songsActions';
 
+const GENRES = AsyncStorage.getItem('@genres');
+const THURSDAY = AsyncStorage.getItem('@thursday');
+const SUNDAY = AsyncStorage.getItem('@sunday');
+const CONVENTIONS = AsyncStorage.getItem('@convention');
+const SPECIAL = AsyncStorage.getItem('@special');
+
+
 const initialState = {
-  songs: [ROM, SOOTHING, ROCKON, CLASSICS, WORKOUT, DANCE, SONGS],
+  songs: [THURSDAY, SUNDAY, SPECIAL, CONVENTIONS],
   favSongs: [],
 };
 
@@ -36,15 +36,6 @@ const songsReducer = (state = initialState, action) => {
           return {...state, favSongs: state.favSongs.concat(song)};
         } else if (action.genreId === '4') {
           const song = state.songs[3].find((s) => s.id === action.songId);
-          return {...state, favSongs: state.favSongs.concat(song)};
-        } else if (action.genreId === '5') {
-          const song = state.songs[4].find((s) => s.id === action.songId);
-          return {...state, favSongs: state.favSongs.concat(song)};
-        } else if (action.genreId === '6') {
-          const song = state.songs[5].find((s) => s.id === action.songId);
-          return {...state, favSongs: state.favSongs.concat(song)};
-        } else if (action.genreId === '7') {
-          const song = state.songs[6].find((s) => s.id === action.songId);
           return {...state, favSongs: state.favSongs.concat(song)};
         }
       }

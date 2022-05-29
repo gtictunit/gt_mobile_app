@@ -47,7 +47,7 @@ const SPECIAL = props.navigation.getParam('special');
         onSelect={() =>
           props.navigation.navigate('SongsPlay', {
             sid: item.id,
-            gid: item.genre,
+            gid: item.genre, genres: GENRES, thursday:THURSDAY, sunday:SUNDAY, convention:CONVENTIONS, special:SPECIAL,
           })
         }
         onLike={() => {}}

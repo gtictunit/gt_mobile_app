@@ -2,16 +2,6 @@ import React, {useState} from 'react';
 import {View, Dimensions} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 
-import {
-  CLASSICS,
-  DANCE,
-  ROCKON,
-  ROM,
-  SOOTHING,
-  WORKOUT,
-  SONGS,
-} from '../components/data';
-
 import SongItem from '../components/SongItem';
 import Colors from '../components/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -19,16 +9,19 @@ import {ScrollView} from 'react-native-gesture-handler';
 const {width, height} = Dimensions.get('window');
 
 const SearchScreen = (props) => {
+  const GENRES = AsyncStorage.getItem('@genres');
+  const THURSDAY = AsyncStorage.getItem('@thursday');
+  const SUNDAY = AsyncStorage.getItem('@sunday');
+  const CONVENTIONS = AsyncStorage.getItem('@convention');
+  const SPECIAL = AsyncStorage.getItem('@special');
+  
   const [search, setSearch] = useState('');
   const [data, setData] = useState([]);
   const arrayHolder = [
-    ...ROM,
-    ...SOOTHING,
-    ...DANCE,
-    ...ROCKON,
-    ...CLASSICS,
-    ...WORKOUT,
-    ...SONGS,
+    ...THURSDAY,
+    ...SUNDAY,
+    ...CONVENTIONS,
+    ...SPECIAL,
   ];
 
   const searchFilterFunction = (text) => {

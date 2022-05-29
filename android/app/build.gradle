@@ -188,6 +188,18 @@ android {
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
 
+                                    project.ext { appName = 'GFG' }
+                        // on below line we are adding the formatted date to our apk file name.
+                        def formattedDate = new Date().format('yyyy-MM-dd-HH-mm-ss')
+                        // on below line we are creating a new name for our apk.
+                        def newName = output.outputFile.name
+                        // on below line we are replacing our previous name with our app name.
+                        newName = newName.replace("app-", "$project.ext.appName-")
+                        // on below line we are replacing -release with our formatted date.
+                        newName = newName.replace("-release", "-release-" + formattedDate)
+                        // at last we are setting our apk name to it.
+                        output.outputFileName  = newName
+
         }
     }
 }

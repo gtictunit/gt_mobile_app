@@ -5,7 +5,7 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 import Genre from '../models/Genre';
 import Song from '../models/Song';
-import {SONGS} from '../components/data';
+import { WEB_URL } from '../constant/urls';
 import GenreGrid from '../components/GenreGrid';
 import Recomm from '../components/Recomm';
 
@@ -37,7 +37,7 @@ function HomeScreen (props) {
   useEffect(() => {
     (async () => {
       let res = await fetch(
-        "https://gt.pario.com.ng/backend/service/get_services" //example and simple data
+        WEB_URL+"/service/get_services" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
@@ -57,7 +57,7 @@ function HomeScreen (props) {
   useEffect(() => {
     (async () => {
       let res = await fetch(
-        "https://gt.pario.com.ng/backend/message/get_messages_by_service?id=1" //example and simple data
+       WEB_URL+"/message/get_messages_by_service?id=1" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
@@ -84,7 +84,7 @@ function HomeScreen (props) {
   useEffect(() => {
     (async () => {
       let res = await fetch(
-        "https://gt.pario.com.ng/backend/message/get_messages_by_service?id=2" //example and simple data
+       WEB_URL+"/message/get_messages_by_service?id=2" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
@@ -108,7 +108,7 @@ function HomeScreen (props) {
     useEffect(() => {
     (async () => {
       let res = await fetch(
-        "https://gt.pario.com.ng/backend/message/get_messages_by_service?id=3" //example and simple data
+       WEB_URL+"/message/get_messages_by_service?id=3" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
@@ -132,7 +132,7 @@ function HomeScreen (props) {
     useEffect(() => {
     (async () => {
       let res = await fetch(
-        "https://gt.pario.com.ng/backend/message/get_messages_by_service?id=4" //example and simple data
+       WEB_URL+"/message/get_messages_by_service?id=4" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
@@ -157,7 +157,7 @@ function HomeScreen (props) {
   useEffect(() => {
     (async () => {
       let res = await fetch(
-        "https://gt.pario.com.ng/backend/message/get_messages_recent" //example and simple data
+       WEB_URL+"/message/get_messages_recent" //example and simple data
       );
       let response = await res.json();
       let r = response.data;

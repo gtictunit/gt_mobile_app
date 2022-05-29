@@ -43,7 +43,7 @@ export default function LoginScreen(props) {
     else {
       (async () => {
         let res = await fetch(
-          "https://gt.pario.com.ng/backend/user/is_login", {
+          "https://gtmobile.glorytabernacleibadan.org/user/is_login", {
           method: "POST",
           body: JSON.stringify(_data),
           headers: { "Content-type": "application/json; charset=UTF-8" }
@@ -87,7 +87,7 @@ export default function LoginScreen(props) {
     console.log("DATA  ==== " + JSON.stringify(_data));
     (async () => {
       let res = await fetch(
-        "https://gt.pario.com.ng/backend/user/create_new_user", {
+        "https://gtmobile.glorytabernacleibadan.org/user/create_new_user", {
         method: "POST",
         body: JSON.stringify(_data),
         headers: { "Content-type": "application/json; charset=UTF-8" }

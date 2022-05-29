@@ -15,15 +15,6 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import TrackPlayer from 'react-native-track-player';
 
-import {
-  ROM,
-  SOOTHING,
-  ROCKON,
-  CLASSICS,
-  WORKOUT,
-  DANCE,
-  SONGS,
-} from '../components/data';
 import Controller from '../components/Controller';
 import MySlider from '../components/MySlider';
 import Colors from '../components/Colors';
@@ -31,25 +22,23 @@ import Colors from '../components/Colors';
 const {width, height} = Dimensions.get('window');
 
 const SongsPlayScreen = (props) => {
+const GENRES = props.navigation.getParam('genres');
+const THURSDAY = props.navigation.getParam('thursday');
+const SUNDAY = props.navigation.getParam('sunday');
+const CONVENTIONS = props.navigation.getParam('convention');
+const SPECIAL = props.navigation.getParam('special');
   const sId = props.navigation.getParam('sid');
   const gId = props.navigation.getParam('gid');
   let arr = [{}];
   if (gId === '1') {
-    arr = ROM;
+    arr = THURSDAY;
   } else if (gId === '2') {
-    arr = SOOTHING;
+    arr = SUNDAY;
   } else if (gId === '3') {
-    arr = ROCKON;
+    arr = CONVENTIONS;
   } else if (gId === '4') {
-    arr = CLASSICS;
-  } else if (gId === '5') {
-    arr = WORKOUT;
-  } else if (gId === '6') {
-    arr = DANCE;
-  } else if (gId === '7') {
-    arr = SONGS;
-  }
-
+    arr = SPECIAL;
+  } 
   const displayedSongs = arr.filter((song) => song.genre.indexOf(gId) >= 0);
 
   const scrollX = useRef(new Animated.Value(0)).current; //useRef to survive from re rendering,
