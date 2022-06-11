@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, View, ActivityIndicator } from 'react-native';
 import SignInScreen from './login/SignInScreen';
 import SignUpScreen from './login/SignUpScreen';
+import { WEB_URL } from '../constant/urls';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 
@@ -43,7 +44,7 @@ export default function LoginScreen(props) {
     else {
       (async () => {
         let res = await fetch(
-          "https://gtmobile.glorytabernacleibadan.org/user/is_login", {
+          WEB_URL+"/user/is_login", {
           method: "POST",
           body: JSON.stringify(_data),
           headers: { "Content-type": "application/json; charset=UTF-8" }
@@ -87,7 +88,7 @@ export default function LoginScreen(props) {
     console.log("DATA  ==== " + JSON.stringify(_data));
     (async () => {
       let res = await fetch(
-        "https://gtmobile.glorytabernacleibadan.org/user/create_new_user", {
+        WEB_URL+"/user/create_new_user", {
         method: "POST",
         body: JSON.stringify(_data),
         headers: { "Content-type": "application/json; charset=UTF-8" }

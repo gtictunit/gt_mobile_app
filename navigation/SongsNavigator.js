@@ -16,6 +16,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../components/Colors';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const AllSongsNavigator = createStackNavigator(
   {
@@ -83,6 +84,17 @@ const tabScreenConfig = {
       tabBarColor: '#282828',
       tabBarLabel:
         Platform.OS === 'android' ? <Text>Favourites</Text> : 'Favourites',
+    },
+  },
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: {
+      tabBarIcon: (tabInfo) => {
+        return <Ionicons name="user" size={25} color={tabInfo.tintColor} />;
+      },
+      tabBarColor: '#282828',
+      tabBarLabel:
+        Platform.OS === 'android' ? <Text>Profile</Text> : 'Profile',
     },
   },
 };
