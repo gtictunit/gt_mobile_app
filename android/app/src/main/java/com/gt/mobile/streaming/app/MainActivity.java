@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
    */
     @Override
   protected String getMainComponentName() {
-    return "GT_MOBILE_STREAMING";
+    return "LifeSprings";
   }
 
   @Override

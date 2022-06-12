@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "GT_MOBILE_STREAMING.app"
-               BlueprintName = "GT_MOBILE_STREAMING"
-               ReferencedContainer = "container:GT_MOBILE_STREAMING.xcodeproj">
+               BuildableName = "LifeSprings.app"
+               BlueprintName = "LifeSprings"
+               ReferencedContainer = "container:LifeSprings.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "GT_MOBILE_STREAMINGTests.xctest"
-               BlueprintName = "GT_MOBILE_STREAMINGTests"
-               ReferencedContainer = "container:GT_MOBILE_STREAMING.xcodeproj">
+               BuildableName = "LifeSpringsTests.xctest"
+               BlueprintName = "LifeSpringsTests"
+               ReferencedContainer = "container:LifeSprings.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "GT_MOBILE_STREAMING.app"
-            BlueprintName = "GT_MOBILE_STREAMING"
-            ReferencedContainer = "container:GT_MOBILE_STREAMING.xcodeproj">
+            BuildableName = "LifeSprings.app"
+            BlueprintName = "LifeSprings"
+            ReferencedContainer = "container:LifeSprings.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "GT_MOBILE_STREAMING.app"
-            BlueprintName = "GT_MOBILE_STREAMING"
-            ReferencedContainer = "container:GT_MOBILE_STREAMING.xcodeproj">
+            BuildableName = "LifeSprings.app"
+            BlueprintName = "LifeSprings"
+            ReferencedContainer = "container:LifeSprings.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
