@@ -8,7 +8,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('window');
 
-const SearchScreen = (props) => {
+function SearchScreen(props) {
   const GENRES = AsyncStorage.getItem('@genres');
   const THURSDAY = AsyncStorage.getItem('@thursday');
   const SUNDAY = AsyncStorage.getItem('@sunday');
@@ -71,6 +71,6 @@ const SearchScreen = (props) => {
       </ScrollView>
     </View>
   );
-};
+}
 
 export default SearchScreen;

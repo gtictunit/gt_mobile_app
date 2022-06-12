@@ -90,7 +90,7 @@ const tabScreenConfig = {
     screen: ProfileScreen,
     navigationOptions: {
       tabBarIcon: (tabInfo) => {
-        return <Ionicons name="user" size={25} color={tabInfo.tintColor} />;
+        return <Ionicons name="person" size={25} color={tabInfo.tintColor} />;
       },
       tabBarColor: '#282828',
       tabBarLabel:

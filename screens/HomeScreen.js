@@ -50,7 +50,7 @@ function HomeScreen (props) {
         // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
       updateGenres(resp);
-      AsyncStorage.setItem('@genres',genres); 
+      AsyncStorage.setItem('@genres',resp); 
     })();
   }, []);
 
@@ -77,7 +77,7 @@ function HomeScreen (props) {
         // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
       updateThursday(resp);
-      AsyncStorage.setItem('@thursday',thursday); 
+      AsyncStorage.setItem('@thursday',resp); 
     })();
   }, []);
 
@@ -100,7 +100,7 @@ function HomeScreen (props) {
         );
           resp.push(gen);
       });
-      AsyncStorage.setItem('@sunday',sunday); 
+      AsyncStorage.setItem('@sunday',resp); 
       updateSunday(resp);
     })();
   }, []);
@@ -124,7 +124,7 @@ function HomeScreen (props) {
         );
           resp.push(gen);
       });
-      AsyncStorage.setItem('@convention',convention); 
+      AsyncStorage.setItem('@convention',resp); 
       updateConvention(resp);
     })();
   }, []);
@@ -149,7 +149,7 @@ function HomeScreen (props) {
           resp.push(gen)
         // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
-      AsyncStorage.setItem('@special',special); 
+      AsyncStorage.setItem('@special',resp); 
       updateSpecial(resp);
     })();
   }, []);
