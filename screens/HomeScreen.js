@@ -13,8 +13,6 @@ const {width, height} = Dimensions.get('window');
 
 
 function HomeScreen (props) {
-  
-  // console.log("HAVE RENDERED?");
   const [username, updateUsername] = useState('')
   const [genres, updateGenres] = useState([]);
   const [thursday, updateThursday] = useState([]);
@@ -200,6 +198,11 @@ function HomeScreen (props) {
           props.navigation.navigate('SongsPlay', {
             sid: item.id,
             gid: item.genre,
+            genres: genres, 
+            thursday:thursday, 
+            sunday:sunday, 
+            convention:convention, 
+            special:special
           })
         }
       />
@@ -214,7 +217,7 @@ function HomeScreen (props) {
           
           <TouchableOpacity
             onPress={() => {
-              AsyncStorage.setItem('@isLogeedIn', '99')
+              AsyncStorage.setItem('@isLoggedIn', '99')
               props.navigation.navigate('Login');//added just for test purpose
             }}>
             <Text style={styles.login}>Logout</Text>

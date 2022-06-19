@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Dimensions} from 'react-native';
+import {View, Dimensions, AsyncStorage} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 
 import SongItem from '../components/SongItem';
@@ -7,13 +7,13 @@ import Colors from '../components/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('window');
+const THURSDAY = AsyncStorage.getItem('@thursday');
+const SUNDAY = AsyncStorage.getItem('@sunday');
+const CONVENTIONS = AsyncStorage.getItem('@convention');
+const SPECIAL = AsyncStorage.getItem('@special');
 
 function SearchScreen(props) {
-  const GENRES = AsyncStorage.getItem('@genres');
-  const THURSDAY = AsyncStorage.getItem('@thursday');
-  const SUNDAY = AsyncStorage.getItem('@sunday');
-  const CONVENTIONS = AsyncStorage.getItem('@convention');
-  const SPECIAL = AsyncStorage.getItem('@special');
+
   
   const [search, setSearch] = useState('');
   const [data, setData] = useState([]);

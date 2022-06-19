@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   Animated,
+  AsyncStorage
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {FlatList} from 'react-native-gesture-handler';
@@ -39,6 +40,7 @@ const SPECIAL = props.navigation.getParam('special');
   } else if (gId === '4') {
     arr = SPECIAL;
   } 
+  console.log("ARRAY CURRENT  ==>>  "+JSON.stringify(arr));
   const displayedSongs = arr.filter((song) => song.genre.indexOf(gId) >= 0);
 
   const scrollX = useRef(new Animated.Value(0)).current; //useRef to survive from re rendering,
@@ -51,7 +53,7 @@ const SPECIAL = props.navigation.getParam('special');
 
   useEffect(() => {
     scrollX.addListener(({value}) => {
-      console.log(value);
+      console.log('INDEX VALUE'+value);
       const index = Math.round(value / width); //get the index of the song
       setSongIndex(index); //set the next song in queue
       console.log(index);
