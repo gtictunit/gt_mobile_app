@@ -48,7 +48,11 @@ export default function LoginScreen(props) {
           method: "POST",
           body: JSON.stringify(_data),
           headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
+        }) .catch((error) => {
+          Alert.alert('Failed to Connect to network. Please check your connection and try again!')
+          updateActivitySpin(false);
+          console.error(error);
+        });
         let response = await res.json();
         console.log("LOGIN RESPONSE  ==== " + JSON.stringify(response));
         let r = response.user;
@@ -56,6 +60,7 @@ export default function LoginScreen(props) {
         updateUser(r);
         if (response.code === "99") {
           Alert.alert(response.message);
+          updateActivitySpin(false);
         }
         else {
           Alert.alert('Login Successful!');

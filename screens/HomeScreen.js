@@ -27,6 +27,7 @@ function HomeScreen (props) {
       const name = await AsyncStorage.getItem('@username');
       const usr = await AsyncStorage.getItem('@user');
       let r = JSON.parse(usr);
+      console.log("User JSON:  "+r);
       updateUsername(name);
       updateUser(r)
     })();
@@ -59,10 +60,10 @@ function HomeScreen (props) {
       );
       let response = await res.json();
       let r = response.data;
-      // console.log("THURSDAY =====>>>     "+JSON.stringify(r))
+      console.log("THURSDAY =====>>>     "+JSON.stringify(r))
       let resp = [];
       r.forEach(item => {    
-        // console.log("THUR ITEM=====>>>     "+JSON.stringify(item))
+        console.log("THUR ITEM=====>>>     "+JSON.stringify(item))
         var gen = new Song(
           item.id,
           item.service,
@@ -72,7 +73,7 @@ function HomeScreen (props) {
           item.media_file_url,
         );
           resp.push(gen);
-        // console.log("ARRAY[] ===> "+JSON.stringify(resp));
+        console.log("THURSDAY[] ===> "+JSON.stringify(resp));
       });
       updateThursday(resp);
       AsyncStorage.setItem('@thursday',resp); 
@@ -177,6 +178,7 @@ function HomeScreen (props) {
   }, []);
 
   const renderGenreItem = ({item, index}) => {
+    console.log("Thursday ===>  "+JSON.stringify(thursday));
     return (
       <GenreGrid
         imageUrl={item.imageUrl}

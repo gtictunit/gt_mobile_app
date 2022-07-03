@@ -22,7 +22,7 @@ import Colors from '../components/Colors';
 
 const {width, height} = Dimensions.get('window');
 
-const SongsPlayScreen = (props) => {
+function SongsPlayScreen(props){
 const GENRES = props.navigation.getParam('genres');
 const THURSDAY = props.navigation.getParam('thursday');
 const SUNDAY = props.navigation.getParam('sunday');
@@ -40,13 +40,14 @@ const SPECIAL = props.navigation.getParam('special');
   } else if (gId === '4') {
     arr = SPECIAL;
   } 
-  console.log("ARRAY CURRENT  ==>>  "+JSON.stringify(arr));
+  console.log("ARRAY CURRENT  ==>>  "+gId);
   const displayedSongs = arr.filter((song) => song.genre.indexOf(gId) >= 0);
 
   const scrollX = useRef(new Animated.Value(0)).current; //useRef to survive from re rendering,
   //mutable but will not be re-created evry time the component re-renders
   //and if changes will not force re render of the component
   //Animated.value will allow React to make changes in the JSX without re-rendering
+  console.log("SCROLLX  ==>>  "+JSON.stringify(scrollX));
   const [songIndex, setSongIndex] = useState(0);
   const slider = useRef(null); // to not re-initialize it
   const [isPlayerReady, setIsPlayerReady] = useState(false);
