@@ -23,7 +23,6 @@ import Colors from '../components/Colors';
 const {width, height} = Dimensions.get('window');
 
 function SongsPlayScreen(props){
-const GENRES = props.navigation.getParam('genres');
 const THURSDAY = props.navigation.getParam('thursday');
 const SUNDAY = props.navigation.getParam('sunday');
 const CONVENTIONS = props.navigation.getParam('convention');

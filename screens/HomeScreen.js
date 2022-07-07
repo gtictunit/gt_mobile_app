@@ -178,7 +178,7 @@ function HomeScreen (props) {
   }, []);
 
   const renderGenreItem = ({item, index}) => {
-    console.log("Thursday ===>  "+JSON.stringify(thursday));
+    console.log("ITEM ===>  "+JSON.stringify(item));
     return (
       <GenreGrid
         imageUrl={item.imageUrl}

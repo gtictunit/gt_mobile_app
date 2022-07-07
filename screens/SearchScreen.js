@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useEffect, useState, useCallback} from 'react';
 import {View, Dimensions, AsyncStorage} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 
@@ -14,7 +14,7 @@ function SearchScreen(props) {
   const [sunday, updateSunday] = useState([]);
   const [special, updateSpecial] = useState([]);
   const [convention, updateConvention] = useState([]);
-  console.log("GENRES ==>>  "+JSON.stringify(THURSDAY));
+  // console.log("GENRES ==>>  "+JSON.stringify(THURSDAY));
 
   useEffect(() => {
     (async () => {
@@ -22,8 +22,8 @@ function SearchScreen(props) {
       const SUNDAY = await AsyncStorage.getItem('@sunday');
       const CONVENTIONS = await AsyncStorage.getItem('@convention');
       const SPECIAL = await AsyncStorage.getItem('@special');
-      let r = JSON.parse(usr);
-      console.log("User JSON:  "+r);
+      
+      console.log("User JSON:  "+JSON.stringify(CONVENTIONS));
       updateThursday(THURSDAY);
       updateSunday(SUNDAY);
       updateSpecial(SPECIAL);
