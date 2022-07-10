@@ -3,17 +3,22 @@ import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, View, Activit
 import SignInScreen from './login/SignInScreen';
 import SignUpScreen from './login/SignUpScreen';
 import { WEB_URL } from '../constant/urls';
-import Spinner from 'react-native-loading-spinner-overlay';
-import AnimatedSplash from 'react-native-animated-splash-screen';
+import AwesomeAlert from 'react-native-awesome-alerts';
+
+
 
 const { width, height } = Dimensions.get('window');
 const logo = require('./login/logo.png');
 export default function LoginScreen(props) {
-  console.log("IN LOGIN");
+  // console.log("IN LOGIN");
   const isLoggedIn = AsyncStorage.getItem('@isLoggedin');
-  console.log("IS LOGGED IN " + isLoggedIn);
+  // console.log("IS LOGGED IN " + isLoggedIn);
   const [newAccount, updateNewAccount] = useState(false);
   const [activitySpin, updateActivitySpin] = useState(false);
+  const [enabled, updateEnabled] = useState(true);
+  const [show, updateShow] = useState(false);
+  const [successText, updateSuccessText] = useState("You have logged in successfully!");
+  const [success, updateSuccess] = useState("success");
   const [user, updateUser] = useState([]);
   const [username, updateUsername] = useState([]);
   const [password, updatePassword] = useState([]);
@@ -30,44 +35,58 @@ export default function LoginScreen(props) {
     })();
   }, []);
 
+  const handleClose = () => {
+    updateShow(false);
+  }
+
   const handleSignIn = () => {
-    console.log(username + " ==== " + password);
     updateActivitySpin(true);
+    updateEnabled(false);
     let _data = {
       login: username,
       password: password
     }
     if (username == null || password == null || username == '' || password == '') {
       updateActivitySpin(false);
-      Alert.alert('Enter Username or Password');
+      updateSuccessText('Enter Username or Password');
+      updateSuccess('info');
+      updateShow(true);
     }
     else {
       (async () => {
         let res = await fetch(
-          WEB_URL+"/user/is_login", {
+          WEB_URL + "/user/is_login", {
           method: "POST",
           body: JSON.stringify(_data),
           headers: { "Content-type": "application/json; charset=UTF-8" }
-        }) .catch((error) => {
-          Alert.alert('Failed to Connect to network. Please check your connection and try again!')
+        }).catch((error) => {
+          updateSuccessText('Failed to Connect to network. Please check your connection and try again!')
+          updateSuccess('info');
+          updateShow(true);
           updateActivitySpin(false);
+          updateEnabled(true);
+          updateUsername('');
+          updatePassword('');
           console.error(error);
         });
         let response = await res.json();
-        console.log("LOGIN RESPONSE  ==== " + JSON.stringify(response));
         let r = response.user;
-        console.log("LOGGED IN USER  ==== " + JSON.stringify(r));
         updateUser(r);
         if (response.code === "99") {
-          Alert.alert(response.message);
+          updateSuccessText(response.message);
           updateActivitySpin(false);
         }
         else {
-          Alert.alert('Login Successful!');
+          updateSuccessText('Login Successful!');
+          updateSuccess('success');
+          updateShow(true);
           AsyncStorage.setItem('@isLoggedIn', r.code);
           AsyncStorage.setItem('@user', JSON.stringify(r));
           AsyncStorage.setItem('@username', r.full_name);
           updateActivitySpin(false);
+          updateEnabled(true);
+          updateUsername('');
+          updatePassword('');
           props.navigation.navigate('Media');
         }
       })();
@@ -88,25 +107,30 @@ export default function LoginScreen(props) {
       phone == null || email == null || email == '' || phone == '' ||
       fullname == null || fullname == ''
     ) {
-      Alert.alert('Enter All Fields');
+      updateSuccessText('Enter All Fields');
+      updateSuccess('info');
+      updateShow(true);
     }
     console.log("DATA  ==== " + JSON.stringify(_data));
     (async () => {
       let res = await fetch(
-        WEB_URL+"/user/create_new_user", {
+        WEB_URL + "/user/create_new_user", {
         method: "POST",
         body: JSON.stringify(_data),
         headers: { "Content-type": "application/json; charset=UTF-8" }
       })
       let response = await res.json();
       let r = response;
-      console.log("REG RESPONSE  ==== " + JSON.stringify(r));
+      // console.log("REG RESPONSE  ==== " + JSON.stringify(r));
       if (r.code === "99") {
         Alert.alert(r.message);
       }
       else {
-        Alert.alert('Registration Successful: ' + r.message);
+        updateSuccessText('Registration Successful: ' + r.message);
+        updateSuccess('info');
+        updateShow(true);
         updateActivitySpin(false);
+        updateEnabled(true)
         updateNewAccount(false);
       }
     })();
@@ -125,6 +149,7 @@ export default function LoginScreen(props) {
             passwordChangeText={(password) => updatePassword(password)}
             handleSignInButton={() => handleSignIn()}
             handleSignUp={() => updateNewAccount(true)}
+            enabled={enabled}
           />
         );
       } else {
@@ -149,6 +174,22 @@ export default function LoginScreen(props) {
       {activitySpin &&
         <View pointerEvents="none" style={styles.activitySpinner}>
           <ActivityIndicator animating={activitySpin} size="large" color="#00ff00" />
+        </View>
+      }
+      {show &&
+        <View pointerEvents="none" style={styles.activitySpinner}>
+        <AwesomeAlert
+          show={show}
+          showProgress={false}
+          title=""
+          message={successText}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={true}
+          showConfirmButton={true}
+          confirmText="Close"
+          confirmButtonColor="#00ff00"
+          onConfirmPressed= {() => handleClose()}
+        />
         </View>
       }
     </View>

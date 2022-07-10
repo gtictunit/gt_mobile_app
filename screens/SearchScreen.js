@@ -1,10 +1,11 @@
-import React, {useRef, useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Dimensions, AsyncStorage} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 
 import SongItem from '../components/SongItem';
 import Colors from '../components/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
+import Song from '../models/Song';
 
 const {width, height} = Dimensions.get('window');
 
@@ -14,7 +15,6 @@ function SearchScreen(props) {
   const [sunday, updateSunday] = useState([]);
   const [special, updateSpecial] = useState([]);
   const [convention, updateConvention] = useState([]);
-  // console.log("GENRES ==>>  "+JSON.stringify(THURSDAY));
 
   useEffect(() => {
     (async () => {
@@ -22,12 +22,70 @@ function SearchScreen(props) {
       const SUNDAY = await AsyncStorage.getItem('@sunday');
       const CONVENTIONS = await AsyncStorage.getItem('@convention');
       const SPECIAL = await AsyncStorage.getItem('@special');
-      
-      console.log("User JSON:  "+JSON.stringify(CONVENTIONS));
-      updateThursday(THURSDAY);
-      updateSunday(SUNDAY);
-      updateSpecial(SPECIAL);
-      updateConvention(CONVENTIONS);      
+
+      console.log("Thursday data ==> "+THURSDAY)
+
+      let resp = [];
+
+      const t = JSON.parse(THURSDAY);
+      t.forEach(item => {    
+        var gen = new Song(
+          item.message_id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        );
+          resp.push(gen);
+      });
+      updateThursday(resp);
+
+      const s = JSON.parse(SUNDAY);
+      resp = [];
+      s.forEach(item => {    
+        var gen = new Song(
+          item.message_id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        );
+          resp.push(gen);
+      });
+      updateSunday(resp);
+
+
+      const c = JSON.parse(CONVENTIONS);
+      resp = [];
+      t.forEach(item => {    
+        var gen = new Song(
+          item.message_id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        );
+          resp.push(gen);
+      });
+      updateConvention(resp);
+
+      const sp = JSON.parse(SPECIAL);
+      resp = [];
+      sp.forEach(item => {    
+        var gen = new Song(
+          item.message_id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+        );
+          resp.push(gen);
+      });
+      updateSpecial(resp);      
     })();
   }, []);
   
@@ -64,11 +122,11 @@ function SearchScreen(props) {
         onChangeText={(text) => {
           searchFilterFunction(text);
         }}
-        // onClear={() => searchFilterFunction('')}
-        // searchIcon={{color: Colors.primary}}
+        onClear={() => searchFilterFunction('')}
+        searchIcon={{color: Colors.primary}}
       />
 
-      {/* <ScrollView style={{marginTop: height/37}}>
+      <ScrollView style={{marginTop: height/37}}>
         <View>
           {data.map((item) => (
             <SongItem
@@ -84,7 +142,7 @@ function SearchScreen(props) {
             />
           ))}
         </View>
-      </ScrollView> */}
+      </ScrollView>
     </View>
   );
 }

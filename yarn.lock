@@ -5906,6 +5906,13 @@
   dependencies:
     "prop-types" "^15.7.2"
 
+"react-native-awesome-alerts@^2.0.0":
+  "integrity" "sha512-ZRBNnDfpE+aQCtXXnQcfGLqwzZ53Q45CNkQI4hOiF8/9JPuCyMUQL2aqtiypnLpCIX+CB28Jcx1KVJ6/reaZsg=="
+  "resolved" "https://registry.npmjs.org/react-native-awesome-alerts/-/react-native-awesome-alerts-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-native-dark-login-screen@^0.1.1":
   "integrity" "sha512-8O4WFInBQLNX/oHLEQjW7d2x665TOw6nR19nhtj5rQqJ3rbbF3LG9LWLDLzqBUvzGqDpTuhQfXUvIu2tDu7ndw=="
   "resolved" "https://registry.npmjs.org/react-native-dark-login-screen/-/react-native-dark-login-screen-0.1.1.tgz"

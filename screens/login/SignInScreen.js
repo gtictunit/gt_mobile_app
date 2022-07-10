@@ -11,7 +11,7 @@ const { width, height } = Dimensions.get('window');
 const logo = require('../login/logo.png');
 
 export default function SignInScreen(props) {
-  console.log("IN SIGN IN");
+  // console.log("IN SIGN IN");
 
   const renderHeaderTextContainer = () => (
     <View style={styles.headerContainer}>
@@ -32,6 +32,7 @@ export default function SignInScreen(props) {
         placeholderTextColor="#6C6D72"
         style={[styles.textInputStyle]}
         onChangeText={props.usernameChangeText}
+        // editable={props.enabled}
       />
       <TextInput
         placeholder="Password"
@@ -39,6 +40,7 @@ export default function SignInScreen(props) {
         style={[styles.textInputStyle]}
         secureTextEntry
         onChangeText={props.passwordChangeText}
+        // editable={props.enabled}
       />
       <TouchableOpacity
         style={styles.forgotButtonStyle}

@@ -39,22 +39,25 @@ const SPECIAL = props.navigation.getParam('special');
   } else if (gId === '4') {
     arr = SPECIAL;
   } 
-  console.log("ARRAY CURRENT  ==>>  "+gId);
+  console.log("Genre Index  ==>>  "+gId);
+  console.log("Song Index  ==>>  "+sId);
+  console.log("Current Array  ==>>  "+JSON.stringify(arr));
   const displayedSongs = arr.filter((song) => song.genre.indexOf(gId) >= 0);
+  console.log("Displayed Song  ==>>  "+JSON.stringify(displayedSongs));
 
   const scrollX = useRef(new Animated.Value(0)).current; //useRef to survive from re rendering,
   //mutable but will not be re-created evry time the component re-renders
   //and if changes will not force re render of the component
   //Animated.value will allow React to make changes in the JSX without re-rendering
-  console.log("SCROLLX  ==>>  "+JSON.stringify(scrollX));
   const [songIndex, setSongIndex] = useState(0);
   const slider = useRef(null); // to not re-initialize it
   const [isPlayerReady, setIsPlayerReady] = useState(false);
 
   useEffect(() => {
     scrollX.addListener(({value}) => {
-      console.log('INDEX VALUE'+value);
+      console.log('Pre-Value ' +value);
       const index = Math.round(value / width); //get the index of the song
+      console.log('Now Index ' +index);
       setSongIndex(index); //set the next song in queue
       console.log(index);
     });

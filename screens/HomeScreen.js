@@ -27,7 +27,7 @@ function HomeScreen (props) {
       const name = await AsyncStorage.getItem('@username');
       const usr = await AsyncStorage.getItem('@user');
       let r = JSON.parse(usr);
-      console.log("User JSON:  "+r);
+      //  console.log("User JSON:  "+r);
       updateUsername(name);
       updateUser(r)
     })();
@@ -49,7 +49,7 @@ function HomeScreen (props) {
         // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
       updateGenres(resp);
-      AsyncStorage.setItem('@genres',resp); 
+      AsyncStorage.setItem('@genres',JSON.stringify(resp)); 
     })();
   }, []);
 
@@ -60,12 +60,12 @@ function HomeScreen (props) {
       );
       let response = await res.json();
       let r = response.data;
-      console.log("THURSDAY =====>>>     "+JSON.stringify(r))
+      // console.log("THURSDAY =====>>>     "+JSON.stringify(r))
       let resp = [];
       r.forEach(item => {    
-        console.log("THUR ITEM=====>>>     "+JSON.stringify(item))
+        // console.log("THUR ITEM=====>>>     "+JSON.stringify(item))
         var gen = new Song(
-          item.id,
+          item.message_id,
           item.service,
           item.title,
           item.preacher,
@@ -73,10 +73,10 @@ function HomeScreen (props) {
           item.media_file_url,
         );
           resp.push(gen);
-        console.log("THURSDAY[] ===> "+JSON.stringify(resp));
+        // console.log("THURSDAY[] ===> "+JSON.stringify(resp));
       });
       updateThursday(resp);
-      AsyncStorage.setItem('@thursday',resp); 
+      AsyncStorage.setItem('@thursday',JSON.stringify(resp)); 
     })();
   }, []);
 
@@ -90,7 +90,7 @@ function HomeScreen (props) {
       let resp = [];
       r.forEach(item => {    
         var gen = new Song(
-          item.id,
+          item.message_id,
           item.service,
           item.title,
           item.preacher,
@@ -99,7 +99,7 @@ function HomeScreen (props) {
         );
           resp.push(gen);
       });
-      AsyncStorage.setItem('@sunday',resp); 
+      AsyncStorage.setItem('@sunday',JSON.stringify(resp)); 
       updateSunday(resp);
     })();
   }, []);
@@ -114,7 +114,7 @@ function HomeScreen (props) {
       let resp = [];
       r.forEach(item => {    
         var gen = new Song(
-          item.id,
+          item.message_id,
           item.service,
           item.title,
           item.preacher,
@@ -123,7 +123,7 @@ function HomeScreen (props) {
         );
           resp.push(gen);
       });
-      AsyncStorage.setItem('@convention',resp); 
+      AsyncStorage.setItem('@convention',JSON.stringify(resp)); 
       updateConvention(resp);
     })();
   }, []);
@@ -138,7 +138,7 @@ function HomeScreen (props) {
       let resp = [];
       r.forEach(item => {    
         var gen = new Song(
-          item.id,
+          item.message_id,
           item.service,
           item.title,
           item.preacher,
@@ -148,7 +148,7 @@ function HomeScreen (props) {
           resp.push(gen)
         // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
-      AsyncStorage.setItem('@special',resp); 
+      AsyncStorage.setItem('@special',JSON.stringify(resp)); 
       updateSpecial(resp);
     })();
   }, []);
@@ -163,7 +163,7 @@ function HomeScreen (props) {
       let resp = [];
       r.forEach(item => {    
         var gen = new Song(
-          item.id,
+          item.message_id,
           item.service,
           item.title,
           item.preacher,
@@ -178,14 +178,21 @@ function HomeScreen (props) {
   }, []);
 
   const renderGenreItem = ({item, index}) => {
-    console.log("ITEM ===>  "+JSON.stringify(item));
+    //  console.log("ITEM ===>  "+JSON.stringify(item));
     return (
       <GenreGrid
         imageUrl={item.imageUrl}
         title={""}
-        onSelect={() => {
-          props.navigation.navigate('SongsList', {gid: item.id, genres: genres, thursday:thursday, sunday:sunday, convention:convention, special:special}); //passing the id of genre as params to view its songs in the next screens
-        }}
+        onSelect={() => 
+          props.navigation.navigate('SongsList', {
+            gid: item.id, 
+            genres: genres, 
+            thursday:thursday, 
+            sunday:sunday, 
+            convention:convention, 
+            special:special
+          })
+        }
       />
     );
   };
