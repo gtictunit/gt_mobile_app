@@ -20,6 +20,7 @@ import Controller from '../components/Controller';
 import MySlider from '../components/MySlider';
 import Colors from '../components/Colors';
 
+
 const {width, height} = Dimensions.get('window');
 
 function SongsPlayScreen(props){
@@ -41,9 +42,9 @@ const SPECIAL = props.navigation.getParam('special');
   } 
   console.log("Genre Index  ==>>  "+gId);
   console.log("Song Index  ==>>  "+sId);
-  console.log("Current Array  ==>>  "+JSON.stringify(arr));
+  // console.log("Current Array  ==>>  "+JSON.stringify(arr));
   const displayedSongs = arr.filter((song) => song.genre.indexOf(gId) >= 0);
-  console.log("Displayed Song  ==>>  "+JSON.stringify(displayedSongs));
+  // console.log("Displayed Song  ==>>  "+JSON.stringify(displayedSongs));
 
   const scrollX = useRef(new Animated.Value(0)).current; //useRef to survive from re rendering,
   //mutable but will not be re-created evry time the component re-renders
@@ -55,9 +56,7 @@ const SPECIAL = props.navigation.getParam('special');
 
   useEffect(() => {
     scrollX.addListener(({value}) => {
-      console.log('Pre-Value ' +value);
       const index = Math.round(value / width); //get the index of the song
-      console.log('Now Index ' +index);
       setSongIndex(index); //set the next song in queue
       console.log(index);
     });

@@ -36,6 +36,14 @@ const Controller = (props) => {
     }
   };
 
+  const renderStopButton = () => {
+        return <FontAwesome5 name="stop" size={height / 25.8} color="white" />;
+  };
+
+  const onPressStop = () => {
+      TrackPlayer.stop();
+  };
+
   const onPlayPause = () => {
     //console.log(playBackState);
     if (playBackState === 'playing' || playBackState === 3) {
@@ -54,6 +62,9 @@ const Controller = (props) => {
       </TouchableOpacity>
       <TouchableOpacity onPress={onPlayPause}>
         {renderPlayPauseButton()}
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onPressStop}>
+        {renderStopButton()}
       </TouchableOpacity>
       <TouchableOpacity onPress={props.goNext}>
         <AntDesign name="stepforward" size={height / 25} color="white" />

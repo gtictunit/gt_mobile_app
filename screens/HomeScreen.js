@@ -27,7 +27,6 @@ function HomeScreen (props) {
       const name = await AsyncStorage.getItem('@username');
       const usr = await AsyncStorage.getItem('@user');
       let r = JSON.parse(usr);
-      //  console.log("User JSON:  "+r);
       updateUsername(name);
       updateUser(r)
     })();
@@ -40,13 +39,10 @@ function HomeScreen (props) {
       );
       let response = await res.json();
       let r = response.data;
-      // console.log("GEN=====>>>     "+JSON.stringify(r))
       let resp = [];
       r.forEach(item => {    
-        // console.log("ITEM=====>>>     "+JSON.stringify(item))
         var gen = new Genre(item.id,item.name,item.img);
           resp.push(gen);
-        // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
       updateGenres(resp);
       AsyncStorage.setItem('@genres',JSON.stringify(resp)); 
@@ -60,10 +56,8 @@ function HomeScreen (props) {
       );
       let response = await res.json();
       let r = response.data;
-      // console.log("THURSDAY =====>>>     "+JSON.stringify(r))
       let resp = [];
       r.forEach(item => {    
-        // console.log("THUR ITEM=====>>>     "+JSON.stringify(item))
         var gen = new Song(
           item.message_id,
           item.service,
@@ -73,7 +67,6 @@ function HomeScreen (props) {
           item.media_file_url,
         );
           resp.push(gen);
-        // console.log("THURSDAY[] ===> "+JSON.stringify(resp));
       });
       updateThursday(resp);
       AsyncStorage.setItem('@thursday',JSON.stringify(resp)); 
@@ -146,7 +139,6 @@ function HomeScreen (props) {
           item.media_file_url,
         );
           resp.push(gen)
-        // console.log("ARRAY[] ===> "+JSON.stringify(resp));
       });
       AsyncStorage.setItem('@special',JSON.stringify(resp)); 
       updateSpecial(resp);
@@ -171,7 +163,6 @@ function HomeScreen (props) {
           item.media_file_url,
         );
           resp.push(gen)
-        // console.log("RECENT[] ===> "+JSON.stringify(resp));
       });
       updateRecent(resp);
     })();
