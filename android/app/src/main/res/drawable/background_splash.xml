@@ -7,7 +7,7 @@
     <item
         android:width="300dp"
         android:height="300dp"
-        android:drawable="@mipmap/lifesprings"
+        android:drawable="@mipmap/lifespring"
         android:gravity="center" />
 
 </layer-list>
