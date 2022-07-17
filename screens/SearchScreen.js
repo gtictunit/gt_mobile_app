@@ -6,11 +6,13 @@ import SongItem from '../components/SongItem';
 import Colors from '../components/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
 import Song from '../models/Song';
+import Genre from '../models/Genre';
 
 const {width, height} = Dimensions.get('window');
 
 
 function SearchScreen(props) {
+  const [genres, updateGenres] = useState([]);
   const [thursday, updateThursday] = useState([]);
   const [sunday, updateSunday] = useState([]);
   const [special, updateSpecial] = useState([]);
@@ -18,24 +20,34 @@ function SearchScreen(props) {
 
   useEffect(() => {
     (async () => {
+      const GENRES = await AsyncStorage.getItem('@genres');
       const THURSDAY = await AsyncStorage.getItem('@thursday');
       const SUNDAY = await AsyncStorage.getItem('@sunday');
       const CONVENTIONS = await AsyncStorage.getItem('@convention');
       const SPECIAL = await AsyncStorage.getItem('@special');
 
-      console.log("Thursday data ==> "+THURSDAY)
+      // console.log("Thursday data ==> "+THURSDAY);      
 
       let resp = [];
 
+      const g = JSON.parse(GENRES);
+      g.forEach(item => {    
+        var gen = new Genre(item.id,item.title,item.url);
+          resp.push(gen);
+      });
+      updateGenres(resp);
+
       const t = JSON.parse(THURSDAY);
-      t.forEach(item => {    
+      resp = [];
+      t.forEach(item => {   
+        if(item.title) 
         var gen = new Song(
-          item.message_id,
-          item.service,
+          item.id,
+          item.genre,
           item.title,
-          item.preacher,
-          item.img_url,
-          item.media_file_url,
+          item.artist,
+          item.artwork,
+          item.url,
         );
           resp.push(gen);
       });
@@ -45,12 +57,12 @@ function SearchScreen(props) {
       resp = [];
       s.forEach(item => {    
         var gen = new Song(
-          item.message_id,
-          item.service,
+          item.id,
+          item.genre,
           item.title,
-          item.preacher,
-          item.img_url,
-          item.media_file_url,
+          item.artist,
+          item.artwork,
+          item.url,
         );
           resp.push(gen);
       });
@@ -59,14 +71,14 @@ function SearchScreen(props) {
 
       const c = JSON.parse(CONVENTIONS);
       resp = [];
-      t.forEach(item => {    
+      c.forEach(item => {    
         var gen = new Song(
-          item.message_id,
-          item.service,
+          item.id,
+          item.genre,
           item.title,
-          item.preacher,
-          item.img_url,
-          item.media_file_url,
+          item.artist,
+          item.artwork,
+          item.url,
         );
           resp.push(gen);
       });
@@ -76,18 +88,23 @@ function SearchScreen(props) {
       resp = [];
       sp.forEach(item => {    
         var gen = new Song(
-          item.message_id,
-          item.service,
+          item.id,
+          item.genre,
           item.title,
-          item.preacher,
-          item.img_url,
-          item.media_file_url,
+          item.artist,
+          item.artwork,
+          item.url,
         );
           resp.push(gen);
       });
       updateSpecial(resp);      
     })();
   }, []);
+
+  // console.log("Thursday data ==> "+JSON.stringify(thursday));
+  // console.log("Sunday data ==> "+JSON.stringify(sunday));
+  // console.log("Convention data ==> "+JSON.stringify(convention));
+  // console.log("Special data ==> "+JSON.stringify(special));
   
   const [search, setSearch] = useState('');
   const [data, setData] = useState([]);
@@ -95,15 +112,18 @@ function SearchScreen(props) {
     ...thursday,
     ...sunday,
     ...convention,
-    ...special,
-  ];
-
+    ...special,];
+  console.log('Array Holder Before ===>  '+JSON.stringify(arrayHolder));
   const searchFilterFunction = (text) => {
+    // console.log('Array Holder After ===>  '+JSON.stringify(arrayHolder));
     const newData = arrayHolder.filter((item) => {
-      const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
-      const textData = text.toUpperCase();
-      return itemData.indexOf(textData) > -1;
+      console.log('Current Item ===>  '+JSON.stringify(item));
+      const title = ""+item.title
+      if(title.includes(text)){
+        return item;
+      }
     });
+    console.log('Current Data ===>  '+JSON.stringify(newData));
     setSearch(text);
     setData(newData);
   };
@@ -137,6 +157,11 @@ function SearchScreen(props) {
                 props.navigation.navigate('SongsPlay', {
                   sid: item.id,
                   gid: item.genre,
+                  genres: genres, 
+                  thursday:thursday, 
+                  sunday:sunday, 
+                  convention:convention, 
+                  special:special
                 })
               }
             />

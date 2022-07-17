@@ -9,6 +9,8 @@ import { WEB_URL } from '../constant/urls';
 import GenreGrid from '../components/GenreGrid';
 import Recomm from '../components/Recomm';
 
+import TrackPlayer from 'react-native-track-player';
+
 const {width, height} = Dimensions.get('window');
 
 
@@ -26,6 +28,8 @@ function HomeScreen (props) {
     (async () => {
       const name = await AsyncStorage.getItem('@username');
       const usr = await AsyncStorage.getItem('@user');
+      const code = await AsyncStorage.getItem('@isLoggedin');
+      console.log('Home Screen Login Code ===>  '+code);
       let r = JSON.parse(usr);
       updateUsername(name);
       updateUser(r)
@@ -217,6 +221,7 @@ function HomeScreen (props) {
           
           <TouchableOpacity
             onPress={() => {
+              TrackPlayer.stop()
               AsyncStorage.setItem('@isLoggedIn', '99')
               props.navigation.navigate('Login');//added just for test purpose
             }}>

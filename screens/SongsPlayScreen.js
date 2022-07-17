@@ -14,7 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {toggleFavourite} from '../store/actions/songsActions';
 import {useDispatch, useSelector} from 'react-redux';
 
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer,{Capability} from 'react-native-track-player';
 
 import Controller from '../components/Controller';
 import MySlider from '../components/MySlider';
@@ -68,6 +68,14 @@ const SPECIAL = props.navigation.getParam('special');
       setIsPlayerReady(true);
       TrackPlayer.play();
     });
+    TrackPlayer.updateOptions({ stopWithApp: true,
+      notificationCapabilities: [
+        Capability.Play,
+        Capability.Pause,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
+      ],
+     });
     return () => {
       scrollX.removeAllListeners();
     }; //clean up function
@@ -169,7 +177,7 @@ const SPECIAL = props.navigation.getParam('special');
         <Text style={styles.artist}>{displayedSongs[songIndex].artist}</Text>
       </View>
       <MySlider />
-      <Controller goNext={goNext} goPrev={goPrevious} />
+      <Controller sId={sId} goNext={goNext} goPrev={goPrevious} />
     </View>
   );
 };

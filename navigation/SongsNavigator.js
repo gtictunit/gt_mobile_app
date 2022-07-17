@@ -11,8 +11,6 @@ import SongsListScreen from '../screens/SongsListScreen';
 import SongsPlayScreen from '../screens/SongsPlayScreen';
 import SearchScreen from '../screens/SearchScreen';
 
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../components/Colors';
@@ -103,7 +101,7 @@ const SongsNavigator =
   Platform.OS === 'android'
     ? createMaterialBottomTabNavigator(tabScreenConfig, {
         //for android like effect
-        activeColor: Colors.primary,
+        activeColor: '#99FF00',
         inactiveColor: '#a6a6a6',
         shifting: true,
       })

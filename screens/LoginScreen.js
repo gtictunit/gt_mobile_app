@@ -20,17 +20,20 @@ export default function LoginScreen(props) {
   const [successText, updateSuccessText] = useState("You have logged in successfully!");
   const [success, updateSuccess] = useState("success");
   const [user, updateUser] = useState([]);
-  const [username, updateUsername] = useState([]);
-  const [password, updatePassword] = useState([]);
-  const [fullname, updateFullname] = useState([]);
-  const [email, updateEmail] = useState([]);
-  const [phone, updatePhone] = useState([]);
+  const [username, updateUsername] = useState('');
+  const [password, updatePassword] = useState('');
+  const [fullname, updateFullname] = useState('');
+  const [email, updateEmail] = useState('');
+  const [phone, updatePhone] = useState('');
 
   useEffect(() => {
     (async () => {
-      let code = AsyncStorage.getItem('@isLoggedin');
+      let code = await AsyncStorage.getItem('@isLoggedin');
+      console.log('Is Logged In ==> '+ code)
       if (code == '00') {
         props.navigation.navigate('Media');
+      }else{
+        console.log('Not Loggedin');
       }
     })();
   }, []);
@@ -80,7 +83,8 @@ export default function LoginScreen(props) {
           updateSuccessText('Login Successful!');
           updateSuccess('success');
           updateShow(true);
-          AsyncStorage.setItem('@isLoggedIn', r.code);
+          console.log("Login Code ==>  "+response.code);
+          AsyncStorage.setItem('@isLoggedIn', response.code);
           AsyncStorage.setItem('@user', JSON.stringify(r));
           AsyncStorage.setItem('@username', r.full_name);
           updateActivitySpin(false);
@@ -149,7 +153,9 @@ export default function LoginScreen(props) {
             passwordChangeText={(password) => updatePassword(password)}
             handleSignInButton={() => handleSignIn()}
             handleSignUp={() => updateNewAccount(true)}
-            enabled={enabled}
+            username={username}
+            password={password}
+            // enabled={enabled}
           />
         );
       } else {

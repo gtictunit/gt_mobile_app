@@ -32,7 +32,7 @@ export default function SignInScreen(props) {
         placeholderTextColor="#6C6D72"
         style={[styles.textInputStyle]}
         onChangeText={props.usernameChangeText}
-        // editable={props.enabled}
+        value={props.username}
       />
       <TextInput
         placeholder="Password"
@@ -40,6 +40,7 @@ export default function SignInScreen(props) {
         style={[styles.textInputStyle]}
         secureTextEntry
         onChangeText={props.passwordChangeText}
+        value={props.password}
         // editable={props.enabled}
       />
       <TouchableOpacity
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
   },
   descriptionTextStyle: {
     fontSize: 15,
-    color: "#696A6F",
+    color: "#fff",
   },
   textInputContainer: {
     marginTop: 24,
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: isIPhoneNotchFamily() ? 20 : 16,
   },
   forgotPasswordTextStyle: {
-    color: "#6C6D72",
+    color: "#fff",
   },
   forgotButtonStyle: {
     height: 30,
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   },
   signInButtonStyle: {
     marginTop: 24,
-    backgroundColor: "#5467FF",
+    backgroundColor: "#99FF00",
     width: width * 0.85,
     height: isIPhoneNotchFamily() ? 60 : 55,
     borderRadius: isIPhoneNotchFamily() ? 20 : 16,
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   signInButtonTextStyle: {
-    color: "#fff",
+    color: "#000",
     fontWeight: "600",
   },
   logoImageStyle: {
@@ -220,7 +221,7 @@ const styles = StyleSheet.create({
   signUpButtonTextStyle: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#519bf4",
+    color: "#99FF00",
   },
   appleButtonStyle: {
     backgroundColor: "#FFFFFF",
