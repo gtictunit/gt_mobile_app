@@ -1,114 +1,141 @@
-import React from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { ActivityIndicator, Image, StyleSheet, Text, View, Linking, AsyncStorage } from 'react-native';
+import TrackPlayer from 'react-native-track-player';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
-const ProfileScreen = props => {
+const logo = require('./login/logo.png');
+
+function ProfileScreen (props) {
+  const [name, updateName] = useState('')
+  const [email, updateEmail] = useState('')
+  const [phone, updatePhone] = useState('')
+
+
+  useEffect(() => {
+    (async () => {
+      const namer = await AsyncStorage.getItem('@username');
+      const emailr = await AsyncStorage.getItem('@useremail');
+      const phoner = await AsyncStorage.getItem('@userphone');
+      updateName(namer);
+      updateEmail(emailr);
+      updatePhone(phoner);
+    })();
+  }, []);
+
+
 
   return (
-      <View>
-          <Text>This is a Profile</Text>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.headerContent}>
+          <Image style={styles.avatar}
+            source={logo} />
+
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.userInfo}>{email}</Text>
+          <Text style={styles.userInfo}>{phone}</Text>
+        </View>
       </View>
+
+      <View style={styles.item}>
+        <View style={styles.iconContent}>
+          <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/70/000000/gear.png' }} />
+        </View>
+        <View style={styles.infoContent}>
+          <Text style={styles.info}>Settings</Text>
+        </View>
+      </View>
+
+      <View style={styles.item}>
+          <View style={styles.iconContent}>
+            <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/70/000000/email.png' }} />
+          </View>
+          <View style={styles.infoContent}>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL('mailto:support@glorytabernacleibadan.org?subject=Feedback')
+            }}>
+            <Text style={styles.info}>Talk to Us</Text>
+          </TouchableOpacity>
+          </View>
+      </View>
+
+      <View style={styles.item}>
+          <View style={styles.iconContent}>
+            <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/70/000000/sign-out.png' }} />
+          </View>
+          <View style={styles.infoContent}>
+          <TouchableOpacity
+            onPress={() => {
+              TrackPlayer.stop()
+              AsyncStorage.setItem('@isLoggedIn', '99')
+              props.navigation.navigate('Login');//added just for test purpose
+            }}>
+            <Text style={styles.info}>Logout</Text>
+          </TouchableOpacity>
+          </View>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  ImageMm: {
-    height: '100%',
-    width: '100%',
+  header:{
+    backgroundColor: "#DCDCDC",
   },
-  Viewhl: {
-    flexGrow: 1,
-    minHeight: '50%',
-    maxHeight: '50%',
-    flexShrink: 0,
-  },
-  TextuW: {
-    marginRight: 6,
-    fontSize: 18,
-    lineHeight: 24,
-    fontFamily: 'System',
-    fontWeight: '700',
-  },
-  View_1E: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 18,
-  },
-  TouchableNn: {
+  headerContent:{
+    padding:30,
     alignItems: 'center',
   },
-  ViewHd: {
-    flexDirection: 'row',
-    marginTop: 6,
-    maxWidth: '25%',
-    justifyContent: 'space-between',
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom:10,
   },
-  TextQG: {
-    textTransform: 'uppercase',
-    fontFamily: 'System',
-    fontWeight: '400',
-    fontSize: 11,
-    marginTop: 18,
+  name:{
+    fontSize:22,
+    color:"#000000",
+    fontWeight:'600',
   },
-  TextRr: {
-    fontSize: 12,
-    lineHeight: 18,
-    marginTop: 12,
+  userInfo:{
+    fontSize:16,
+    color:"#778899",
+    fontWeight:'600',
   },
-  Text_3x: {
-    marginTop: 16,
-    marginTop: 24,
-    textTransform: 'uppercase',
-    fontFamily: 'System',
-    fontWeight: '400',
-    fontSize: 11,
+  body:{
+    backgroundColor: "#778899",
+    height:500,
+    alignItems:'center',
   },
-  TextIx: {
-    fontSize: 10,
-    fontFamily: 'System',
-    fontWeight: '700',
+  item:{
+    flexDirection : 'row',
   },
-  View_6L: {
-    marginRight: 8,
-    paddingBottom: 8,
-    paddingTop: 8,
-    paddingRight: 16,
-    paddingLeft: 16,
+  infoContent:{
+    flex:1,
+    alignItems:'flex-start',
+    paddingLeft:5
   },
-  Text_5j: {
-    fontSize: 10,
-    fontFamily: 'System',
-    fontWeight: '700',
+  iconContent:{
+    flex:1,
+    alignItems:'flex-end',
+    paddingRight:5,
   },
-  ViewPW: {
-    marginRight: 8,
-    paddingBottom: 8,
-    paddingTop: 8,
-    paddingRight: 16,
-    paddingLeft: 16,
+  icon:{
+    width:30,
+    height:30,
+    marginTop:20,
   },
-  Textwe: {
-    fontSize: 10,
-    fontFamily: 'System',
-    fontWeight: '700',
+  info:{
+    fontSize:18,
+    marginTop:20,
+    color: "#000",
   },
-  View_0b: {
-    marginRight: 8,
-    paddingBottom: 8,
-    paddingTop: 8,
-    paddingRight: 16,
-    paddingLeft: 16,
-  },
-  Viewy7: {
-    flexDirection: 'row',
-    marginTop: 12,
-  },
-  Viewg3: {
-    marginLeft: 18,
-    marginRight: 18,
-    flexGrow: 1,
-    flexShrink: 0,
-    minHeight: '50%',
-  },
+  login: {
+    color: '#000',
+  }
 });
 
 export default ProfileScreen;

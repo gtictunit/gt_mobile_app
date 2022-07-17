@@ -1,20 +1,21 @@
 
 import { AsyncStorage } from 'react-native';
 import {TOGGLE_FAVOURITE} from '../actions/songsActions';
+import Song from '../../models/Song';
+
+// import { thursday, sunday, convention, special } from '../../components/data';
 
 const GENRES = AsyncStorage.getItem('@genres');
-const THURSDAY = AsyncStorage.getItem('@thursday');
-const SUNDAY = AsyncStorage.getItem('@sunday');
-const CONVENTIONS = AsyncStorage.getItem('@convention');
-const SPECIAL = AsyncStorage.getItem('@special');
 
+// const arrayHolder = [thursday,sunday,convention,special,];
 
 const initialState = {
-  songs: [THURSDAY, SUNDAY, SPECIAL, CONVENTIONS],
+  songs: [],
   favSongs: [],
 };
 
 const songsReducer = (state = initialState, action) => {
+  console.log("Songs: "+JSON.stringify(initialState))
   switch (action.type) {
     case TOGGLE_FAVOURITE:
       const existingFav = state.favSongs.findIndex(

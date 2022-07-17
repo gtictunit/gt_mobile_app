@@ -87,6 +87,8 @@ export default function LoginScreen(props) {
           AsyncStorage.setItem('@isLoggedIn', response.code);
           AsyncStorage.setItem('@user', JSON.stringify(r));
           AsyncStorage.setItem('@username', r.full_name);
+          AsyncStorage.setItem('@userphone', r.phone);
+          AsyncStorage.setItem('@useremail', r.email);
           updateActivitySpin(false);
           updateEnabled(true);
           updateUsername('');

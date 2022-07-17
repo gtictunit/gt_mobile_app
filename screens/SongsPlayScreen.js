@@ -139,12 +139,12 @@ const SPECIAL = props.navigation.getParam('special');
             color={Colors.primary}
             onPress={() => props.navigation.goBack()}
           />
-          <Ionicons
+          {/* <Ionicons
             name={currentSongIsFav ? 'heart' : 'heart-outline'}
             size={height / 30}
             color={Colors.primary}
             onPress={toggleFavouriteHandler}
-          />
+          /> */}
         </View>
         <FlatList
           horizontal
