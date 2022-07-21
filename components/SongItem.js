@@ -37,6 +37,7 @@ const SongItem = (props) => {
             />
             <View style={styles.titleAndartist}>
               <Text style={styles.songTitle}>{props.title}</Text>
+              <Text style={styles.songArtist}>{props.serviceDate}</Text>              
               <Text style={styles.songArtist}>{props.artist}</Text>
             </View>
           </View>

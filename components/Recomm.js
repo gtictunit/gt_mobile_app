@@ -31,6 +31,7 @@ const Recomm = (props) => {
           </View>
           <View style={styles.infoContainer}>
             <Text style={styles.title}>{props.title}</Text>
+            <Text style={styles.artist}>{props.serviceDate}</Text>
             <Text style={styles.artist}>{props.artist}</Text>
           </View>
         </View>

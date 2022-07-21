@@ -47,6 +47,7 @@ const SongsListScreen = (props) => {
         artwork={item.artwork}
         title={item.title}
         artist={item.artist}
+        serviceDate={item.service_date}
         onSelect={() =>
           props.navigation.navigate('SongsPlay', {
             sid: item.id,

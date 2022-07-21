@@ -69,6 +69,7 @@ function HomeScreen (props) {
           item.preacher,
           item.img_url,
           item.media_file_url,
+          item.service_date,
         );
           resp.push(gen);
       });
@@ -93,6 +94,7 @@ function HomeScreen (props) {
           item.preacher,
           item.img_url,
           item.media_file_url,
+          item.service_date,
         );
           resp.push(gen);
       });
@@ -117,6 +119,7 @@ function HomeScreen (props) {
           item.preacher,
           item.img_url,
           item.media_file_url,
+          item.service_date,
         );
           resp.push(gen);
       });
@@ -141,6 +144,7 @@ function HomeScreen (props) {
           item.preacher,
           item.img_url,
           item.media_file_url,
+          item.service_date,
         );
           resp.push(gen)
       });
@@ -165,6 +169,7 @@ function HomeScreen (props) {
           item.preacher,
           item.img_url,
           item.media_file_url,
+          item.service_date,
         );
           resp.push(gen)
       });
@@ -198,6 +203,7 @@ function HomeScreen (props) {
         artwork={item.artwork}
         title={item.title}
         artist={item.artist}
+        serviceDate={item.service_date}
         onSelect={() =>
           props.navigation.navigate('SongsPlay', {
             sid: item.id,

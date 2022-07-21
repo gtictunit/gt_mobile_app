@@ -5,8 +5,8 @@
         android:drawable="@color/splashscreen_bg"/>
 
     <item
-        android:width="280dp"
-        android:height="162dp"
+        android:width="500dp"
+        android:height="500dp"
         android:drawable="@mipmap/lifespring"
         android:gravity="center" />
 

@@ -48,6 +48,7 @@ function SearchScreen(props) {
           item.artist,
           item.artwork,
           item.url,
+          item.service_date,
         );
           resp.push(gen);
       });
@@ -63,6 +64,7 @@ function SearchScreen(props) {
           item.artist,
           item.artwork,
           item.url,
+          item.service_date,
         );
           resp.push(gen);
       });
@@ -79,6 +81,7 @@ function SearchScreen(props) {
           item.artist,
           item.artwork,
           item.url,
+          item.service_date,
         );
           resp.push(gen);
       });
@@ -94,6 +97,7 @@ function SearchScreen(props) {
           item.artist,
           item.artwork,
           item.url,
+          item.service_date,
         );
           resp.push(gen);
       });
@@ -119,9 +123,10 @@ function SearchScreen(props) {
     const newData = arrayHolder.filter((item) => {
       console.log('Current Item ===>  '+JSON.stringify(item));
       const title = ""+item.title
-      if(title.includes(text)){
+      const serviceDate = ""+item.service_date
+      if(title.includes(text) || serviceDate.includes(text)){
         return item;
-      }
+      }      
     });
     console.log('Current Data ===>  '+JSON.stringify(newData));
     setSearch(text);
@@ -153,6 +158,7 @@ function SearchScreen(props) {
               artwork={item.artwork}
               title={item.title}
               artist={item.artist}
+              serviceDate={item.service_date}
               onSelect={() =>
                 props.navigation.navigate('SongsPlay', {
                   sid: item.id,

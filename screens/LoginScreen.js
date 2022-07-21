@@ -12,7 +12,8 @@ const logo = require('./login/logo.png');
 export default function LoginScreen(props) {
   // console.log("IN LOGIN");
   const isLoggedIn = AsyncStorage.getItem('@isLoggedin');
-  // console.log("IS LOGGED IN " + isLoggedIn);
+  const userr = AsyncStorage.getItem('@username');
+  console.log("USER AT LOGIN ===>  " + userr);
   const [newAccount, updateNewAccount] = useState(false);
   const [activitySpin, updateActivitySpin] = useState(false);
   const [enabled, updateEnabled] = useState(true);
