@@ -10,10 +10,6 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 const { width, height } = Dimensions.get('window');
 const logo = require('./login/logo.png');
 export default function LoginScreen(props) {
-  // console.log("IN LOGIN");
-  const isLoggedIn = AsyncStorage.getItem('@isLoggedin');
-  const userr = AsyncStorage.getItem('@username');
-  console.log("USER AT LOGIN ===>  " + userr);
   const [newAccount, updateNewAccount] = useState(false);
   const [activitySpin, updateActivitySpin] = useState(false);
   const [enabled, updateEnabled] = useState(true);
@@ -85,11 +81,15 @@ export default function LoginScreen(props) {
           updateSuccess('success');
           updateShow(true);
           console.log("Login Code ==>  "+response.code);
-          AsyncStorage.setItem('@isLoggedIn', response.code);
+          console.log("Logged in User =>  "+JSON.stringify(r))
+          console.log("Logged in User =>  "+JSON.stringify(r.id))
+          const uuID = ""+r.id;
+          AsyncStorage.setItem('@isLoggedIn', ""+response.code);
           AsyncStorage.setItem('@user', JSON.stringify(r));
           AsyncStorage.setItem('@username', r.full_name);
           AsyncStorage.setItem('@userphone', r.phone);
           AsyncStorage.setItem('@useremail', r.email);
+          AsyncStorage.setItem('@userid', uuID);
           updateActivitySpin(false);
           updateEnabled(true);
           updateUsername('');
@@ -130,7 +130,9 @@ export default function LoginScreen(props) {
       let r = response;
       // console.log("REG RESPONSE  ==== " + JSON.stringify(r));
       if (r.code === "99") {
-        Alert.alert(r.message);
+        updateSuccessText(r.message);
+        updateSuccess('info');
+        updateShow(true);
       }
       else {
         updateSuccessText('Registration Successful: ' + r.message);
@@ -214,7 +216,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#181A1F",
+    backgroundColor: "#fff",
   },
   activitySpinner: {
     position: 'absolute',

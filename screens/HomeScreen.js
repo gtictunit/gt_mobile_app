@@ -23,16 +23,41 @@ function HomeScreen (props) {
   const [convention, updateConvention] = useState([]);
   const [recent, updateRecent] = useState([]);
   const [user, updateUser] = useState([]);
+  const [uId, updateUId] = useState('');
 
   useEffect(() => {
     (async () => {
       const name = await AsyncStorage.getItem('@username');
       const usr = await AsyncStorage.getItem('@user');
+      const user_id = await AsyncStorage.getItem('@userid');
       const code = await AsyncStorage.getItem('@isLoggedin');
       console.log('Home Screen Login Code ===>  '+code);
+      console.log('UID Props ===>  '+props.userid)
+      console.log('UID Storage ===>  '+user_id)
       let r = JSON.parse(usr);
+      let res = await fetch(
+        WEB_URL+"/favorites/get_user_favs_by_id?user_id="+user_id //example and simple data
+       );
+       let response = await res.json();
+       let rr = response.data;
+       let resp = [];
+       rr.forEach(item => {    
+         var gen = new Song(
+           item.message_id,
+           item.service,
+           item.title,
+           item.preacher,
+           item.img_url,
+           item.media_file_url,
+           item.service_date,
+         );
+           resp.push(gen);
+       });
+       console.log("FAVS Home Screen ===> "+JSON.stringify(resp))
+       AsyncStorage.setItem('@favs',JSON.stringify(resp)); 
       updateUsername(name);
       updateUser(r)
+      updateUId(user_id)
     })();
   }, []);
   

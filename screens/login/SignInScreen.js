@@ -8,7 +8,7 @@ import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-g
 
 const { width, height } = Dimensions.get('window');
 
-const logo = require('../login/logo.png');
+const logo = require('../login/lifespring-nobg.png');
 
 export default function SignInScreen(props) {
   // console.log("IN SIGN IN");
@@ -16,12 +16,6 @@ export default function SignInScreen(props) {
   const renderHeaderTextContainer = () => (
     <View style={styles.headerContainer}>
       <Image style={styles.logoImageStyle} source={logo}/>
-      <Text style={[styles.titleTextStyle]}>Welcome!</Text>
-      <View style={styles.descriptionContainer}>
-        <Text style={[styles.descriptionTextStyle]}>
-          {"Glory Tabernacle Mobile Streaming App"}
-        </Text>
-      </View>
     </View>
   );
 
@@ -86,7 +80,7 @@ export default function SignInScreen(props) {
       <ScrollView>
       <KeyboardAvoidingView
         enabled
-        behavior="padding"
+        behavior="position"
         style={styles.keyboardAvoidingViewStyle}
       >
         <SafeAreaView
@@ -121,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    marginTop: 16,
+    // marginBottom: 2,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -132,10 +126,10 @@ const styles = StyleSheet.create({
   },
   descriptionTextStyle: {
     fontSize: 15,
-    color: "#fff",
+    color: "#63A3F4",
   },
   textInputContainer: {
-    marginTop: 24,
+    // marginTop: 5,
     justifyContent: "center",
     width: width * 0.85,
   },
@@ -144,12 +138,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 16,
     paddingLeft: 32,
-    backgroundColor: "#262A34",
-    color: "#fff",
+    backgroundColor: "#F5F5F5",
+    color: "#000",
     borderRadius: isIPhoneNotchFamily() ? 20 : 16,
   },
   forgotPasswordTextStyle: {
-    color: "#fff",
+    color: "#000",
   },
   forgotButtonStyle: {
     height: 30,
@@ -157,8 +151,8 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   signInButtonStyle: {
-    marginTop: 24,
-    backgroundColor: "#99FF00",
+    marginTop: 10,
+    backgroundColor: "#63A3F4",
     width: width * 0.85,
     height: isIPhoneNotchFamily() ? 60 : 55,
     borderRadius: isIPhoneNotchFamily() ? 20 : 16,
@@ -170,9 +164,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   logoImageStyle: {
-    // width: 80,
-    // height: 80,
-    marginBottom: 30,
+    width: 250,
+    height: 250,
+    // marginBottom: 10,
   },
   googleButtonStyle: {
     backgroundColor: "#FFFFFF",
@@ -216,12 +210,12 @@ const styles = StyleSheet.create({
   },
   signUpTextStyle: {
     fontSize: 14,
-    color: "#fff",
+    color: "#000",
   },
   signUpButtonTextStyle: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#99FF00",
+    color: "#000",
   },
   appleButtonStyle: {
     backgroundColor: "#FFFFFF",
@@ -239,7 +233,7 @@ const styles = StyleSheet.create({
   },
   newAccountContainer: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 5,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -247,6 +241,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   descriptionContainer: {
-    marginTop: 16,
+    marginTop: 5,
   },
 });
