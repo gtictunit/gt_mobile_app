@@ -22,6 +22,7 @@ export default function LoginScreen(props) {
   const [fullname, updateFullname] = useState('');
   const [email, updateEmail] = useState('');
   const [phone, updatePhone] = useState('');
+  const [passwordVisible,setPasswordVisible] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -58,7 +59,8 @@ export default function LoginScreen(props) {
           WEB_URL + "/user/is_login", {
           method: "POST",
           body: JSON.stringify(_data),
-          headers: { "Content-type": "application/json; charset=UTF-8" }
+          headers: { "Content-type": "application/json; charset=UTF-8" },
+          timeout: 10000
         }).catch((error) => {
           updateSuccessText('Failed to Connect to network. Please check your connection and try again!')
           updateSuccess('info');
@@ -98,6 +100,10 @@ export default function LoginScreen(props) {
         }
       })();
     }
+  }
+
+  const setVisible = (visible) => {
+    setPasswordVisible(visible);
   }
 
   const handleSignUp = () => {
@@ -160,6 +166,8 @@ export default function LoginScreen(props) {
             handleSignUp={() => updateNewAccount(true)}
             username={username}
             password={password}
+            setVisible = {(visible)=> setVisible(visible)}
+            seePassword = {passwordVisible}
             // enabled={enabled}
           />
         );
@@ -173,6 +181,8 @@ export default function LoginScreen(props) {
             signUpPasswordChangeText={(password) => updatePassword(password)}
             handleSignIn={() => updateNewAccount(false)}
             handleSignUpButton={() => handleSignUp()}
+            setVisible = {(visible)=> setVisible(visible)}
+            seePassword = {passwordVisible}
           />
         );
       }
@@ -198,7 +208,7 @@ export default function LoginScreen(props) {
           closeOnHardwareBackPress={true}
           showConfirmButton={true}
           confirmText="Close"
-          confirmButtonColor="#00ff00"
+          confirmButtonColor="#63A3F4"
           onConfirmPressed= {() => handleClose()}
         />
         </View>

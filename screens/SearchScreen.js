@@ -117,18 +117,18 @@ function SearchScreen(props) {
     ...sunday,
     ...convention,
     ...special,];
-  console.log('Array Holder Before ===>  '+JSON.stringify(arrayHolder));
+  // console.log('Array Holder Before ===>  '+JSON.stringify(arrayHolder));
   const searchFilterFunction = (text) => {
     // console.log('Array Holder After ===>  '+JSON.stringify(arrayHolder));
     const newData = arrayHolder.filter((item) => {
-      console.log('Current Item ===>  '+JSON.stringify(item));
+      // console.log('Current Item ===>  '+JSON.stringify(item));
       const title = ""+item.title
       const serviceDate = ""+item.service_date
       if(title.includes(text) || serviceDate.includes(text)){
         return item;
       }      
     });
-    console.log('Current Data ===>  '+JSON.stringify(newData));
+    // console.log('Current Data ===>  '+JSON.stringify(newData));
     setSearch(text);
     setData(newData);
   };

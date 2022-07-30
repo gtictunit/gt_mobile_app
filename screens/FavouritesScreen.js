@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions, AsyncStorage} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {isIPhoneNotchFamily} from "@freakycoder/react-native-helpers";
 
 import SongItem from '../components/SongItem';
 import Genre from '../models/Genre';
 import Song from '../models/Song';
 import { WEB_URL } from '../constant/urls';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const {width, height} = Dimensions.get('window');
@@ -16,6 +19,7 @@ function FavouritesScreen(props){
   const [sunday, updateSunday] = useState([]);
   const [special, updateSpecial] = useState([]);
   const [convention, updateConvention] = useState([]);
+  const [reloadFavs, UpdateReloadFavs] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -24,8 +28,6 @@ function FavouritesScreen(props){
       const SUNDAY = await AsyncStorage.getItem('@sunday');
       const CONVENTIONS = await AsyncStorage.getItem('@convention');
       const SPECIAL = await AsyncStorage.getItem('@special');
-
-      // console.log("Thursday data ==> "+THURSDAY);      
 
       let resp = [];
 
@@ -100,19 +102,17 @@ function FavouritesScreen(props){
         );
           resp.push(gen);
       });
-      updateSpecial(resp);      
-    })();
-  }, []);
+      updateSpecial(resp);  
 
-  useEffect(() => {
-    (async () => {
+      // if(reloadFavs){
+        console.log("Reloading Favs")
       const user_id = await AsyncStorage.getItem('@userid');
       let res = await fetch(
        WEB_URL+"/favorites/get_user_favs_by_id?user_id="+user_id //example and simple data
       );
       let response = await res.json();
       let r = response.data;
-      let resp = [];
+      resp = [];
       r.forEach(item => {    
         var gen = new Song(
           item.message_id,
@@ -124,11 +124,42 @@ function FavouritesScreen(props){
           item.service_date,
         );
           resp.push(gen);
-      });
+      });   
       updateFavSongs(resp);
       AsyncStorage.setItem('@favs',JSON.stringify(resp)); 
+    // }
+
     })();
   }, []);
+
+
+  const reloadFavList = () => {
+    (async () => {
+    console.log("Reloading Favs")
+    const user_id = await AsyncStorage.getItem('@userid');
+    let res = await fetch(
+     WEB_URL+"/favorites/get_user_favs_by_id?user_id="+user_id 
+    );
+    let response = await res.json();
+    let r = response.data;
+    let resp = [];
+    r.forEach(item => {    
+      var gen = new Song(
+        item.message_id,
+        item.service,
+        item.title,
+        item.preacher,
+        item.img_url,
+        item.media_file_url,
+        item.service_date,
+      );
+        resp.push(gen);
+    });   
+    updateFavSongs(resp);
+    AsyncStorage.setItem('@favs',JSON.stringify(resp)); 
+  })();
+  }
+
 
   if (favSongs.length === 0) {
     return (
@@ -136,6 +167,11 @@ function FavouritesScreen(props){
         <Text style={styles.fav}>Your Favourites</Text>
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Text style={styles.noFav}>No favourites added!</Text>
+          <TouchableOpacity
+            onPress={() => {reloadFavList()}}>
+              <Ionicons name="person" size={25} color='white' />
+            {/* <Text style={styles.login}>Refresh</Text> */}
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -145,14 +181,21 @@ function FavouritesScreen(props){
     <View style={styles.screen}>
       <View style={styles.header}>
         <Text style={styles.fav}>Your Favourites</Text>
+        <TouchableOpacity
+            onPress={() => {reloadFavList()}}>
+              {/* <Text style={styles.login}>Refresh</Text> */}
+              <Ionicons style={styles.login} name="refresh" size={25} color='white' />
+            {/*  */}
+          </TouchableOpacity>
       </View>
       <ScrollView style={{marginTop: 20}}>
         <View>
-          {favSongs.map((item) => (
+          {favSongs.map((item, title) => (
             <SongItem
               artwork={item.artwork}
               title={item.title}
               artist={item.artist}
+              serviceDate={item.service_date}
               onSelect={() =>
                 props.navigation.navigate('SongsPlay', {
                   sid: item.id,
@@ -183,7 +226,7 @@ const styles = StyleSheet.create({
     fontSize: height/25,
     fontWeight: 'bold',
     paddingVertical: height/75,
-    paddingRight: height/75
+    paddingRight: 100
   },
   noFav: {
     color: '#a6a6a6',
@@ -191,6 +234,18 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     
+  },  login: {
+    color: 'white',
+    fontSize: height / 45,
+    paddingBottom: height / 37,
+    paddingTop: 20,
+    paddingLeft: width / 80,
+    fontWeight: 'bold',
+    // backgroundColor: "#63A3F4",
+    width:80,
+    // height:50,
+    textAlign:'center',
+    borderRadius: isIPhoneNotchFamily() ? 20 : 16,
   },
 });
 

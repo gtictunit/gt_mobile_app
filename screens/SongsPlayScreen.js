@@ -18,6 +18,8 @@ import TrackPlayer, { Capability } from 'react-native-track-player';
 import Controller from '../components/Controller';
 import MySlider from '../components/MySlider';
 import Colors from '../components/Colors';
+import Genre from '../models/Genre';
+import Song from '../models/Song';
 
 
 const { width, height } = Dimensions.get('window');
@@ -26,36 +28,36 @@ function SongsPlayScreen(props) {
   const [favSongs, updateFavSongs] = useState([]);
   const [currentSongIsFav, updateCurrentSongIsFav] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const FAVS = await AsyncStorage.getItem('@favs');
-      let resp = [];
-      const t = JSON.parse(FAVS);
-      t.forEach(item => {
-        if (item.title)
-          var gen = new Song(
-            item.id,
-            item.genre,
-            item.title,
-            item.artist,
-            item.artwork,
-            item.url,
-            item.service_date,
-          );
-        resp.push(gen);
-      });
-      resp.forEach(item => {
-        const song_id = item.id;
-        const genre_id = item.genre;
-        console.log('Fav Item loop ===> '+JSON.stringify(item));
-        if (genre_id === gId && song_id === sId) {
-          console.log('Is FAV');
-          updateCurrentSongIsFav(true);
-        }
-      });
-      updateFavSongs(resp);
-    });
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const FAVS = await AsyncStorage.getItem('@favs');
+  //     let resp = [];
+  //     const t = JSON.parse(FAVS);
+  //     t.forEach(item => {
+  //       if (item.title)
+  //         var gen = new Song(
+  //           item.id,
+  //           item.genre,
+  //           item.title,
+  //           item.artist,
+  //           item.artwork,
+  //           item.url,
+  //           item.service_date,
+  //         );
+  //       resp.push(gen);
+  //     });
+  //     updateFavSongs(resp);
+  //     resp.forEach(item => {
+  //       const song_id = item.id;
+  //       const genre_id = item.genre;
+  //       console.log('Fav Item loop ===> '+JSON.stringify(item));
+  //       if (genre_id === gId && song_id === sId) {
+  //         console.log('Is FAV');
+  //         updateCurrentSongIsFav(true);
+  //       }
+  //     }); 
+  //   });
+  // }, []);
 
   useEffect(() => {
     (async () => {
@@ -104,6 +106,34 @@ function SongsPlayScreen(props) {
       await TrackPlayer.add(displayedSongs);
       TrackPlayer.skip(sId); //to start from the selected song
       setIsPlayerReady(true);
+
+      const FAVS = await AsyncStorage.getItem('@favs');
+      let resp = [];
+      const t = JSON.parse(FAVS);
+      t.forEach(item => {
+        if (item.title)
+          var gen = new Song(
+            item.id,
+            item.genre,
+            item.title,
+            item.artist,
+            item.artwork,
+            item.url,
+            item.service_date,
+          );
+        resp.push(gen);
+      });
+      updateFavSongs(resp);
+      resp.forEach(item => {
+        const song_id = item.id;
+        const genre_id = item.genre;
+        console.log('Fav Item loop ===> '+JSON.stringify(item));
+        if (genre_id === gId && song_id === sId) {
+          console.log('Is FAV');
+          updateCurrentSongIsFav(true);
+        }
+      }); 
+
       TrackPlayer.play();
     });
     TrackPlayer.updateOptions({

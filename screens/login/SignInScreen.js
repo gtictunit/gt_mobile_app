@@ -3,7 +3,8 @@ import {
   isAndroid,
   isIPhoneNotchFamily, getStatusBarHeight
 } from "@freakycoder/react-native-helpers";
-import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, KeyboardAvoidingView, SafeAreaView, View, TextInput, Text, Image } from 'react-native';
+import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, KeyboardAvoidingView, SafeAreaView, View, Text, Image } from 'react-native';
+import {TextInput} from 'react-native-paper'
 import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 
 const { width, height } = Dimensions.get('window');
@@ -12,6 +13,8 @@ const logo = require('../login/lifespring-nobg.png');
 
 export default function SignInScreen(props) {
   // console.log("IN SIGN IN");
+  const [passwordVisible,setPasswordVisible] = useState(true)
+
 
   const renderHeaderTextContainer = () => (
     <View style={styles.headerContainer}>
@@ -32,10 +35,10 @@ export default function SignInScreen(props) {
         placeholder="Password"
         placeholderTextColor="#6C6D72"
         style={[styles.textInputStyle]}
-        secureTextEntry
+        secureTextEntry={passwordVisible}
         onChangeText={props.passwordChangeText}
         value={props.password}
-        // editable={props.enabled}
+        right={<TextInput.Icon name={passwordVisible ? "eye-off" : "eye"} onPress={() => setPasswordVisible(!passwordVisible)} />}
       />
       <TouchableOpacity
         style={styles.forgotButtonStyle}

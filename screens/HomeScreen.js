@@ -31,9 +31,9 @@ function HomeScreen (props) {
       const usr = await AsyncStorage.getItem('@user');
       const user_id = await AsyncStorage.getItem('@userid');
       const code = await AsyncStorage.getItem('@isLoggedin');
-      console.log('Home Screen Login Code ===>  '+code);
-      console.log('UID Props ===>  '+props.userid)
-      console.log('UID Storage ===>  '+user_id)
+      // console.log('Home Screen Login Code ===>  '+code);
+      // console.log('UID Props ===>  '+props.userid)
+      // console.log('UID Storage ===>  '+user_id)
       let r = JSON.parse(usr);
       let res = await fetch(
         WEB_URL+"/favorites/get_user_favs_by_id?user_id="+user_id //example and simple data
@@ -53,7 +53,7 @@ function HomeScreen (props) {
          );
            resp.push(gen);
        });
-       console.log("FAVS Home Screen ===> "+JSON.stringify(resp))
+      //  console.log("FAVS Home Screen ===> "+JSON.stringify(resp))
        AsyncStorage.setItem('@favs',JSON.stringify(resp)); 
       updateUsername(name);
       updateUser(r)
