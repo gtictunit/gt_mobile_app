@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontSize: height / 41.6,
+    fontSize: height / 65,
+    fontWeight: 'bold'
   },
   artist: {
     color: 'gray',

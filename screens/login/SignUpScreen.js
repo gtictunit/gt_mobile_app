@@ -28,10 +28,16 @@ export default function SignUpScreen(props) {
   const renderTextInputContainer = () => (
     <View style={styles.textInputContainer}>
       <TextInput        
-        placeholder={"Full Name"}
+        placeholder={"First Name"}
         placeholderTextColor="#6C6D72"
         style={[styles.textInputStyle]}
         onChangeText={props.fullNameOnChange}
+      />
+      <TextInput        
+        placeholder={"Last Name"}
+        placeholderTextColor="#6C6D72"
+        style={[styles.textInputStyle]}
+        onChangeText={props.lastNameOnChange}
       />
       <TextInput        
         placeholder={"Email"}
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#181A1F",
+    backgroundColor: "#fff",
   },
   headerContainer: {
     marginTop: 24,
@@ -156,7 +162,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   signUpButtonStyle: {
-    backgroundColor: "#5467FF",
+    backgroundColor: "#63A3F4",
     width: width * 0.85,
     height: isIPhoneNotchFamily() ? 60 : 55,
     borderRadius: isIPhoneNotchFamily() ? 20 : 16,

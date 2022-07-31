@@ -5934,6 +5934,11 @@
   dependencies:
     "@freakycoder/react-native-helpers" "^1.0.1"
 
+"react-native-device-detection@^0.2.1":
+  "integrity" "sha512-0ErWdxoB4DPLuzzjgS3nUyzauo1YoJ0QjQJZMjx0dr3MGdF3SE9T3Lb2lKj3kPsTQYy5qnlWZ24DmQkHZlIjgw=="
+  "resolved" "https://registry.npmjs.org/react-native-device-detection/-/react-native-device-detection-0.2.1.tgz"
+  "version" "0.2.1"
+
 "react-native-elements@^2.3.2":
   "integrity" "sha512-HygYYmq8JYjk/YYiUwr/64qT64H2xlPBz0JnkGTQwvnnyXZrfkHFopw8rLWCupv3iLLPDzVohvPs0Z5HLdonSQ=="
   "resolved" "https://registry.npmjs.org/react-native-elements/-/react-native-elements-2.3.2.tgz"

@@ -20,6 +20,7 @@ export default function LoginScreen(props) {
   const [username, updateUsername] = useState('');
   const [password, updatePassword] = useState('');
   const [fullname, updateFullname] = useState('');
+  const [lastname, updateLastname] = useState('');
   const [email, updateEmail] = useState('');
   const [phone, updatePhone] = useState('');
   const [passwordVisible,setPasswordVisible] = useState(false)
@@ -109,16 +110,17 @@ export default function LoginScreen(props) {
   const handleSignUp = () => {
     console.log(email + " ==== " + fullname);
     updateActivitySpin(true);
+    
     let _data = {
       email: email,
-      full_name: fullname,
+      full_name: fullname+" "+lastname,
       login: username,
       phone: phone,
       password: password
     }
     if (username == null || password == null || username == '' || password == '' ||
       phone == null || email == null || email == '' || phone == '' ||
-      fullname == null || fullname == ''
+      fullname == null || fullname == ''||lastname == null || lastname == ''
     ) {
       updateSuccessText('Enter All Fields');
       updateSuccess('info');
@@ -175,6 +177,7 @@ export default function LoginScreen(props) {
         return (
           <SignUpScreen
             fullNameOnChange={(fullname) => updateFullname(fullname)}
+            lastNameOnChange={(lastname) => updateLastname(lastname)}
             emailOnChange={(email) => updateEmail(email)}
             phoneOnChange={(phone) => updatePhone(phone)}
             usernameOnChange={(username) => updateUsername(username)}

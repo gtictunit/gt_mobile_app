@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions, AsyncStorage} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {isIPhoneNotchFamily} from "@freakycoder/react-native-helpers";
+import Device from 'react-native-device-detection';
 
 import SongItem from '../components/SongItem';
 import Genre from '../models/Genre';
@@ -169,7 +170,7 @@ function FavouritesScreen(props){
           <Text style={styles.noFav}>No favourites added!</Text>
           <TouchableOpacity
             onPress={() => {reloadFavList()}}>
-              <Ionicons name="person" size={25} color='white' />
+              <Ionicons name="refresh" size={25} color='white' />
             {/* <Text style={styles.login}>Refresh</Text> */}
           </TouchableOpacity>
         </View>
@@ -181,11 +182,10 @@ function FavouritesScreen(props){
     <View style={styles.screen}>
       <View style={styles.header}>
         <Text style={styles.fav}>Your Favourites</Text>
+          <Text style={styles.loginText}>Refresh</Text>
         <TouchableOpacity
             onPress={() => {reloadFavList()}}>
-              {/* <Text style={styles.login}>Refresh</Text> */}
-              <Ionicons style={styles.login} name="refresh" size={25} color='white' />
-            {/*  */}
+              <Ionicons style={styles.login} name="refresh-circle-outline"/>
           </TouchableOpacity>
       </View>
       <ScrollView style={{marginTop: 20}}>
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     fontSize: height/25,
     fontWeight: 'bold',
     paddingVertical: height/75,
-    paddingRight: 100
+    paddingRight: Device.isTablet? width/10 : width/10
   },
   noFav: {
     color: '#a6a6a6',
@@ -234,18 +234,24 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     
-  },  login: {
+  }, 
+  login: {
     color: 'white',
-    fontSize: height / 45,
+    fontSize: Device.isTablet? 40 : 30,
     paddingBottom: height / 37,
-    paddingTop: 20,
-    paddingLeft: width / 80,
+    paddingTop: Device.isTablet? 35 : 15,
+    paddingLeft: width / 65,
     fontWeight: 'bold',
     // backgroundColor: "#63A3F4",
-    width:80,
+    // width:80,
     // height:50,
     textAlign:'center',
-    borderRadius: isIPhoneNotchFamily() ? 20 : 16,
+  },
+  loginText: {
+    color: 'white',
+    paddingBottom: height / 37,
+    paddingTop: Device.isTablet? 40 : 22,
+    fontSize: Device.isTablet? 25 : 15,
   },
 });
 
