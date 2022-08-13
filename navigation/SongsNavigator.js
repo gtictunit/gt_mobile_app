@@ -10,6 +10,7 @@ import FavouritesScreen from '../screens/FavouritesScreen';
 import SongsListScreen from '../screens/SongsListScreen';
 import SongsPlayScreen from '../screens/SongsPlayScreen';
 import SearchScreen from '../screens/SearchScreen';
+import PastorDeskScreen from '../screens/PastorDeskScreen';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -21,6 +22,7 @@ const AllSongsNavigator = createStackNavigator(
     Home: HomeScreen,
     SongsList: SongsListScreen,
     SongsPlay: SongsPlayScreen,
+    PastorDesk: PastorDeskScreen,
   },
   {
     defaultNavigationOptions: {

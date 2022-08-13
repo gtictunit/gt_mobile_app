@@ -7,9 +7,11 @@ import Genre from '../models/Genre';
 import Song from '../models/Song';
 import { WEB_URL } from '../constant/urls';
 import GenreGrid from '../components/GenreGrid';
+import PostGrid from '../components/PostGrid';
 import Recomm from '../components/Recomm';
 
 import TrackPlayer from 'react-native-track-player';
+import Post from '../models/Post';
 
 const {width, height} = Dimensions.get('window');
 
@@ -22,6 +24,7 @@ function HomeScreen (props) {
   const [special, updateSpecial] = useState([]);
   const [convention, updateConvention] = useState([]);
   const [recent, updateRecent] = useState([]);
+  const [lastpost, updateLastPost] = useState([]);
   const [user, updateUser] = useState([]);
   const [uId, updateUId] = useState('');
 
@@ -31,10 +34,8 @@ function HomeScreen (props) {
       const usr = await AsyncStorage.getItem('@user');
       const user_id = await AsyncStorage.getItem('@userid');
       const code = await AsyncStorage.getItem('@isLoggedin');
-      // console.log('Home Screen Login Code ===>  '+code);
-      // console.log('UID Props ===>  '+props.userid)
-      // console.log('UID Storage ===>  '+user_id)
       let r = JSON.parse(usr);
+
       let res = await fetch(
         WEB_URL+"/favorites/get_user_favs_by_id?user_id="+user_id //example and simple data
        );
@@ -202,6 +203,31 @@ function HomeScreen (props) {
     })();
   }, []);
 
+
+  useEffect(() => {
+    (async () => {
+      let res = await fetch(
+       WEB_URL+"/posts/get_last_post" //example and simple data
+      );
+      let response = await res.json();
+      let r = response.data;
+      console.log('Posts:: ---->>>  '+JSON.stringify(r))
+      // let resp = [];
+      // r.forEach(item => {    
+      //   var gen = new Post(
+      //     item.post_id,
+      //     item.title,
+      //     item.content,
+      //     item.upload_date,
+      //   );
+      //     resp.push(gen);
+      // });
+      // updateLastPost(resp);
+      // AsyncStorage.setItem('@posts',JSON.stringify(resp)); 
+    })();
+  }, []);
+
+
   const renderGenreItem = ({item, index}) => {
     //  console.log("ITEM ===>  "+JSON.stringify(item));
     return (
@@ -244,6 +270,22 @@ function HomeScreen (props) {
     );
   };
 
+  const renderPostItem = ({item, index}) => {
+    return (
+      <PostGrid
+        imageUrl={item.imageUrl}
+        title={""}
+        onSelect={() => 
+          props.navigation.navigate('PastorDesk', {
+            title: item.title, 
+            content: item.content, 
+            date:item.upload_date
+          })
+        }
+      />
+    );
+  };
+
   return (
     <View style={{backgroundColor: 'black', padding: 10}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -279,6 +321,18 @@ function HomeScreen (props) {
             showsHorizontalScrollIndicator={false}
           />
         </View>
+
+        {/* <Text style={styles.subHeader}>Services</Text>
+        <View style={styles.listOfGenres}>
+          <FlatList
+            keyExtractor={(item, index) => item.id}
+            key={lastpost} //new thing, Changing numColumns on the fly is not supported. Change the key prop on FlatList when changing the number of columns to force a fresh render of the component.
+            horizontal
+            data={lastpost}
+            renderItem={renderPostItem}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View> */}
       </ScrollView>
     </View>
   );
