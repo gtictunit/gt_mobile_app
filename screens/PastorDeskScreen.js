@@ -12,7 +12,7 @@ function PastorDeskScreen(props) {
     const date = props.navigation.getParam('date');
     const content = props.navigation.getParam('content');
 
-    console.log("Content :::>  "+content)
+    // console.log("Content :::>  "+content)
 
     return (
         <View style={{ backgroundColor: 'white', padding: 10}}>
