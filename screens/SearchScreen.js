@@ -141,7 +141,7 @@ function SearchScreen(props) {
         inputContainerStyle={{backgroundColor: '#282828', padding: 5}}
         inputStyle={{color: 'white'}}
         placeholderTextColor="gray"
-        placeholder="Search for songs..."
+        placeholder="Type Here..."
         value={search}
         underlineColorAndroid={Colors.primary}
         onChangeText={(text) => {

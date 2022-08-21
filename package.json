@@ -12,6 +12,7 @@
     "release-build": "rmdir android/app/src/main/res/drawable-* && rmdir android/app/src/main/res/raw/* && cd android && ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
+    "@draftbit/ui": "^46.0.2",
     "@freakycoder/react-native-helpers": "^1.0.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/slider": "^3.0.3",
