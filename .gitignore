@@ -75,3 +75,4 @@ android/app/src/main/res/drawable-xxhdpi/node_modules_reactnavigationstack_lib_m
 android/app/src/main/res/drawable-xxxhdpi/node_modules_reactnavigationstack_lib_module_vendor_views_assets_backicon.png
 android/app/src/main/res/drawable-mdpi/screens_login_lifespringnobg.png
 android/app/src/main/assets/
+*.bundle
