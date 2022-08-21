@@ -209,21 +209,20 @@ function HomeScreen (props) {
       let res = await fetch(
        WEB_URL+"/posts/get_last_post" //example and simple data
       );
+      console.log('Posts:: ---->>>  ')
       let response = await res.json();
-      let r = response.data;
-      console.log('Posts:: ---->>>  '+JSON.stringify(r))
-      // let resp = [];
-      // r.forEach(item => {    
-      //   var gen = new Post(
-      //     item.post_id,
-      //     item.title,
-      //     item.content,
-      //     item.upload_date,
-      //   );
-      //     resp.push(gen);
-      // });
-      // updateLastPost(resp);
-      // AsyncStorage.setItem('@posts',JSON.stringify(resp)); 
+      let r = response.data;  
+        var gen = new Post(
+          r.post_id,
+          r.title,
+          r.posttext,
+          r.upload_date,
+        );
+        let resp = [];
+        resp.push(gen)
+      console.log('Posts:: ---->>>  '+JSON.stringify(resp))
+      updateLastPost(resp);
+      AsyncStorage.setItem('@posts',JSON.stringify(resp)); 
     })();
   }, []);
 
@@ -273,8 +272,8 @@ function HomeScreen (props) {
   const renderPostItem = ({item, index}) => {
     return (
       <PostGrid
-        imageUrl={item.imageUrl}
-        title={""}
+        imageUrl={"https://gtmobile.glorytabernacleibadan.org/uploads/Pastor_desk.png"}
+        title={item.title}
         onSelect={() => 
           props.navigation.navigate('PastorDesk', {
             title: item.title, 
@@ -321,18 +320,17 @@ function HomeScreen (props) {
             showsHorizontalScrollIndicator={false}
           />
         </View>
-
-        {/* <Text style={styles.subHeader}>Services</Text>
-        <View style={styles.listOfGenres}>
+        <Text style={styles.pText}>Pastor's Desk</Text>
+        <View style={styles.desk}>        
           <FlatList
             keyExtractor={(item, index) => item.id}
-            key={lastpost} //new thing, Changing numColumns on the fly is not supported. Change the key prop on FlatList when changing the number of columns to force a fresh render of the component.
-            horizontal
+            key={lastpost} 
             data={lastpost}
             renderItem={renderPostItem}
             showsHorizontalScrollIndicator={false}
+            numColumns={1}
           />
-        </View> */}
+        </View>
       </ScrollView>
     </View>
   );
@@ -359,8 +357,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   subHeader: {
-    fontSize: height / 41,
-    color: 'gold',
+    fontSize: height / 30,
+    color: 'white',
     paddingBottom: height / 75,
     paddingLeft: width / 25,
     fontWeight: 'bold',
@@ -372,12 +370,21 @@ const styles = StyleSheet.create({
 
   recomm: {
     padding: height / 75,
-    height: height / 2,
+    height: height / 2.7,
   },
   recommText: {
     color: 'gray',
     fontSize: height / 41,
     marginBottom: height / 50,
+    fontWeight: 'bold',
+  },
+  desk: {
+    flex: 1,
+    marginBottom: height / 37,
+  },
+  pText: {
+    color: 'white',
+    fontSize: height / 30,
     fontWeight: 'bold',
   },
 });

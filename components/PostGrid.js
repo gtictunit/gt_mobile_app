@@ -26,6 +26,7 @@ const PostGrid = (props) => {
           source={{uri: props.imageUrl}}
           style={{height: '100%', width: '100%'}}>
           <View style={{...styles.container, ...props.image}}>
+            <Text style={styles.heading}>TOPIC:</Text>
             <Text numberOfLines={2} style={styles.title}>
               {props.title}
             </Text>
@@ -41,8 +42,8 @@ const styles = StyleSheet.create({
   grid: {
     flex: 1,
     margin: 5,
-    height: height / 7,
-    borderBottomEndRadius: height / 25,
+    height: height / 2.7,
+    // borderBottomEndRadius: height / 25,
     /* borderColor: 'grey',
     borderWidth: 1, */
     overflow: 'hidden',
@@ -50,13 +51,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     padding: height / 75,
   },
-  title: {
-    color: 'white',
-    fontSize: height / 41.6,
+  heading: {
+    color: 'black',
+    fontSize: height / 30,
     textAlign: 'right',
+    paddingTop: 120,
+    fontWeight: 'bold',
+  },
+  title: {
+    color: 'blue',
+    fontSize: height / 43,
+    textAlign: 'right',
+    // paddingTop: 1 ,
+    fontWeight: 'bold',
   },
 });
 
