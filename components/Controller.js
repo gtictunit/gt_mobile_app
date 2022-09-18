@@ -14,23 +14,28 @@ const {width, height} = Dimensions.get('window');
 const Controller = (props) => {
   const playBackState = usePlaybackState(); //custom hook by the react-native-track-player package
   const [isPlaying, setIsPlaying] = useState('paused');
-  const [stopped, setStopped] = useState(false);
 
   useEffect(() => {
+    console.log('playBackState:  '+playBackState)
     if (playBackState === 'playing' || playBackState === 3) {
       setIsPlaying('playing');
     } else if (playBackState === 'paused' || playBackState === 2) {
       setIsPlaying('paused');
+    } else if (playBackState === 'stopped' || playBackState === 0) {
+      setIsPlaying('stopped');
     } else {
       setIsPlaying('loading');
     }
   }, [playBackState]);
 
   const renderPlayPauseButton = () => {
+    console.log('ISPLAYING:  '+isPlaying)
     switch (isPlaying) {
       case 'playing':
         return <Fontisto name="pause" size={height / 25.8} color="white" />;
       case 'paused':
+        return <FontAwesome5 name="play" size={height / 25.8} color="white" />;
+      case 'stopped':
         return <FontAwesome5 name="play" size={height / 25.8} color="white" />;
       default:
         return <ActivityIndicator size={height / 25} color="gray" />;
@@ -42,12 +47,8 @@ const Controller = (props) => {
   };
 
   const onPressStop = () => {
-    if (playBackState === 'playing' || playBackState === 3) {
-      setStopped(true);
-      TrackPlayer.pause();
-    } else if (playBackState === 'paused' || playBackState === 2) {
-      setStopped(true);
-    }
+    setIsPlaying('stopped');
+    TrackPlayer.stop();
   };
 
   const onPlayPause = () => {
@@ -56,7 +57,7 @@ const Controller = (props) => {
       //I couldn't find in the documentation about this, it should be 'playing' but on the console it printed 3 for 'playing' and 2 for 'paused'
       //apparently this is 3 only on android
       TrackPlayer.pause();
-    } else if ((playBackState === 'paused' || playBackState === 2)&&stopped) {
+    } else if (playBackState === 'stopped' || playBackState === 0) {
       TrackPlayer.skip(props.sId);
       TrackPlayer.play();
     } else if (playBackState === 'paused' || playBackState === 2) {

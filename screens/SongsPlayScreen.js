@@ -28,37 +28,6 @@ function SongsPlayScreen(props) {
   const [favSongs, updateFavSongs] = useState([]);
   const [currentSongIsFav, updateCurrentSongIsFav] = useState(false);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const FAVS = await AsyncStorage.getItem('@favs');
-  //     let resp = [];
-  //     const t = JSON.parse(FAVS);
-  //     t.forEach(item => {
-  //       if (item.title)
-  //         var gen = new Song(
-  //           item.id,
-  //           item.genre,
-  //           item.title,
-  //           item.artist,
-  //           item.artwork,
-  //           item.url,
-  //           item.service_date,
-  //         );
-  //       resp.push(gen);
-  //     });
-  //     updateFavSongs(resp);
-  //     resp.forEach(item => {
-  //       const song_id = item.id;
-  //       const genre_id = item.genre;
-  //       console.log('Fav Item loop ===> '+JSON.stringify(item));
-  //       if (genre_id === gId && song_id === sId) {
-  //         console.log('Is FAV');
-  //         updateCurrentSongIsFav(true);
-  //       }
-  //     }); 
-  //   });
-  // }, []);
-
   useEffect(() => {
     (async () => {
   });
@@ -136,11 +105,13 @@ function SongsPlayScreen(props) {
 
       TrackPlayer.play();
     });
+
     TrackPlayer.updateOptions({
       stopWithApp: true,
       notificationCapabilities: [
         Capability.Play,
         Capability.Pause,
+        Capability.Stop,
         Capability.SkipToNext,
         Capability.SkipToPrevious,
       ],
@@ -169,17 +140,6 @@ function SongsPlayScreen(props) {
       offset: (songIndex - 1) * width,
     }); //Flatlist will scroll to the previous item in the queue
   };
-
-  // const dispatch = useDispatch();
-
-  // const toggleFavouriteHandler = useCallback(() => {
-  //   //useCallback to prevent recreation of this function
-  //   //after every rerender but not needed here
-  //   //earlier I thought I'll add this fav icon in the header, for that I had to pass it to the header using params
-  //   //with help of useEffect and the dependency would be the same funcion, so to prevent infinite number of loops
-  //   console.log('liked');
-  //   dispatch(toggleFavourite(displayedSongs[songIndex].id, uId, gId));
-  // }, [dispatch, displayedSongs[songIndex].id, uId, gId]);
 
   const addFavorite = (songId, genreId) => {
     (async () => {

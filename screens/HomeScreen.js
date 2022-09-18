@@ -15,6 +15,8 @@ import Post from '../models/Post';
 
 const {width, height} = Dimensions.get('window');
 
+const logo = require('./login/p.png');
+
 
 function HomeScreen (props) {
   const [username, updateUsername] = useState('')
@@ -272,8 +274,8 @@ function HomeScreen (props) {
   const renderPostItem = ({item, index}) => {
     return (
       <PostGrid
-        imageUrl={"https://gtmobile.glorytabernacleibadan.org/uploads/Pastor_desk.png"}
-        title={item.title}
+        imageUrl={logo}
+        title={""}
         onSelect={() => 
           props.navigation.navigate('PastorDesk', {
             title: item.title, 
@@ -328,7 +330,7 @@ function HomeScreen (props) {
             data={lastpost}
             renderItem={renderPostItem}
             showsHorizontalScrollIndicator={false}
-            numColumns={1}
+            // numColumns={1}
           />
         </View>
       </ScrollView>

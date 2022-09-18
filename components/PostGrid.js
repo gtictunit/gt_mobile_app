@@ -23,14 +23,8 @@ const PostGrid = (props) => {
     <View style={styles.grid}>
       <TouchableCmp onPress={props.onSelect}>
         <ImageBackground
-          source={{uri: props.imageUrl}}
+          source={props.imageUrl}
           style={{height: '100%', width: '100%'}}>
-          <View style={{...styles.container, ...props.image}}>
-            <Text style={styles.heading}>TOPIC:</Text>
-            <Text numberOfLines={2} style={styles.title}>
-              {props.title}
-            </Text>
-          </View>
         </ImageBackground>
       </TouchableCmp>
     </View>
@@ -41,15 +35,15 @@ const PostGrid = (props) => {
 const styles = StyleSheet.create({
   grid: {
     flex: 1,
+    // flexDirection: "row",
+    // flexWrap: "wrap",
+    alignItems: 'center',
+    justifyContent: 'center',
     margin: 5,
-    height: height / 2.7,
-    // borderBottomEndRadius: height / 25,
-    /* borderColor: 'grey',
-    borderWidth: 1, */
+    height: height / 3.4,
     overflow: 'hidden',
   },
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: height / 75,
