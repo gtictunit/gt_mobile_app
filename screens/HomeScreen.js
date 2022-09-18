@@ -11,6 +11,7 @@ import PostGrid from '../components/PostGrid';
 import Recomm from '../components/Recomm';
 
 import TrackPlayer from 'react-native-track-player';
+import Carousel from 'react-native-snap-carousel';
 import Post from '../models/Post';
 
 const {width, height} = Dimensions.get('window');
@@ -29,6 +30,7 @@ function HomeScreen (props) {
   const [lastpost, updateLastPost] = useState([]);
   const [user, updateUser] = useState([]);
   const [uId, updateUId] = useState('');
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -249,6 +251,16 @@ function HomeScreen (props) {
     );
   };
 
+  const renderCarouselItem = ({item, index}) => {
+    return (
+      <GenreGrid
+        imageUrl={item.imageUrl}
+        title={""}
+        onSelect={() =>{}  }
+      />
+  );
+  }
+
   const renderSongItem = ({item, index}) => {
     return (
       <Recomm
@@ -302,6 +314,14 @@ function HomeScreen (props) {
             <Text style={styles.login}>Logout</Text>
           </TouchableOpacity>
         </View>
+        <Carousel
+              // ref={(c) => { this._carousel = c; }}
+              data={genres}
+              renderItem={renderCarouselItem}
+              sliderWidth={400}
+              itemWidth={200}
+              onSnapToItem = { index => setIndex(index) } 
+            />
         <Text style={styles.subHeader}>Services</Text>
 
         <View style={styles.listOfGenres}>
