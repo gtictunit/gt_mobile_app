@@ -13,6 +13,8 @@ import Recomm from '../components/Recomm';
 import TrackPlayer from 'react-native-track-player';
 import Carousel from 'react-native-snap-carousel';
 import Post from '../models/Post';
+import CarouselImg from '../components/CarouselImg';
+import CarouselItem from '../models/CarouselItem';
 
 const {width, height} = Dimensions.get('window');
 
@@ -31,6 +33,7 @@ function HomeScreen (props) {
   const [user, updateUser] = useState([]);
   const [uId, updateUId] = useState('');
   const [index, setIndex] = useState(0);
+  const [carouselItems, updateCarouselItems] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -80,6 +83,25 @@ function HomeScreen (props) {
       });
       updateGenres(resp);
       AsyncStorage.setItem('@genres',JSON.stringify(resp)); 
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      let res = await fetch(
+        WEB_URL+"/carousel/get_carouselitems" //example and simple data
+      );
+      console.log('Carousel Items  ==>>> '+JSON.stringify(resp))
+      let response = await res.json();
+      let r = response.data;
+      let resp = [];
+      r.forEach(item => {    
+        var gen = new CarouselItem(item.id,item.img);
+          resp.push(gen);
+      });
+      console.log('Carousel Items  ==>>> '+JSON.stringify(resp))
+      updateCarouselItems(resp);
+      // AsyncStorage.setItem('@',JSON.stringify(resp)); 
     })();
   }, []);
 
@@ -253,7 +275,7 @@ function HomeScreen (props) {
 
   const renderCarouselItem = ({item, index}) => {
     return (
-      <GenreGrid
+      <CarouselImg
         imageUrl={item.imageUrl}
         title={""}
         onSelect={() =>{}  }
@@ -316,11 +338,15 @@ function HomeScreen (props) {
         </View>
         <Carousel
               // ref={(c) => { this._carousel = c; }}
-              data={genres}
+              keyExtractor={(item, index) => item.id}
+              data={carouselItems}
               renderItem={renderCarouselItem}
-              sliderWidth={400}
-              itemWidth={200}
-              onSnapToItem = { index => setIndex(index) } 
+              sliderWidth={width}
+              itemWidth={width}
+              // onSnapToItem = { index => setIndex(index) } 
+              enableSnap = {true}
+              loop={true}
+              autoplay={true}
             />
         <Text style={styles.subHeader}>Services</Text>
 
@@ -336,6 +362,7 @@ function HomeScreen (props) {
         <View style={styles.recomm}>
           <Text style={styles.recommText}>Recent Uploads</Text>
           <FlatList
+            keyExtractor={(item, index) => item.id}
             horizontal
             data={recent}
             renderItem={renderSongItem}

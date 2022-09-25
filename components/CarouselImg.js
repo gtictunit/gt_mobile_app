@@ -13,21 +13,16 @@ import {
 
 const {width, height} = Dimensions.get('window');
 
-let TouchableCmp = TouchableOpacity;
 
-if (Platform.OS === 'android' && Platform.Version >= 21) {
-  TouchableCmp = TouchableNativeFeedback; //diff for both ios and android
-}
-
-const GenreGrid = (props) => {
+const CarouselImg = (props) => {
   return (
     <View style={styles.grid}>
-      <TouchableCmp onPress={props.onSelect}>
         <ImageBackground
           source={{uri: props.imageUrl}}
           style={{height: '100%', width: '100%'}}>
+          <View style={{...styles.container, ...props.image}}>
+          </View>
         </ImageBackground>
-      </TouchableCmp>
     </View>
   )
   
@@ -37,8 +32,7 @@ const styles = StyleSheet.create({
   grid: {
     flex: 1,
     margin: 5,
-    height: height / 7,
-    borderBottomEndRadius: height / 25,
+    height: height / 3,
     /* borderColor: 'grey',
     borderWidth: 1, */
     overflow: 'hidden',
@@ -56,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GenreGrid;
+export default CarouselImg;
