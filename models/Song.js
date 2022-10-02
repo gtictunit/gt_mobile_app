@@ -9,7 +9,7 @@ class Song {
   //   this.service_date = service_date;
   // }
 
-  constructor(id, genre, title, artist, artwork, url, service_date) { //to provide a blueprint for how our songs will look like, what all it will contain
+  constructor(id, genre, title, artist, artwork, url, service_date, list_id) { //to provide a blueprint for how our songs will look like, what all it will contain
     this.id = id;
     this.genre = genre;
     this.title = title;
@@ -17,6 +17,7 @@ class Song {
     this.artwork = artwork;
     this.url = url;
     this.service_date = service_date;
+    this.list_id = list_id;
   }
 }
 

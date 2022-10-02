@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Dimensions, FlatList, AsyncStorage} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, FlatList, AsyncStorage, RefreshControl, LogBox} from 'react-native';
 // import { AsyncStorage } from 'react-native-community';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -34,6 +34,18 @@ function HomeScreen (props) {
   const [uId, updateUId] = useState('');
   const [index, setIndex] = useState(0);
   const [carouselItems, updateCarouselItems] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release']);
+}, [])
 
   useEffect(() => {
     (async () => {
@@ -222,6 +234,7 @@ function HomeScreen (props) {
           item.img_url,
           item.media_file_url,
           item.service_date,
+          item.id,
         );
           resp.push(gen)
       });
@@ -239,7 +252,7 @@ function HomeScreen (props) {
       let response = await res.json();
       let r = response.data;  
         var gen = new Post(
-          r.post_id,
+          r.post_id+"",
           r.title,
           r.posttext,
           r.upload_date,
@@ -323,22 +336,28 @@ function HomeScreen (props) {
 
   return (
     <View style={{backgroundColor: 'black', padding: 10}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}
+      refreshControl ={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={()=>onRefresh()}
+        />
+      }
+      >
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.header}>Shalom!,  {username} </Text>
-          
-          <TouchableOpacity
+          <Text style={styles.header}>Shalom!,  {username} </Text>          
+          {/* <TouchableOpacity
             onPress={() => {
               TrackPlayer.stop()
               AsyncStorage.setItem('@isLoggedIn', '99')
               props.navigation.navigate('Login');//added just for test purpose
             }}>
             <Text style={styles.login}>Logout</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <Carousel
               // ref={(c) => { this._carousel = c; }}
-              keyExtractor={(item, index) => item.id}
+              // keyExtractor={(item, index) => item.id}
               data={carouselItems}
               renderItem={renderCarouselItem}
               sliderWidth={width}
@@ -362,7 +381,7 @@ function HomeScreen (props) {
         <View style={styles.recomm}>
           <Text style={styles.recommText}>Recent Uploads</Text>
           <FlatList
-            keyExtractor={(item, index) => item.id}
+            keyExtractor={(item, index) => item.list_id}
             horizontal
             data={recent}
             renderItem={renderSongItem}
@@ -372,7 +391,7 @@ function HomeScreen (props) {
         <Text style={styles.pText}>Pastor's Desk</Text>
         <View style={styles.desk}>        
           <FlatList
-            keyExtractor={(item, index) => item.id}
+            // keyExtractor={(item, index) => item.id}
             key={lastpost} 
             data={lastpost}
             renderItem={renderPostItem}

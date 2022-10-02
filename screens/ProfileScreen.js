@@ -1,7 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, View, Linking, AsyncStorage } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, SafeAreaView, StyleSheet, AsyncStorage} from 'react-native';
+import {
+  Avatar,
+  Title,
+  Caption,
+  Text,
+  TouchableRipple,
+} from 'react-native-paper';
+
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TrackPlayer from 'react-native-track-player';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 const logo = require('./login/logo.png');
 
@@ -16,126 +24,157 @@ function ProfileScreen (props) {
       const namer = await AsyncStorage.getItem('@username');
       const emailr = await AsyncStorage.getItem('@useremail');
       const phoner = await AsyncStorage.getItem('@userphone');
+      console.log('Name:  '+namer)
       updateName(namer);
       updateEmail(emailr);
       updatePhone(phoner);
     })();
   }, []);
 
-
-
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <Image style={styles.avatar}
-            source={logo} />
+    <SafeAreaView style={styles.container}>
 
-          <Text style={styles.name}>{name}</Text>
-          <Text style={styles.userInfo}>{email}</Text>
-          <Text style={styles.userInfo}>{phone}</Text>
+      <View style={styles.userInfoSection}>
+        <View style={{flexDirection: 'row', marginTop: 15}}>
+          <Avatar.Image 
+            source={logo}
+            size={80}
+          />
+          <View style={{marginLeft: 20}}>
+            <Title style={[styles.title, {
+              marginTop:15,
+              marginBottom: 5,
+            }]}>{name}</Title>
+            <Caption style={styles.caption}>@{name}</Caption>
+          </View>
         </View>
       </View>
 
-      <View style={styles.item}>
-        <View style={styles.iconContent}>
-          <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/70/000000/gear.png' }} />
+      <View style={styles.userInfoSection}>
+        <View style={styles.row}>
+          <Icon name="map-marker-radius" color="#777777" size={20}/>
+          <Text style={{color:"#777777", marginLeft: 20}}>Nigeria</Text>
         </View>
-        <View style={styles.infoContent}>
-          <Text style={styles.info}>Settings</Text>
+        <View style={styles.row}>
+          <Icon name="phone" color="#777777" size={20}/>
+          <Text style={{color:"#777777", marginLeft: 20}}>{phone}</Text>
+        </View>
+        <View style={styles.row}>
+          <Icon name="email" color="#777777" size={20}/>
+          <Text style={{color:"#777777", marginLeft: 20}}>{email}</Text>
         </View>
       </View>
 
-      <View style={styles.item}>
-          <View style={styles.iconContent}>
-            <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/70/000000/email.png' }} />
+      <View style={styles.infoBoxWrapper}>
+          <View style={[styles.infoBox, {
+            borderRightColor: '#dddddd',
+            borderRightWidth: 1
+          }]}>
+            <Title>ACTIVE</Title>
+            <Caption>Subscription Status</Caption>
           </View>
-          <View style={styles.infoContent}>
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL('mailto:support@glorytabernacleibadan.org?subject=Feedback')
-            }}>
-            <Text style={styles.info}>Talk to Us</Text>
-          </TouchableOpacity>
+          <View style={styles.infoBox}>
+            <Title>01-12-2022</Title>
+            <Caption>EXPIRES</Caption>
           </View>
       </View>
 
-      <View style={styles.item}>
-          <View style={styles.iconContent}>
-            <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/70/000000/sign-out.png' }} />
+      <View style={styles.menuWrapper}>
+        <TouchableRipple onPress={() => {props.navigation.navigate('Fav')}}>
+          <View style={styles.menuItem}>
+            <Icon name="heart-outline" color="#FF6347" size={25}/>
+            <Text style={styles.menuItemText}>Your Favorites</Text>
           </View>
-          <View style={styles.infoContent}>
-          <TouchableOpacity
-            onPress={() => {
+        </TouchableRipple>
+        {/* <TouchableRipple onPress={() => {}}>
+          <View style={styles.menuItem}>
+            <Icon name="credit-card" color="#FF6347" size={25}/>
+            <Text style={styles.menuItemText}>Payment</Text>
+          </View>
+        </TouchableRipple>
+        <TouchableRipple onPress={() =>{}}>
+          <View style={styles.menuItem}>
+            <Icon name="share-outline" color="#FF6347" size={25}/>
+            <Text style={styles.menuItemText}>Tell Your Friends</Text>
+          </View>
+        </TouchableRipple> */}
+        <TouchableRipple onPress={() => {}}>
+          <View style={styles.menuItem}>
+            <Icon name="account-check-outline" color="#FF6347" size={25}/>
+            <Text style={styles.menuItemText}>Support</Text>
+          </View>
+        </TouchableRipple>
+        <TouchableRipple onPress={() => {}}>
+          <View style={styles.menuItem}>
+            <Icon name="account-settings-outline" color="#FF6347" size={25}/>
+            <Text style={styles.menuItemText}>Settings</Text>
+          </View>
+        </TouchableRipple>
+        <TouchableRipple             
+        onPress={() => {
               TrackPlayer.stop()
               AsyncStorage.setItem('@isLoggedIn', '99')
               props.navigation.navigate('Login');//added just for test purpose
             }}>
-            <Text style={styles.info}>Logout</Text>
-          </TouchableOpacity>
+          <View style={styles.menuItem}>
+            <Icon name="power" color="#FF6347" size={25}/>
+            <Text style={styles.menuItemText}>Logout</Text>
           </View>
+        </TouchableRipple>
       </View>
-    </View>
+    </SafeAreaView>
   );
-};
-
-const styles = StyleSheet.create({
-  header:{
-    backgroundColor: "#DCDCDC",
-  },
-  headerContent:{
-    padding:30,
-    alignItems: 'center',
-  },
-  avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-    borderWidth: 4,
-    borderColor: "white",
-    marginBottom:10,
-  },
-  name:{
-    fontSize:22,
-    color:"#000000",
-    fontWeight:'600',
-  },
-  userInfo:{
-    fontSize:16,
-    color:"#778899",
-    fontWeight:'600',
-  },
-  body:{
-    backgroundColor: "#778899",
-    height:500,
-    alignItems:'center',
-  },
-  item:{
-    flexDirection : 'row',
-  },
-  infoContent:{
-    flex:1,
-    alignItems:'flex-start',
-    paddingLeft:5
-  },
-  iconContent:{
-    flex:1,
-    alignItems:'flex-end',
-    paddingRight:5,
-  },
-  icon:{
-    width:30,
-    height:30,
-    marginTop:20,
-  },
-  info:{
-    fontSize:18,
-    marginTop:20,
-    color: "#000",
-  },
-  login: {
-    color: '#000',
-  }
-});
+}
 
 export default ProfileScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  userInfoSection: {
+    paddingHorizontal: 30,
+    marginBottom: 25,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  caption: {
+    fontSize: 14,
+    lineHeight: 14,
+    fontWeight: '500',
+  },
+  row: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  infoBoxWrapper: {
+    borderBottomColor: '#dddddd',
+    borderBottomWidth: 1,
+    borderTopColor: '#dddddd',
+    borderTopWidth: 1,
+    flexDirection: 'row',
+    height: 100,
+  },
+  infoBox: {
+    width: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  menuWrapper: {
+    marginTop: 10,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+  },
+  menuItemText: {
+    color: '#777777',
+    marginLeft: 20,
+    fontWeight: '600',
+    fontSize: 16,
+    lineHeight: 26,
+  },
+});
