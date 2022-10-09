@@ -15,6 +15,7 @@ import Carousel from 'react-native-snap-carousel';
 import Post from '../models/Post';
 import CarouselImg from '../components/CarouselImg';
 import CarouselItem from '../models/CarouselItem';
+import Sub from '../models/UserSub';
 
 const {width, height} = Dimensions.get('window');
 
@@ -78,6 +79,22 @@ function HomeScreen (props) {
       updateUsername(name);
       updateUser(r)
       updateUId(user_id)
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const user_id = await AsyncStorage.getItem('@userid');
+
+      let res = await fetch(
+        WEB_URL+"/subscription/get_user_subscription_status?id="+user_id //example and simple data
+       );
+       let response = await res.json();
+       let rr = response.sub;
+       AsyncStorage.setItem('@subtype', rr.type);
+       AsyncStorage.setItem('@subexpiry', rr.end_date);
+       AsyncStorage.setItem('@substatus', rr.status);
+       AsyncStorage.setItem('@sub',JSON.stringify(gen)); 
     })();
   }, []);
   

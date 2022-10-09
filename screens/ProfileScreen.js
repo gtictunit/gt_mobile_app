@@ -17,6 +17,9 @@ function ProfileScreen (props) {
   const [name, updateName] = useState('')
   const [email, updateEmail] = useState('')
   const [phone, updatePhone] = useState('')
+  const [subStatus, updateSubStatus] = useState('')
+  const [subPeriod, updateSubPeriod] = useState('')
+  const [subExpiry, updatesubExpiry] = useState('')
 
 
   useEffect(() => {
@@ -24,10 +27,16 @@ function ProfileScreen (props) {
       const namer = await AsyncStorage.getItem('@username');
       const emailr = await AsyncStorage.getItem('@useremail');
       const phoner = await AsyncStorage.getItem('@userphone');
+      const status = await AsyncStorage.getItem('@substatus');
+      const period = await AsyncStorage.getItem('@subtype');
+      const expiry = await AsyncStorage.getItem('@subexpiry');
       console.log('Name:  '+namer)
       updateName(namer);
       updateEmail(emailr);
       updatePhone(phoner);
+      updateSubStatus(status);
+      updateSubPeriod(period);
+      updatesubExpiry(expiry);
     })();
   }, []);
 
@@ -70,11 +79,11 @@ function ProfileScreen (props) {
             borderRightColor: '#dddddd',
             borderRightWidth: 1
           }]}>
-            <Title>ACTIVE</Title>
+            <Title>{subStatus} - {subPeriod}</Title>
             <Caption>Subscription Status</Caption>
           </View>
           <View style={styles.infoBox}>
-            <Title>01-12-2022</Title>
+            <Title>{subExpiry}</Title>
             <Caption>EXPIRES</Caption>
           </View>
       </View>
