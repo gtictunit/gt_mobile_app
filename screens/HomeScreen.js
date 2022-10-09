@@ -94,7 +94,6 @@ function HomeScreen (props) {
        AsyncStorage.setItem('@subtype', rr.type);
        AsyncStorage.setItem('@subexpiry', rr.end_date);
        AsyncStorage.setItem('@substatus', rr.status);
-       AsyncStorage.setItem('@sub',JSON.stringify(gen)); 
     })();
   }, []);
   
