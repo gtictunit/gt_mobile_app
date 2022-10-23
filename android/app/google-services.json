@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "948212024252",
+    "project_id": "lifesprings",
+    "storage_bucket": "lifesprings.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948212024252:android:23d9858839ce08d99721b9",
+        "android_client_info": {
+          "package_name": "com.gt.mobile.streaming.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948212024252-vd2hg2c5fka3s0341nqu0t8kl6a2sah5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gt.mobile.streaming.app",
+            "certificate_hash": "016c3aac303293b3aa56817382f283bfb4f77b4d"
+          }
+        },
+        {
+          "client_id": "948212024252-qhs5mjq2lr34ore3nsk1cu9mm1p3mpul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQVJVYJUHGfCevS2eq_Kvci8dwkF1lygU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948212024252-qhs5mjq2lr34ore3nsk1cu9mm1p3mpul.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
