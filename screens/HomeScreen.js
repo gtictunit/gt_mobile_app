@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Dimensions, FlatList, AsyncStorage, RefreshControl, LogBox} from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, StyleSheet, Dimensions, FlatList, AsyncStorage, RefreshControl, LogBox } from 'react-native';
 // import { AsyncStorage } from 'react-native-community';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 import Genre from '../models/Genre';
 import Song from '../models/Song';
@@ -17,12 +17,16 @@ import CarouselImg from '../components/CarouselImg';
 import CarouselItem from '../models/CarouselItem';
 import Sub from '../models/UserSub';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const logo = require('./login/p.png');
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
-function HomeScreen (props) {
+function HomeScreen(props) {
+  const y = useRef()
   const [username, updateUsername] = useState('')
   const [genres, updateGenres] = useState([]);
   const [thursday, updateThursday] = useState([]);
@@ -38,15 +42,23 @@ function HomeScreen (props) {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
+    console.log("REFRESHING")
     setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
+    wait(2000).then(() => {
+      setRefreshing(false);
+      onScreenReload();
+    });
   }, []);
 
-  
+  const onScreenReload = () => {
+    console.log("RELOADING")
+    props.navigation.navigate('Home')
+  };
+
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release']);
-}, [])
+  }, [])
 
   useEffect(() => {
     (async () => {
@@ -57,25 +69,25 @@ function HomeScreen (props) {
       let r = JSON.parse(usr);
 
       let res = await fetch(
-        WEB_URL+"/favorites/get_user_favs_by_id?user_id="+user_id //example and simple data
-       );
-       let response = await res.json();
-       let rr = response.data;
-       let resp = [];
-       rr.forEach(item => {    
-         var gen = new Song(
-           item.message_id,
-           item.service,
-           item.title,
-           item.preacher,
-           item.img_url,
-           item.media_file_url,
-           item.service_date,
-         );
-           resp.push(gen);
-       });
+        WEB_URL + "/favorites/get_user_favs_by_id?user_id=" + user_id //example and simple data
+      );
+      let response = await res.json();
+      let rr = response.data;
+      let resp = [];
+      rr.forEach(item => {
+        var gen = new Song(
+          item.message_id,
+          item.service,
+          item.title,
+          item.preacher,
+          item.img_url,
+          item.media_file_url,
+          item.service_date,
+        );
+        resp.push(gen);
+      });
       //  console.log("FAVS Home Screen ===> "+JSON.stringify(resp))
-       AsyncStorage.setItem('@favs',JSON.stringify(resp)); 
+      AsyncStorage.setItem('@favs', JSON.stringify(resp));
       updateUsername(name);
       updateUser(r)
       updateUId(user_id)
@@ -87,47 +99,54 @@ function HomeScreen (props) {
       const user_id = await AsyncStorage.getItem('@userid');
 
       let res = await fetch(
-        WEB_URL+"/subscription/get_user_subscription_status?id="+user_id //example and simple data
-       );
-       let response = await res.json();
-       let rr = response.sub;
-       AsyncStorage.setItem('@subtype', rr.type);
-       AsyncStorage.setItem('@subexpiry', rr.end_date);
-       AsyncStorage.setItem('@substatus', rr.status);
-    })();
-  }, []);
-  
-  useEffect(() => {
-    (async () => {
-      let res = await fetch(
-        WEB_URL+"/service/get_services" //example and simple data
+        WEB_URL + "/subscription/get_user_subscription_status?id=" + user_id //example and simple data
       );
       let response = await res.json();
-      let r = response.data;
-      let resp = [];
-      r.forEach(item => {    
-        var gen = new Genre(item.id,item.name,item.img);
-          resp.push(gen);
-      });
-      updateGenres(resp);
-      AsyncStorage.setItem('@genres',JSON.stringify(resp)); 
+      let rr = response.sub;
+      if(rr != null){
+      AsyncStorage.setItem('@subtype', rr.type);
+      AsyncStorage.setItem('@subexpiry', rr.end_date);
+      AsyncStorage.setItem('@substatus', rr.status);
+      }
+      else{
+        AsyncStorage.setItem('@subtype', "No Active Subscription");
+        AsyncStorage.setItem('@subexpiry', '****/**/**');
+        AsyncStorage.setItem('@substatus', 'No Active Subscription');
+      }
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
       let res = await fetch(
-        WEB_URL+"/carousel/get_carouselitems" //example and simple data
+        WEB_URL + "/service/get_services" //example and simple data
       );
-      console.log('Carousel Items  ==>>> '+JSON.stringify(resp))
       let response = await res.json();
       let r = response.data;
       let resp = [];
-      r.forEach(item => {    
-        var gen = new CarouselItem(item.id,item.img);
-          resp.push(gen);
+      r.forEach(item => {
+        var gen = new Genre(item.id, item.name, item.img);
+        resp.push(gen);
       });
-      console.log('Carousel Items  ==>>> '+JSON.stringify(resp))
+      updateGenres(resp);
+      AsyncStorage.setItem('@genres', JSON.stringify(resp));
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      let res = await fetch(
+        WEB_URL + "/carousel/get_carouselitems" //example and simple data
+      );
+      console.log('Carousel Items  ==>>> ' + JSON.stringify(resp))
+      let response = await res.json();
+      let r = response.data;
+      let resp = [];
+      r.forEach(item => {
+        var gen = new CarouselItem(item.id, item.img);
+        resp.push(gen);
+      });
+      console.log('Carousel Items  ==>>> ' + JSON.stringify(resp))
       updateCarouselItems(resp);
       // AsyncStorage.setItem('@',JSON.stringify(resp)); 
     })();
@@ -136,12 +155,12 @@ function HomeScreen (props) {
   useEffect(() => {
     (async () => {
       let res = await fetch(
-       WEB_URL+"/message/get_messages_by_service?id=1" //example and simple data
+        WEB_URL + "/message/get_messages_by_service?id=1" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
       let resp = [];
-      r.forEach(item => {    
+      r.forEach(item => {
         var gen = new Song(
           item.message_id,
           item.service,
@@ -151,22 +170,22 @@ function HomeScreen (props) {
           item.media_file_url,
           item.service_date,
         );
-          resp.push(gen);
+        resp.push(gen);
       });
       updateThursday(resp);
-      AsyncStorage.setItem('@thursday',JSON.stringify(resp)); 
+      AsyncStorage.setItem('@thursday', JSON.stringify(resp));
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
       let res = await fetch(
-       WEB_URL+"/message/get_messages_by_service?id=2" //example and simple data
+        WEB_URL + "/message/get_messages_by_service?id=2" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
       let resp = [];
-      r.forEach(item => {    
+      r.forEach(item => {
         var gen = new Song(
           item.message_id,
           item.service,
@@ -176,22 +195,22 @@ function HomeScreen (props) {
           item.media_file_url,
           item.service_date,
         );
-          resp.push(gen);
+        resp.push(gen);
       });
-      AsyncStorage.setItem('@sunday',JSON.stringify(resp)); 
+      AsyncStorage.setItem('@sunday', JSON.stringify(resp));
       updateSunday(resp);
     })();
   }, []);
-  
-    useEffect(() => {
+
+  useEffect(() => {
     (async () => {
       let res = await fetch(
-       WEB_URL+"/message/get_messages_by_service?id=3" //example and simple data
+        WEB_URL + "/message/get_messages_by_service?id=3" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
       let resp = [];
-      r.forEach(item => {    
+      r.forEach(item => {
         var gen = new Song(
           item.message_id,
           item.service,
@@ -201,22 +220,22 @@ function HomeScreen (props) {
           item.media_file_url,
           item.service_date,
         );
-          resp.push(gen);
+        resp.push(gen);
       });
-      AsyncStorage.setItem('@convention',JSON.stringify(resp)); 
+      AsyncStorage.setItem('@convention', JSON.stringify(resp));
       updateConvention(resp);
     })();
   }, []);
-  
-    useEffect(() => {
+
+  useEffect(() => {
     (async () => {
       let res = await fetch(
-       WEB_URL+"/message/get_messages_by_service?id=4" //example and simple data
+        WEB_URL + "/message/get_messages_by_service?id=4" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
       let resp = [];
-      r.forEach(item => {    
+      r.forEach(item => {
         var gen = new Song(
           item.message_id,
           item.service,
@@ -226,9 +245,9 @@ function HomeScreen (props) {
           item.media_file_url,
           item.service_date,
         );
-          resp.push(gen)
+        resp.push(gen)
       });
-      AsyncStorage.setItem('@special',JSON.stringify(resp)); 
+      AsyncStorage.setItem('@special', JSON.stringify(resp));
       updateSpecial(resp);
     })();
   }, []);
@@ -236,12 +255,12 @@ function HomeScreen (props) {
   useEffect(() => {
     (async () => {
       let res = await fetch(
-       WEB_URL+"/message/get_messages_recent" //example and simple data
+        WEB_URL + "/message/get_messages_recent" //example and simple data
       );
       let response = await res.json();
       let r = response.data;
       let resp = [];
-      r.forEach(item => {    
+      r.forEach(item => {
         var gen = new Song(
           item.message_id,
           item.service,
@@ -252,7 +271,7 @@ function HomeScreen (props) {
           item.service_date,
           item.id,
         );
-          resp.push(gen)
+        resp.push(gen)
       });
       updateRecent(resp);
     })();
@@ -262,57 +281,57 @@ function HomeScreen (props) {
   useEffect(() => {
     (async () => {
       let res = await fetch(
-       WEB_URL+"/posts/get_last_post" //example and simple data
+        WEB_URL + "/posts/get_last_post" //example and simple data
       );
       console.log('Posts:: ---->>>  ')
       let response = await res.json();
-      let r = response.data;  
-        var gen = new Post(
-          r.post_id+"",
-          r.title,
-          r.posttext,
-          r.upload_date,
-        );
-        let resp = [];
-        resp.push(gen)
-      console.log('Posts:: ---->>>  '+JSON.stringify(resp))
+      let r = response.data;
+      var gen = new Post(
+        r.post_id + "",
+        r.title,
+        r.posttext,
+        r.upload_date,
+      );
+      let resp = [];
+      resp.push(gen)
+      console.log('Posts:: ---->>>  ' + JSON.stringify(resp))
       updateLastPost(resp);
-      AsyncStorage.setItem('@posts',JSON.stringify(resp)); 
+      AsyncStorage.setItem('@posts', JSON.stringify(resp));
     })();
   }, []);
 
 
-  const renderGenreItem = ({item, index}) => {
+  const renderGenreItem = ({ item, index }) => {
     //  console.log("ITEM ===>  "+JSON.stringify(item));
     return (
       <GenreGrid
         imageUrl={item.imageUrl}
         title={""}
-        onSelect={() => 
+        onSelect={() =>
           props.navigation.navigate('SongsList', {
-            gid: item.id, 
-            genres: genres, 
-            thursday:thursday, 
-            sunday:sunday, 
-            convention:convention, 
-            special:special
+            gid: item.id,
+            genres: genres,
+            thursday: thursday,
+            sunday: sunday,
+            convention: convention,
+            special: special
           })
         }
       />
     );
   };
 
-  const renderCarouselItem = ({item, index}) => {
+  const renderCarouselItem = ({ item, index }) => {
     return (
       <CarouselImg
         imageUrl={item.imageUrl}
         title={""}
-        onSelect={() =>{}  }
+        onSelect={() => { }}
       />
-  );
+    );
   }
 
-  const renderSongItem = ({item, index}) => {
+  const renderSongItem = ({ item, index }) => {
     return (
       <Recomm
         artwork={item.artwork}
@@ -323,27 +342,27 @@ function HomeScreen (props) {
           props.navigation.navigate('SongsPlay', {
             sid: item.id,
             gid: item.genre,
-            genres: genres, 
-            thursday:thursday, 
-            sunday:sunday, 
-            convention:convention, 
-            special:special
+            genres: genres,
+            thursday: thursday,
+            sunday: sunday,
+            convention: convention,
+            special: special
           })
         }
       />
     );
   };
 
-  const renderPostItem = ({item, index}) => {
+  const renderPostItem = ({ item, index }) => {
     return (
       <PostGrid
         imageUrl={logo}
         title={""}
-        onSelect={() => 
+        onSelect={() =>
           props.navigation.navigate('PastorDesk', {
-            title: item.title, 
-            content: item.content, 
-            date:item.upload_date
+            title: item.title,
+            content: item.content,
+            date: item.upload_date
           })
         }
       />
@@ -351,17 +370,32 @@ function HomeScreen (props) {
   };
 
   return (
-    <View style={{backgroundColor: 'black', padding: 10}}>
-      <ScrollView showsVerticalScrollIndicator={false}
-      refreshControl ={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={()=>onRefresh()}
-        />
+    <View style={{ backgroundColor: 'black', padding: 10 }}
+    onTouchStart={e=> y.current = e.nativeEvent.pageY}
+    onTouchEnd={e => {
+      // some threshold. add whatever suits you
+      if (y.current - e.nativeEvent.pageY < 10) {
+        onRefresh()
       }
+    }}>
+      <ScrollView showsVerticalScrollIndicator={true}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => onRefresh()}
+            tintColor="red"
+          />
+        }
+        onTouchStart={e=> y.current = e.nativeEvent.pageY}
+        onTouchEnd={e => {
+          // some threshold. add whatever suits you
+          if (y.current - e.nativeEvent.pageY < 10) {
+            onRefresh()
+          }
+        }}
       >
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.header}>Shalom!,  {username} </Text>          
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.header}>Shalom!,  {username} </Text>
           {/* <TouchableOpacity
             onPress={() => {
               TrackPlayer.stop()
@@ -372,17 +406,17 @@ function HomeScreen (props) {
           </TouchableOpacity> */}
         </View>
         <Carousel
-              // ref={(c) => { this._carousel = c; }}
-              // keyExtractor={(item, index) => item.id}
-              data={carouselItems}
-              renderItem={renderCarouselItem}
-              sliderWidth={width}
-              itemWidth={width}
-              // onSnapToItem = { index => setIndex(index) } 
-              enableSnap = {true}
-              loop={true}
-              autoplay={true}
-            />
+          // ref={(c) => { this._carousel = c; }}
+          // keyExtractor={(item, index) => item.id}
+          data={carouselItems}
+          renderItem={renderCarouselItem}
+          sliderWidth={width}
+          itemWidth={width}
+          // onSnapToItem = { index => setIndex(index) } 
+          enableSnap={true}
+          loop={true}
+          autoplay={true}
+        />
         <Text style={styles.subHeader}>Services</Text>
 
         <View style={styles.listOfGenres}>
@@ -405,14 +439,14 @@ function HomeScreen (props) {
           />
         </View>
         <Text style={styles.pText}>Pastor's Desk</Text>
-        <View style={styles.desk}>        
+        <View style={styles.desk}>
           <FlatList
             // keyExtractor={(item, index) => item.id}
-            key={lastpost} 
+            key={lastpost}
             data={lastpost}
             renderItem={renderPostItem}
             showsHorizontalScrollIndicator={false}
-            // numColumns={1}
+          // numColumns={1}
           />
         </View>
       </ScrollView>

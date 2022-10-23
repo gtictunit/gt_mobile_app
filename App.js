@@ -1,14 +1,19 @@
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
-import SongsNavigator from './navigation/SongsNavigator';
 import SplashScreen from 'react-native-splash-screen';
 
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 
 import songsReducer from './store/reducers/songsReducers';
-import LoginScreen from './screens/LoginScreen';
 import LoginNavigator from './navigation/LoginNavigator';
+
+import BackgroundTask from 'react-native-background-task'
+import { backgroundSync } from './store/task'
+
+BackgroundTask.define(async () => {
+    backgroundSync()
+    BackgroundTask.finish()
+})
 
 const rootReducer = combineReducers({
   songs: songsReducer,
@@ -17,6 +22,11 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer);
 
 export default function App() {
+  useEffect(() => {
+    BackgroundTask.schedule({
+        period: 1600, // Aim to run every 30 mins - more conservative on battery
+    })
+});
   useEffect(() => {
     SplashScreen.hide()
   },[])
