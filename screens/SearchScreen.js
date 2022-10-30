@@ -17,9 +17,11 @@ function SearchScreen(props) {
   const [sunday, updateSunday] = useState([]);
   const [special, updateSpecial] = useState([]);
   const [convention, updateConvention] = useState([]);
+  const [subStatus, updateSubStatus] = useState(false)
 
   useEffect(() => {
     (async () => {
+      const status = await AsyncStorage.getItem('@substatus');
       const GENRES = await AsyncStorage.getItem('@genres');
       const THURSDAY = await AsyncStorage.getItem('@thursday');
       const SUNDAY = await AsyncStorage.getItem('@sunday');
@@ -102,6 +104,10 @@ function SearchScreen(props) {
           resp.push(gen);
       });
       updateSpecial(resp);      
+      console.log('Subscription Status:  ' + status);
+      if (status === "ACTIVE") {
+        updateSubStatus(true);
+      }
     })();
   }, []);
 
@@ -162,7 +168,9 @@ function SearchScreen(props) {
               onSelect={() =>
                 props.navigation.navigate('SongsPlay', {
                   sid: item.id,
+                  url: item.url,
                   gid: item.genre,
+                  sub: subStatus,
                   genres: genres, 
                   thursday:thursday, 
                   sunday:sunday, 

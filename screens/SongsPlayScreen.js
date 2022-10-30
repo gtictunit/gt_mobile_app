@@ -27,17 +27,21 @@ const { width, height } = Dimensions.get('window');
 function SongsPlayScreen(props) {
   const [favSongs, updateFavSongs] = useState([]);
   const [currentSongIsFav, updateCurrentSongIsFav] = useState(false);
+  const [subStatus, updateSubStatus] = useState(false)
 
   useEffect(() => {
     (async () => {
-  });
+
+    });
   }, []);
 
+  const sub = props.navigation.getParam('sub');
   const THURSDAY = props.navigation.getParam('thursday');
   const SUNDAY = props.navigation.getParam('sunday');
   const CONVENTIONS = props.navigation.getParam('convention');
   const SPECIAL = props.navigation.getParam('special');
   const sId = props.navigation.getParam('sid');
+  const sUrl = props.navigation.getParam('url');
   const gId = props.navigation.getParam('gid');
   let arr = [{}];
   if (gId === '1') {
@@ -96,12 +100,12 @@ function SongsPlayScreen(props) {
       resp.forEach(item => {
         const song_id = item.id;
         const genre_id = item.genre;
-        console.log('Fav Item loop ===> '+JSON.stringify(item));
+        console.log('Fav Item loop ===> ' + JSON.stringify(item));
         if (genre_id === gId && song_id === sId) {
           console.log('Is FAV');
           updateCurrentSongIsFav(true);
         }
-      }); 
+      });
 
       TrackPlayer.play();
     });
@@ -222,7 +226,7 @@ function SongsPlayScreen(props) {
         <Text style={styles.artist}>{displayedSongs[songIndex].artist}</Text>
       </View>
       <MySlider />
-      <Controller sId={sId} goNext={goNext} goPrev={goPrevious} />
+      <Controller sub={sub} sId={sId} sUrl={sUrl} goNext={goNext} goPrev={goPrevious} />
     </View>
   );
 };

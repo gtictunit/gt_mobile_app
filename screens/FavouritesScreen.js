@@ -20,10 +20,11 @@ function FavouritesScreen(props){
   const [sunday, updateSunday] = useState([]);
   const [special, updateSpecial] = useState([]);
   const [convention, updateConvention] = useState([]);
-  const [reloadFavs, UpdateReloadFavs] = useState(true);
+  const [subStatus, updateSubStatus] = useState(false)
 
   useEffect(() => {
     (async () => {
+      const status = await AsyncStorage.getItem('@substatus');
       const GENRES = await AsyncStorage.getItem('@genres');
       const THURSDAY = await AsyncStorage.getItem('@thursday');
       const SUNDAY = await AsyncStorage.getItem('@sunday');
@@ -128,8 +129,11 @@ function FavouritesScreen(props){
       });   
       updateFavSongs(resp);
       AsyncStorage.setItem('@favs',JSON.stringify(resp)); 
-    // }
 
+    console.log('Subscription Status:  ' + status);
+    if (status === "ACTIVE") {
+      updateSubStatus(true);
+    }
     })();
   }, []);
 
@@ -199,7 +203,9 @@ function FavouritesScreen(props){
               onSelect={() =>
                 props.navigation.navigate('SongsPlay', {
                   sid: item.id,
+                  url: item.url,
                   gid: item.genre,
+                  sub: subStatus,
                   genres: genres, 
                   thursday:thursday, 
                   sunday:sunday, 

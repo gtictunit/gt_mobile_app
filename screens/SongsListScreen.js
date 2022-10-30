@@ -51,7 +51,14 @@ const SongsListScreen = (props) => {
         onSelect={() =>
           props.navigation.navigate('SongsPlay', {
             sid: item.id,
-            gid: item.genre, genres: GENRES, thursday: THURSDAY, sunday: SUNDAY, convention: CONVENTIONS, special: SPECIAL,
+            url: item.url,
+            gid: item.genre, 
+            sub: props.navigation.getParam('sub'),
+            genres: GENRES, 
+            thursday: THURSDAY, 
+            sunday: SUNDAY, 
+            convention: CONVENTIONS, 
+            special: SPECIAL,
           })
         }
         onLike={() => { }}

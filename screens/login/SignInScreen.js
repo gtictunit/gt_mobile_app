@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   logoImageStyle: {
-    width: 250,
-    height: 250,
+    width: 280,
+    height: 280,
     // marginBottom: 10,
   },
   googleButtonStyle: {

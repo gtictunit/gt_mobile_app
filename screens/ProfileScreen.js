@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, SafeAreaView, StyleSheet, AsyncStorage} from 'react-native';
+import {View, SafeAreaView, StyleSheet, AsyncStorage, Dimensions, TouchableOpacity} from 'react-native';
 import {
   Avatar,
   Title,
@@ -7,11 +7,15 @@ import {
   Text,
   TouchableRipple,
 } from 'react-native-paper';
-
+import {
+  isAndroid,
+  isIPhoneNotchFamily, getStatusBarHeight
+} from "@freakycoder/react-native-helpers";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TrackPlayer from 'react-native-track-player';
 
 const logo = require('./login/logo.png');
+const { width, height } = Dimensions.get('window');
 
 function ProfileScreen (props) {
   const [name, updateName] = useState('')
@@ -20,6 +24,8 @@ function ProfileScreen (props) {
   const [subStatus, updateSubStatus] = useState('')
   const [subPeriod, updateSubPeriod] = useState('')
   const [subExpiry, updatesubExpiry] = useState('')
+  const [uId, updateUId] = useState('')
+  const [sType, updateSType] = useState(false)
 
 
   useEffect(() => {
@@ -30,15 +36,32 @@ function ProfileScreen (props) {
       const status = await AsyncStorage.getItem('@substatus');
       const period = await AsyncStorage.getItem('@subtype');
       const expiry = await AsyncStorage.getItem('@subexpiry');
+      const userId = await AsyncStorage.getItem('@userid');
       console.log('Name:  '+namer)
+      if(status !== "ACTIVE") updateSType(true);
       updateName(namer);
       updateEmail(emailr);
       updatePhone(phoner);
       updateSubStatus(status);
       updateSubPeriod(period);
       updatesubExpiry(expiry);
+      updateUId(userId);
     })();
   }, []);
+
+  const renderSubscriptionContainer = () => (
+    <View style={styles.signUpButtonContainer}>
+      <TouchableOpacity
+        style={styles.signUpButtonStyle}
+        onPress={() => {}}
+      >
+        <Text style={[styles.signUpButtonTextStyle]}>
+          {'Add Subscription'}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -87,7 +110,14 @@ function ProfileScreen (props) {
             <Caption>EXPIRES</Caption>
           </View>
       </View>
-
+      {sType&&<View
+          style={{
+            // position: "absolute",
+            bottom: isIPhoneNotchFamily() ? getStatusBarHeight() : 8,
+          }}
+        >
+          {renderSubscriptionContainer()}
+        </View>}
       <View style={styles.menuWrapper}>
         <TouchableRipple onPress={() => {props.navigation.navigate('Fav')}}>
           <View style={styles.menuItem}>
@@ -185,5 +215,26 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
     lineHeight: 26,
+  },
+  signUpButtonContainer: {
+    marginTop: 8,
+    width: width * 0.9,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  signUpButtonStyle: {
+    height: 40,
+    justifyContent: "center",
+    marginLeft: 8,
+  },
+  signUpTextStyle: {
+    fontSize: 14,
+    color: "#000",
+  },
+  signUpButtonTextStyle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#000",
   },
 });

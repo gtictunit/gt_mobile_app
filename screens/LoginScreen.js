@@ -23,15 +23,15 @@ export default function LoginScreen(props) {
   const [lastname, updateLastname] = useState('');
   const [email, updateEmail] = useState('');
   const [phone, updatePhone] = useState('');
-  const [passwordVisible,setPasswordVisible] = useState(false)
+  const [passwordVisible, setPasswordVisible] = useState(false)
 
   useEffect(() => {
     (async () => {
       let code = await AsyncStorage.getItem('@isLoggedin');
-      console.log('Is Logged In ==> '+ code)
+      console.log('Is Logged In ==> ' + code)
       if (code == '00') {
         props.navigation.navigate('Media');
-      }else{
+      } else {
         console.log('Not Loggedin');
       }
     })();
@@ -73,31 +73,39 @@ export default function LoginScreen(props) {
           console.error(error);
         });
         let response = await res.json();
-        let r = response.user;
-        updateUser(r);
-        if (response.code === "99") {
-          updateSuccessText(response.message);
+        console.log(JSON.stringify(response));
+        if (response === null) {
+          updateSuccessText("Error in logging you in! If this persists contact the administrator.");
           updateActivitySpin(false);
         }
         else {
-          updateSuccessText('Login Successful!');
-          updateSuccess('success');
-          updateShow(true);
-          console.log("Login Code ==>  "+response.code);
-          console.log("Logged in User =>  "+JSON.stringify(r))
-          console.log("Logged in User =>  "+JSON.stringify(r.id))
-          const uuID = ""+r.id;
-          AsyncStorage.setItem('@isLoggedIn', ""+response.code);
-          AsyncStorage.setItem('@user', JSON.stringify(r));
-          AsyncStorage.setItem('@username', r.full_name);
-          AsyncStorage.setItem('@userphone', r.phone);
-          AsyncStorage.setItem('@useremail', r.email);
-          AsyncStorage.setItem('@userid', uuID);
-          updateActivitySpin(false);
-          updateEnabled(true);
-          updateUsername('');
-          updatePassword('');
-          props.navigation.navigate('Media');
+          if (response.code === "00") {
+            let r = response.user;
+            updateUser(r);
+            updateSuccessText('Welcome to LifeSprings!');
+            updateSuccess('success');
+            updateShow(true);
+            console.log("Login Code ==>  " + response.code);
+            console.log("Logged in User =>  " + JSON.stringify(r))
+            console.log("Logged in User =>  " + JSON.stringify(r.id))
+            const uuID = "" + r.id;
+            AsyncStorage.setItem('@isLoggedIn', "" + response.code);
+            AsyncStorage.setItem('@user', JSON.stringify(r));
+            AsyncStorage.setItem('@username', r.full_name);
+            AsyncStorage.setItem('@userphone', r.phone);
+            AsyncStorage.setItem('@useremail', r.email);
+            AsyncStorage.setItem('@userid', uuID);
+            updateActivitySpin(false);
+            updateEnabled(true);
+            updateUsername('');
+            updatePassword('');
+            props.navigation.navigate('Media');
+          }
+          if(response.code === "99") {
+            updateSuccessText(response.message);
+            updateActivitySpin(false);
+            updateShow(true);
+          }
         }
       })();
     }
@@ -110,17 +118,17 @@ export default function LoginScreen(props) {
   const handleSignUp = () => {
     console.log(email + " ==== " + fullname);
     updateActivitySpin(true);
-    
+
     let _data = {
       email: email,
-      full_name: fullname+" "+lastname,
+      full_name: fullname + " " + lastname,
       login: username,
       phone: phone,
       password: password
     }
     if (username == null || password == null || username == '' || password == '' ||
       phone == null || email == null || email == '' || phone == '' ||
-      fullname == null || fullname == ''||lastname == null || lastname == ''
+      fullname == null || fullname == '' || lastname == null || lastname == ''
     ) {
       updateSuccessText('Enter All Fields');
       updateSuccess('info');
@@ -168,9 +176,9 @@ export default function LoginScreen(props) {
             handleSignUp={() => updateNewAccount(true)}
             username={username}
             password={password}
-            setVisible = {(visible)=> setVisible(visible)}
-            seePassword = {passwordVisible}
-            // enabled={enabled}
+            setVisible={(visible) => setVisible(visible)}
+            seePassword={passwordVisible}
+          // enabled={enabled}
           />
         );
       } else {
@@ -184,8 +192,8 @@ export default function LoginScreen(props) {
             signUpPasswordChangeText={(password) => updatePassword(password)}
             handleSignIn={() => updateNewAccount(false)}
             handleSignUpButton={() => handleSignUp()}
-            setVisible = {(visible)=> setVisible(visible)}
-            seePassword = {passwordVisible}
+            setVisible={(visible) => setVisible(visible)}
+            seePassword={passwordVisible}
           />
         );
       }
@@ -202,18 +210,18 @@ export default function LoginScreen(props) {
       }
       {show &&
         <View pointerEvents="none" style={styles.activitySpinner}>
-        <AwesomeAlert
-          show={show}
-          showProgress={false}
-          title=""
-          message={successText}
-          closeOnTouchOutside={true}
-          closeOnHardwareBackPress={true}
-          showConfirmButton={true}
-          confirmText="Close"
-          confirmButtonColor="#63A3F4"
-          onConfirmPressed= {() => handleClose()}
-        />
+          <AwesomeAlert
+            show={show}
+            showProgress={false}
+            title=""
+            message={successText}
+            closeOnTouchOutside={true}
+            closeOnHardwareBackPress={true}
+            showConfirmButton={true}
+            confirmText="Close"
+            confirmButtonColor="#63A3F4"
+            onConfirmPressed={() => handleClose()}
+          />
         </View>
       }
     </View>

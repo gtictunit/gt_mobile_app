@@ -1,22 +1,23 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, ActivityIndicator, Dimensions} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ActivityIndicator, Dimensions, PermissionsAndroid, ToastAndroid } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import TrackPlayer from 'react-native-track-player';
-import {usePlaybackState} from 'react-native-track-player/lib/hooks';
+import { usePlaybackState } from 'react-native-track-player/lib/hooks';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import RNFetchBlob from 'rn-fetch-blob';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const Controller = (props) => {
   const playBackState = usePlaybackState(); //custom hook by the react-native-track-player package
   const [isPlaying, setIsPlaying] = useState('paused');
 
   useEffect(() => {
-    console.log('playBackState:  '+playBackState)
+    console.log('playBackState:  ' + playBackState)
     if (playBackState === 'playing' || playBackState === 3) {
       setIsPlaying('playing');
     } else if (playBackState === 'paused' || playBackState === 2) {
@@ -29,7 +30,7 @@ const Controller = (props) => {
   }, [playBackState]);
 
   const renderPlayPauseButton = () => {
-    console.log('ISPLAYING:  '+isPlaying)
+    console.log('ISPLAYING:  ' + isPlaying)
     switch (isPlaying) {
       case 'playing':
         return <Fontisto name="pause" size={height / 25.8} color="white" />;
@@ -43,12 +44,87 @@ const Controller = (props) => {
   };
 
   const renderStopButton = () => {
-        return <FontAwesome5 name="stop" size={height / 25.8} color="white" />;
+    return <FontAwesome5 name="stop" size={height / 25.8} color="white" />;
   };
 
   const onPressStop = () => {
     setIsPlaying('stopped');
     TrackPlayer.stop();
+  };
+
+  const getFileExtension = fileUrl => {
+    // To get the file extension
+    return /[.]/.exec(fileUrl) ?
+      /[^.]+$/.exec(fileUrl) : undefined;
+  };
+
+  const checkPermission = async () => {
+    if (props.sub) {
+      if (Platform.OS === 'ios') {
+        onPressDownload();
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            {
+              title: 'Storage Permission Required',
+              message:
+                'Application needs access to your storage to download File',
+            }
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            // Start downloading
+            onPressDownload();
+            console.log('Storage Permission Granted.');
+            ToastAndroid.show("Starting download......!", ToastAndroid.SHORT);
+          } else {
+            // If permission denied then show alert
+            Alert.alert('Error', 'Storage Permission Not Granted');
+          }
+        } catch (err) {
+          // To handle permission related exception
+          console.log("++++" + err);
+        }
+      }
+    }
+  };
+
+  const onPressDownload = () => {
+    // Get today's date to add the time suffix in filename
+    let date = new Date();
+    // File URL which we want to download
+    let FILE_URL = props.sUrl;
+    // Function to get extention of the file url
+    let file_ext = getFileExtension(FILE_URL);
+    console.log(JSON.stringify(file_ext))
+    file_ext = '.' + file_ext[0];
+    
+    // config: To get response by passing the downloading related options
+    // fs: Root directory path to download
+    const { config, fs } = RNFetchBlob;
+    let RootDir = fs.dirs.MusicDir+"/LifeSprings/Downloads";
+    let options = {
+      fileCache: true,
+      addAndroidDownloads: {
+        path:
+          RootDir +
+          '/file_' +
+          Math.floor(date.getTime() + date.getSeconds() / 2) +
+          file_ext,
+        description: 'downloading file...',
+        notification: true,
+        // useDownloadManager works with Android only
+        useDownloadManager: true,
+      },
+    };
+    config(options)
+      .fetch('GET', FILE_URL)
+      .then(res => {
+        // Alert after successful downloading
+        console.log('res -> ', JSON.stringify(res));
+        ToastAndroid.show("Downloaded Successfully!", ToastAndroid.LONG);
+        // alert('File Downloaded Successfully.');
+      });
   };
 
   const onPlayPause = () => {
@@ -78,6 +154,9 @@ const Controller = (props) => {
       </TouchableOpacity>
       <TouchableOpacity onPress={props.goNext}>
         <AntDesign name="stepforward" size={height / 25} color="white" />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={checkPermission}>
+        <AntDesign name="download" size={height / 25} color="white" />
       </TouchableOpacity>
     </View>
   );

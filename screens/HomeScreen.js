@@ -40,28 +40,17 @@ function HomeScreen(props) {
   const [index, setIndex] = useState(0);
   const [carouselItems, updateCarouselItems] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    console.log("REFRESHING")
-    setRefreshing(true);
-    wait(2000).then(() => {
-      setRefreshing(false);
-      onScreenReload();
-    });
-  }, []);
-
-  const onScreenReload = () => {
-    console.log("RELOADING")
-    props.navigation.navigate('Home')
-  };
+  const [subStatus, updateSubStatus] = useState(false)
 
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release']);
+    LogBox.ignoreLogs(['Required cycle'])
   }, [])
 
   useEffect(() => {
     (async () => {
+      
       const name = await AsyncStorage.getItem('@username');
       const usr = await AsyncStorage.getItem('@user');
       const user_id = await AsyncStorage.getItem('@userid');
@@ -107,11 +96,14 @@ function HomeScreen(props) {
       AsyncStorage.setItem('@subtype', rr.type);
       AsyncStorage.setItem('@subexpiry', rr.end_date);
       AsyncStorage.setItem('@substatus', rr.status);
+      if(rr.status === "ACTIVE"){
+        updateSubStatus(true);
+      }
       }
       else{
-        AsyncStorage.setItem('@subtype', "No Active Subscription");
+        AsyncStorage.setItem('@subtype', "N/A");
         AsyncStorage.setItem('@subexpiry', '****/**/**');
-        AsyncStorage.setItem('@substatus', 'No Active Subscription');
+        AsyncStorage.setItem('@substatus', 'No Subscription');
       }
     })();
   }, []);
@@ -307,9 +299,10 @@ function HomeScreen(props) {
       <GenreGrid
         imageUrl={item.imageUrl}
         title={""}
-        onSelect={() =>
-          props.navigation.navigate('SongsList', {
+        onSelect={() =>props.navigation.navigate('SongsList', {
+          
             gid: item.id,
+            sub: subStatus,
             genres: genres,
             thursday: thursday,
             sunday: sunday,
@@ -341,7 +334,9 @@ function HomeScreen(props) {
         onSelect={() =>
           props.navigation.navigate('SongsPlay', {
             sid: item.id,
+            url: item.url,
             gid: item.genre,
+            sub: subStatus,
             genres: genres,
             thursday: thursday,
             sunday: sunday,
@@ -371,28 +366,29 @@ function HomeScreen(props) {
 
   return (
     <View style={{ backgroundColor: 'black', padding: 10 }}
-    onTouchStart={e=> y.current = e.nativeEvent.pageY}
-    onTouchEnd={e => {
-      // some threshold. add whatever suits you
-      if (y.current - e.nativeEvent.pageY < 10) {
-        onRefresh()
-      }
-    }}>
+    // onTouchStart={e=> y.current = e.nativeEvent.pageY}
+    // onTouchEnd={e => {
+    //   // some threshold. add whatever suits you
+    //   if (y.current - e.nativeEvent.pageY < 10) {
+    //     onRefresh()
+    //   }
+    // }}
+    >
       <ScrollView showsVerticalScrollIndicator={true}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={() => onRefresh()}
-            tintColor="red"
-          />
-        }
-        onTouchStart={e=> y.current = e.nativeEvent.pageY}
-        onTouchEnd={e => {
-          // some threshold. add whatever suits you
-          if (y.current - e.nativeEvent.pageY < 10) {
-            onRefresh()
-          }
-        }}
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={refreshing}
+        //     onRefresh={() => onRefresh()}
+        //     tintColor="red"
+        //   />
+        // }
+        // onTouchStart={e=> y.current = e.nativeEvent.pageY}
+        // onTouchEnd={e => {
+        //   // some threshold. add whatever suits you
+        //   if (y.current - e.nativeEvent.pageY < 10) {
+        //     onRefresh()
+        //   }
+        // }}
       >
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={styles.header}>Shalom!,  {username} </Text>
