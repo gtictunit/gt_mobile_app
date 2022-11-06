@@ -16,6 +16,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../components/Colors';
 import ProfileScreen from '../screens/ProfileScreen';
+import PodcastPlayer from '../screens/PodcastPlayer';
+import PodcastList from '../screens/PodcastList';
 
 const AllSongsNavigator = createStackNavigator(
   {
@@ -23,6 +25,8 @@ const AllSongsNavigator = createStackNavigator(
     SongsList: SongsListScreen,
     SongsPlay: SongsPlayScreen,
     PastorDesk: PastorDeskScreen,
+    PodcastList: PodcastList,
+    Podcast: PodcastPlayer,
   },
   {
     defaultNavigationOptions: {

@@ -1,7 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.gt.mobile.streaming.app">
+  package="com.gt.mobile.streaming.app"
+  xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-sdk android:targetSdkVersion="31" android:minSdkVersion="19"
+    tools:overrideLibrary="com.facebook.react"/>
 
     <application
       android:name=".MainApplication"
