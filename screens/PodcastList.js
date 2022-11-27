@@ -1,9 +1,48 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Image, Text, Dimensions } from "react-native";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AwesomeAlert from 'react-native-awesome-alerts';
+
+const { width, height } = Dimensions.get('window');
 
 function PodcastList(props) {
+  const [show, updateShow] = useState(false);
+  const [successText, updateSuccessText] = useState("FEATURE COMING SOON!");
+
+  useEffect(() => {
+      updateShow(true)    
+  }, []);
+
+  const handleClose = () => {
+    props.navigation.goBack();
+  }
+
+
   return (
     <View style={styles.container}>
+      {show&&
+      <View pointerEvents="none" style={styles.activitySpinner}>
+        <AwesomeAlert
+          show={show}
+          showProgress={false}
+          title=""
+          message={successText}
+          closeOnHardwareBackPress={true}
+          showConfirmButton={true}
+          confirmText="Close"
+          confirmButtonColor="#63A3F4"
+          onConfirmPressed={() => handleClose()}
+        />
+      </View>
+}
+      <View style={styles.icon}>
+        <Ionicons
+          name="arrow-back"
+          size={height / 30}
+          color='black'
+          onPress={() => props.navigation.goBack()}
+        />
+      </View>
       <View style={styles.imageRow}>
         <Image
           source={require("./assets/logo.jpg")}
@@ -11,9 +50,8 @@ function PodcastList(props) {
           style={styles.image}
         ></Image>
         <View style={styles.loremIpsumColumn}>
-          <Text style={styles.loremIpsum}>This is the podcast description</Text>
-          <Text style={styles.authorSomeone}>Author: Someone</Text>
-          <Text style={styles.uploadDate}>Upload Date</Text>
+          <Text style={styles.loremIpsum}>Monday Morning Musing</Text>
+          <Text style={styles.authorSomeone}>By: Richard Omidiwura</Text>
         </View>
       </View>
 
@@ -24,9 +62,8 @@ function PodcastList(props) {
           style={styles.image}
         ></Image>
         <View style={styles.loremIpsumColumn}>
-          <Text style={styles.loremIpsum}>This is the podcast description</Text>
-          <Text style={styles.authorSomeone}>Author: Someone</Text>
-          <Text style={styles.uploadDate}>Upload Date</Text>
+          <Text style={styles.loremIpsum}>Throne of Grace</Text>
+          <Text style={styles.authorSomeone}>By: Gabriel Akinbola</Text>
         </View>
       </View>
     </View>
@@ -52,7 +89,8 @@ const styles = StyleSheet.create({
     fontFamily: "calibri-regular",
     color: "#121212",
     marginTop: 1,
-    marginLeft: 3
+    marginLeft: 3,
+    fontSize: 13
   },
   uploadDate: {
     fontFamily: "calibri-regular",
@@ -69,42 +107,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 20,
     marginLeft: 26,
-    marginRight: 33
+    marginRight: 33,
   },
-  image1: {
-    width: 62,
-    height: 56,
-    marginTop: 4
+  icon: {
+    padding: height / 65,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  loremIpsum1: {
-    fontFamily: "calibri-regular",
-    color: "#121212",
-    textAlign: "left",
-    fontSize: 20
-  },
-  authorSomeone1: {
-    fontFamily: "calibri-regular",
-    color: "#121212",
-    marginTop: 1,
-    marginLeft: 3
-  },
-  uploadDate1: {
-    fontFamily: "calibri-regular",
-    color: "#121212",
-    marginTop: 2,
-    marginLeft: 3
-  },
-  loremIpsum1Column: {
-    width: 245,
-    marginLeft: 9
-  },
-  image1Row: {
-    height: 61,
-    flexDirection: "row",
-    marginTop: 19,
-    marginLeft: 26,
-    marginRight: 33
-  }
 });
 
 export default PodcastList;

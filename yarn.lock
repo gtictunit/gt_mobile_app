@@ -1339,7 +1339,7 @@
     "hermes-profile-transformer" "^0.0.6"
     "ip" "^1.1.5"
 
-"@react-native-community/cli-platform-android@^4.13.0", "@react-native-community/cli-platform-android@^4.7.0":
+"@react-native-community/cli-platform-android@^4.10.0", "@react-native-community/cli-platform-android@^4.13.0":
   "integrity" "sha512-3i8sX8GklEytUZwPnojuoFbCjIRzMugCdzDIdZ9UNmi/OhD4/8mLGO0dgXfT4sMWjZwu3qjy45sFfk2zOAgHbA=="
   "resolved" "https://registry.npmjs.org/@react-native-community/cli-platform-android/-/cli-platform-android-4.13.0.tgz"
   "version" "4.13.0"
@@ -1355,7 +1355,7 @@
     "slash" "^3.0.0"
     "xmldoc" "^1.1.2"
 
-"@react-native-community/cli-platform-ios@^4.7.0":
+"@react-native-community/cli-platform-ios@^4.10.0":
   "integrity" "sha512-6THlTu8zp62efkzimfGr3VIuQJ2514o+vScZERJCV1xgEi8XtV7mb/ZKt9o6Y9WGxKKkc0E0b/aVAtgy+L27CA=="
   "resolved" "https://registry.npmjs.org/@react-native-community/cli-platform-ios/-/cli-platform-ios-4.13.0.tgz"
   "version" "4.13.0"
@@ -1400,7 +1400,7 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/cli-types/-/cli-types-4.10.1.tgz"
   "version" "4.10.1"
 
-"@react-native-community/cli@^4.7.0":
+"@react-native-community/cli@^4.10.0":
   "integrity" "sha512-EYJKBuxFxAu/iwNUfwDq41FjORpvSh1wvQ3qsHjzcR5uaGlWEOJrd3uNJDuKBAS0TVvbEesLF9NEXipjyRVr4Q=="
   "resolved" "https://registry.npmjs.org/@react-native-community/cli/-/cli-4.14.0.tgz"
   "version" "4.14.0"
@@ -6999,15 +6999,15 @@
     "escape-string-regexp" "2.0.0"
     "invariant" "2.2.4"
 
-"react-native@0.63.2":
-  "integrity" "sha512-MkxHeJorUDzmQwKJrTfrFYMDRLyu9GSBpsFFMDX7X+HglVnaZi3CTzW2mRv1eIcazoseBOP2eJe+bnkyLl8Y2A=="
-  "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.63.2.tgz"
-  "version" "0.63.2"
+"react-native@0.63.5":
+  "integrity" "sha512-unjHZOcHek2xxPkBbyqGO//2Z/AriKTwtDzGTT/ujGMRE3odDJk8wKtZregurQ9cpTUtu1Bj5R5bJv3gQIG5zw=="
+  "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.63.5.tgz"
+  "version" "0.63.5"
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@react-native-community/cli" "^4.7.0"
-    "@react-native-community/cli-platform-android" "^4.7.0"
-    "@react-native-community/cli-platform-ios" "^4.7.0"
+    "@react-native-community/cli" "^4.10.0"
+    "@react-native-community/cli-platform-android" "^4.10.0"
+    "@react-native-community/cli-platform-ios" "^4.10.0"
     "abort-controller" "^3.0.0"
     "anser" "^1.4.9"
     "base64-js" "^1.1.2"

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, View, ActivityIndicator } from 'react-native';
+import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, View, ActivityIndicator, LogBox } from 'react-native';
 import SignInScreen from './login/SignInScreen';
 import SignUpScreen from './login/SignUpScreen';
 import { WEB_URL } from '../constant/urls';
@@ -24,6 +24,12 @@ export default function LoginScreen(props) {
   const [email, updateEmail] = useState('');
   const [phone, updatePhone] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false)
+
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release']);
+    LogBox.ignoreLogs(['Required cycle'])
+  }, [])
 
   useEffect(() => {
     (async () => {

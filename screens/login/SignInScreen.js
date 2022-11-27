@@ -3,7 +3,7 @@ import {
   isAndroid,
   isIPhoneNotchFamily, getStatusBarHeight
 } from "@freakycoder/react-native-helpers";
-import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, KeyboardAvoidingView, SafeAreaView, View, Text, Image } from 'react-native';
+import { Alert, AsyncStorage, AppRegistry, StyleSheet, Dimensions, KeyboardAvoidingView, SafeAreaView, View, Text, Image, LogBox } from 'react-native';
 import {TextInput} from 'react-native-paper'
 import { ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -15,6 +15,11 @@ export default function SignInScreen(props) {
   // console.log("IN SIGN IN");
   const [passwordVisible,setPasswordVisible] = useState(true)
 
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core and will be removed in a future release']);
+    LogBox.ignoreLogs(['Required cycle'])
+  }, [])
 
   const renderHeaderTextContainer = () => (
     <View style={styles.headerContainer}>

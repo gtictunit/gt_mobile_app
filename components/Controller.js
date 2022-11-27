@@ -3,18 +3,22 @@ import { View, StyleSheet, ActivityIndicator, Dimensions, PermissionsAndroid, To
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import TrackPlayer from 'react-native-track-player';
+import { RepeatMode } from 'react-native-track-player';
 import { usePlaybackState } from 'react-native-track-player/lib/hooks';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import RNFetchBlob from 'rn-fetch-blob';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const { width, height } = Dimensions.get('window');
 
 const Controller = (props) => {
   const playBackState = usePlaybackState(); //custom hook by the react-native-track-player package
   const [isPlaying, setIsPlaying] = useState('paused');
+  const [show, updateShow] = useState(false);
+  const [successText, updateSuccessText] = useState("You have not subscribed. Buy a subscription and retry!");
 
   useEffect(() => {
     console.log('playBackState:  ' + playBackState)
@@ -87,6 +91,9 @@ const Controller = (props) => {
         }
       }
     }
+    else{
+      updateShow(true)
+    }
   };
 
   const onPressDownload = () => {
@@ -141,8 +148,28 @@ const Controller = (props) => {
     }
   };
 
+  const handleClose = () => {
+    updateShow(false);
+  }
+
   return (
     <View style={styles.screen}>
+            {show &&
+        <View pointerEvents="none" style={styles.activitySpinner}>
+          <AwesomeAlert
+            show={show}
+            showProgress={false}
+            title=""
+            message={successText}
+            closeOnTouchOutside={true}
+            closeOnHardwareBackPress={true}
+            showConfirmButton={true}
+            confirmText="Close"
+            confirmButtonColor="#63A3F4"
+            onConfirmPressed={() => handleClose()}
+          />
+        </View>
+      }
       <TouchableOpacity onPress={props.goPrev}>
         <AntDesign name="stepbackward" size={height / 25} color="white" />
       </TouchableOpacity>
@@ -166,6 +193,17 @@ const styles = StyleSheet.create({
   screen: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+  activitySpinner: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.5,
+    backgroundColor: 'black',
   },
 });
 

@@ -19,7 +19,7 @@
     "axios": "^0.26.0",
     "htmlparser2-without-node-native": "^3.9.2",
     "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react-native": "0.63.5",
     "react-native-animated-splash-screen": "^2.0.5",
     "react-native-autolink": "^4.0.0",
     "react-native-awesome-alerts": "^2.0.0",

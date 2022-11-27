@@ -101,6 +101,17 @@ const tabScreenConfig = {
         Platform.OS === 'android' ? <Text>Profile</Text> : 'Profile',
     },
   },
+  // Podcast: {
+  //   screen: PodcastList,
+  //   navigationOptions: {
+  //     tabBarIcon: (tabInfo) => {
+  //       return <Ionicons name="mic-sharp" size={25} color={tabInfo.tintColor} />;
+  //     },
+  //     tabBarColor: '#282828',
+  //     tabBarLabel:
+  //       Platform.OS === 'android' ? <Text>Podcasts</Text> : 'Podcasts',
+  //   },
+  // },
 };
 
 const SongsNavigator =

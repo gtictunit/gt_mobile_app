@@ -12,7 +12,9 @@ import {
 const Dev_Height = Dimensions.get("window").height
 const Dev_Width = Dimensions.get("window").width
 
-import { AntDesign, Entypo, Feather } from "react-native-vector-icons"
+import AntDesign from "react-native-vector-icons/AntDesign"
+import Entypo from "react-native-vector-icons/Entypo"
+import Feather from "react-native-vector-icons/Feather"
 import PodcastSlider from '../components/PodcastSlider';
 
 function PodcastPlayer(props) {
@@ -36,11 +38,11 @@ function PodcastPlayer(props) {
             <PodcastSlider />
 
             <View style={styles.functions_view}>
-                <Entypo name="shuffle" size={24} color="#e75480" style={{ marginLeft: "9%" }} />
-                <Entypo name="controller-fast-backward" size={24} color="#e75480" style={{ marginLeft: "12%" }} />
+                <Entypo name="loop" size={24} color="#e75480" style={{ marginLeft: "9%" }} />
+                <Entypo name="controller-jump-to-start" size={24} color="#e75480" style={{ marginLeft: "12%" }} />
                 <AntDesign name="pausecircle" size={50} color="#e75480" style={{ marginLeft: "12%" }} />
-                <Entypo name="controller-fast-forward" size={24} color="#e75480" style={{ marginLeft: "12%" }} />
-                <Feather name="repeat" size={20} color="#e75480" style={{ marginLeft: "10%" }} />
+                <Entypo name="controller-next" size={24} color="#e75480" style={{ marginLeft: "12%" }} />
+                <Feather name="download" size={20} color="#e75480" style={{ marginLeft: "10%" }} />
             </View>
         </SafeAreaView>
     )
