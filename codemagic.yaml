@@ -1,10 +1,12 @@
 workflows:
   gtmobile-app:
       scripts:
+      - name: Give Gradle permission
+        working_directory: android
+        script: chmod 777 ./gradlew 
+
       - name: Build Android APK
         working_directory: android
-        script: 
-          chmod 777 ./gradlew
-          ./gradlew assembleRelease
+        script: ./gradlew assembleRelease
       artifacts:
       - app/build/outputs/**/**/*.apk
