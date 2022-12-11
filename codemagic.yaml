@@ -2,7 +2,7 @@ workflows:
   gtmobile-app-android:
       scripts:
       - name: Give Gradle permission
-        working_directory: android
+        working_directory: /
         script: chmod 777 ./gradlew 
 
       - name: Install Node
