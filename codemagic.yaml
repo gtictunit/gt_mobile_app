@@ -10,15 +10,12 @@ workflows:
         script: npm install -g react-native-cli
 
       - name: React Native Assembly
-        working_directory: gt_mobile_app
         script: react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/
 
       - name: Remove Drawable
-        working_directory: gt_mobile_app
         script: rmdir -r android/app/src/main/res/drawable-*
 
       - name: Remove Raw
-        working_directory: gt_mobile_app
         script: rmdir -r android/app/src/main/res/raw/*
 
       - name: Give Gradle permission
