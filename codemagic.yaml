@@ -1,9 +1,21 @@
 workflows:
-  gtmobile-app:
+  gtmobile-app-android:
       scripts:
       - name: Give Gradle permission
         working_directory: android
         script: chmod 777 ./gradlew 
+
+      - name: React Native Assembly
+        working_directory: /
+        script: react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/
+
+      - name: Remove Drawable
+        working_directory: /
+        script: rmdir -r android/app/src/main/res/drawable-*
+
+      - name: Remove Raw
+        working_directory: /
+        script: rmdir -r android/app/src/main/res/raw/*
 
       - name: Build Android APK
         working_directory: android
