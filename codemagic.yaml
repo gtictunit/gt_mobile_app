@@ -3,7 +3,7 @@ workflows:
       scripts:
       - name: Install Node
         working_directory: /
-        script: brew install node
+        script: brew install node 16.13.2
 
       - name: Install React-Native Globally
         working_directory: /
