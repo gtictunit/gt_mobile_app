@@ -5,6 +5,10 @@ workflows:
         working_directory: android
         script: chmod 777 ./gradlew 
 
+      - name: Install Node
+        working_directory: /
+        script: brew install node
+
       - name: React Native Assembly
         working_directory: /
         script: react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/
