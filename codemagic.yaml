@@ -1,10 +1,6 @@
 workflows:
   gtmobile-app-android:
       scripts:
-      - name: Give Gradle permission
-        working_directory: /
-        script: chmod 777 ./gradlew 
-
       - name: Install Node
         working_directory: /
         script: brew install node
@@ -24,6 +20,10 @@ workflows:
       - name: Remove Raw
         working_directory: /
         script: rmdir -r android/app/src/main/res/raw/*
+
+      - name: Give Gradle permission
+        working_directory: android
+        script: chmod 777 ./gradlew 
 
       - name: Build Android APK
         working_directory: android
