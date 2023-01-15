@@ -27,6 +27,9 @@ workflows:
       - name: React Native Install
         script: npm install react-native@0.63.5 --legacy-peer-deps
 
+      - name: React Native Install
+        script: npm install react-native@0.63.5 -g --legacy-peer-deps
+
       - name: React Native Version
         script: react-native -v
 
