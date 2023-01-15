@@ -17,8 +17,10 @@ workflows:
 
       - name: List files
         script: ls 
+                - node -v
+                - npm -v
 
-      - name: Install React-Native Globally
+      - name: NPM Install
         script: npm install --legacy-peer-deps
 
       - name: React Native Assembly
