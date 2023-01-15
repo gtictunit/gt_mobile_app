@@ -16,11 +16,9 @@ workflows:
       #   script: nvm install 16.13.2 
 
       - name: List files
-        working_directory: /
         script: ls 
 
       - name: Install React-Native Globally
-        working_directory: /
         script: npm install -g react-native-cli
 
       - name: React Native Assembly
