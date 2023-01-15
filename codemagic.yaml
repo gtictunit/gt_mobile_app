@@ -17,11 +17,16 @@ workflows:
 
       - name: List files
         script: ls 
-                - node -v
-                - npm -v
+
+      - name: Node version
+        script: node -v 
+
+      - name: NPM Version
+        script: npm -v
+
 
       - name: NPM Install
-        script: npm install --legacy-peer-deps
+        script: npm install react-native -g
 
       - name: React Native Assembly
         script: react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/
