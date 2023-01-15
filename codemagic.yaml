@@ -24,9 +24,11 @@ workflows:
       - name: NPM Version
         script: npm -v
 
-
       - name: NPM Install
-        script: npm install react-native -g
+        script: npm install react-native@0.63.5 
+
+      - name: React Native Version
+        script: react-native -v
 
       - name: React Native Assembly
         script: react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/
