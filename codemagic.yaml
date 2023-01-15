@@ -7,7 +7,9 @@ workflows:
       
       - name: Export NVM for Global Use
         working_directory: /
-        script: export NVM_DIR="$HOME/.nvm" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" 
+        script: export NVM_DIR="$HOME/.nvm" 
+                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+                [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" 
 
       - name: Install Node
         working_directory: /
