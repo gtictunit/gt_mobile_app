@@ -9,6 +9,10 @@ workflows:
         working_directory: /
         script: nvm install 16.13.2 
 
+      - name: Export NVM for Global Use
+        working directory: /
+        script: export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
       - name: Install React-Native Globally
         working_directory: /
         script: npm install -g react-native-cli

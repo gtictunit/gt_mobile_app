@@ -6,7 +6,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 const { width, height } = Dimensions.get('window');
 
 function PodcastList(props) {
-  const [show, updateShow] = useState(false);
+  const [show, updateShow] = useState(true);
   const [successText, updateSuccessText] = useState("FEATURE COMING SOON!");
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function PodcastList(props) {
           showProgress={false}
           title=""
           message={successText}
-          closeOnHardwareBackPress={true}
+          closeOnHardwareBackPress={false}
           showConfirmButton={true}
           confirmText="Close"
           confirmButtonColor="#63A3F4"

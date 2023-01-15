@@ -53,7 +53,11 @@ function ProfileScreen (props) {
     <View style={styles.signUpButtonContainer}>
       <TouchableOpacity
         style={styles.signUpButtonStyle}
-        onPress={() => {}}
+        onPress={() => {props.navigation.navigate("SelectPackage",{
+          email: email,
+          mobile: phone,
+          name: name,
+        })}}
       >
         <Text style={[styles.signUpButtonTextStyle]}>
           {'Add Subscription'}

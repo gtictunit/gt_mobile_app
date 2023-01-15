@@ -15,7 +15,11 @@ import PastorDeskScreen from '../screens/PastorDeskScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Colors from '../components/Colors';
+
 import ProfileScreen from '../screens/ProfileScreen';
+import SelectPackage from '../screens/subscription/SelectPackage';
+import PaySubscription from '../screens/subscription/PaySubscription';
+
 import PodcastPlayer from '../screens/PodcastPlayer';
 import PodcastList from '../screens/PodcastList';
 
@@ -58,6 +62,19 @@ const Searchnavigator = createStackNavigator(
   },
 );
 
+const Profilenavigator = createStackNavigator(
+  {
+    Profile: ProfileScreen,
+    SelectPackage: SelectPackage,
+    PaySubscription: PaySubscription,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  },
+);
+
 const tabScreenConfig = {
   All: {
     screen: AllSongsNavigator,
@@ -91,7 +108,7 @@ const tabScreenConfig = {
     },
   },
   Profile: {
-    screen: ProfileScreen,
+    screen: Profilenavigator,
     navigationOptions: {
       tabBarIcon: (tabInfo) => {
         return <Ionicons name="person" size={25} color={tabInfo.tintColor} />;
