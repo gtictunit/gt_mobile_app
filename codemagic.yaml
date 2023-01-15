@@ -18,6 +18,9 @@ workflows:
       - name: List files
         script: ls 
 
+      - name: Install React-Native
+        script: npm install -g react-native-cli --legacy-peer-deps
+
       - name: Install React-Native Globally
         script: npm install react-native-cli --legacy-peer-deps
 
