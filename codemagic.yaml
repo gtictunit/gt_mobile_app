@@ -19,7 +19,7 @@ workflows:
         script: ls 
 
       - name: Install React-Native Globally
-        script: npm install -g react-native-cli
+        script: npm install react-native-cli
 
       - name: React Native Assembly
         script: react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/
