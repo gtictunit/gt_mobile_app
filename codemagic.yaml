@@ -1,19 +1,6 @@
 workflows:
   gtmobile-app-android:
       scripts:
-      - name: Install NVM
-        working_directory: /
-        script: wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-      
-      - name: Export NVM for Global Use
-        working_directory: /
-        script: export NVM_DIR="$HOME/.nvm" 
-                -s "NVM_DIR/nvm.sh"  && \. "NVM_DIR/nvm.sh" 
-                -s "NVM_DIR/bash_completion" && \. "NVM_DIR/bash_completion" 
-
-      - name: Install Node
-        working_directory: /
-        script: nvm install 16.13.2 
 
       - name: Install React-Native Globally
         working_directory: /
