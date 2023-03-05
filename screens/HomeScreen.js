@@ -128,7 +128,7 @@ function HomeScreen(props) {
   useEffect(() => {
     (async () => {
       let res = await fetch(
-        WEB_URL + "/carousel/get_carouselitems" //example and simple data
+        WEB_URL + "/carousel/get_active_carouselitems" //example and simple data
       );
       console.log('Carousel Items  ==>>> ' + JSON.stringify(resp))
       let response = await res.json();
